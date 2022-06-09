@@ -24,14 +24,16 @@
         <div class="container h-100">
             <div class="row justify-content-center h-100">
                 <div class="col-xl-12">                        
-                        <form action="#" id="step-form-horizontal" class="step-form-horizontal">
+                        <form action="<?=base_url()?>RegistroControlador/registrar_datos_personales" id="FRM_REGISTRO_2" class="step-form-horizontal">
                             <div>
                                 <h4>Datos personales</h4>
+                                <?php //if(isset($correo_registrado)){ echo $correo_registrado; }?>
                                 <section>
                                 <h1 style="text-align: center; margin-bottom: 30px;">Cuéntanos más sobre ti</h1>
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
+                                                <input type="hidden" name="u_user" value="<?php if(isset($ID_USUARIO)){echo $ID_USUARIO;} ?>" />
                                                 <input type="text" name="u_nombres" class="form-control" placeholder="Ingrese su nombre" >
                                             </div>
                                         </div>

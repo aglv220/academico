@@ -23,8 +23,8 @@
 
     <link href="<?= base_url() ?>assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
 
-    <link href="<?= base_url() ?>assets/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
-
+    <!--<link href="<?= base_url() ?>assets/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">-->
+    <link href="<?= base_url() ?>assets/plugins/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
     
 </head>
 <style>

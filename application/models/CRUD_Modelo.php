@@ -50,6 +50,24 @@ class CRUD_Modelo extends CI_Model
         return $id;
     }
 
+    public function listar_campo_tabla_xcond($tabla,$campo,$cv){
+        $this->db->select($campo);
+        $this->db->from($tabla);
+
+        if (count($cv) > 0) {
+            foreach ($cv as $row) {
+                $this->db->where($row["campo"],$row["valor"]);
+            }
+        }
+
+        $consulta = $this->db->get();
+        $result = $consulta->result();
+        foreach ($result as $row) {
+            $campo = $row->$campo;
+        }
+        return $campo;
+    }
+
     public function eliminar_xid_tabla($id,$tabla){
         $this->db->where('ID', $id);
         $DELETE = $this->db->delete($tabla);

@@ -11,29 +11,31 @@
     <script src="<?= base_url() ?>assets/plugins/chart.js/Chart.bundle.min.js"></script>
     <!-- Circle progress -->
     <script src="<?= base_url() ?>assets/plugins/circle-progress/circle-progress.min.js"></script>
-    <!-- Datamap -->
+    <!-- Datamap 
     <script src="<?= base_url() ?>assets/plugins/d3v3/index.js"></script>
     <script src="<?= base_url() ?>assets/plugins/topojson/topojson.min.js"></script>
-    <script src="<?= base_url() ?>assets/plugins/datamaps/datamaps.world.min.js"></script>
+    <script src="<?= base_url() ?>assets/plugins/datamaps/datamaps.world.min.js"></script>-->
     <!-- Morrisjs -->
     <script src="<?= base_url() ?>assets/plugins/raphael/raphael.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/morris/morris.min.js"></script>
     <!-- Pignose Calender -->
     <script src="<?= base_url() ?>assets/plugins/moment/moment.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
-    <!-- ChartistJS -->
+    
     <script src="<?= base_url() ?>assets/plugins/chartist/js/chartist.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
-
-    <script src="<?= base_url() ?>assets/js/dashboard/dashboard-1.js"></script>
+    <!-- DASHBOARD 1
+    <script src="<?= base_url() ?>assets/js/dashboard/dashboard-1.js"></script>-->
 
     <script src="<?= base_url() ?>assets/plugins/jqueryui/js/jquery-ui.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/moment/moment.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/fullcalendar/js/fullcalendar.min.js"></script>
     <script src="<?= base_url() ?>assets/js/plugins-init/fullcalendar-init.js"></script>
-
+    
+    <script src="<?= base_url() ?>assets/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+    <!-- SWEET ALERT INIT
     <script src="<?= base_url() ?>assets/plugins/sweetalert/js/sweetalert.min.js"></script>
-    <script src="<?= base_url() ?>assets/plugins/sweetalert/js/sweetalert.init.js"></script>
+    <script src="<?= base_url() ?>assets/plugins/sweetalert/js/sweetalert.init.js"></script>-->
 
     <!--  flot-chart js -->
     <script src="<?= base_url() ?>assets/plugins/flot/js/jquery.flot.min.js"></script>

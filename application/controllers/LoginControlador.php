@@ -29,7 +29,10 @@ class LoginControlador extends UTP_Controller {
         if (count($lst_login) > 0) {
             foreach ($lst_login as $row) {
                 if (password_verify($this->usuariom->password, $row->password)){
-                    $ROWDATA['SESSION_USUARIO'] = $row->correo;
+                    $ROWDATA['SESSION_CORREO'] = $row->correo;
+                    $ROWDATA['SESSION_NOMBRES'] = $row->nombres;
+                    $ROWDATA['SESSION_APELLIDOS'] = $row->apellidos;
+                    $ROWDATA['SESSION_ID'] = $row->ID;
                     array_push($json_data, $ROWDATA);
                     $this->session->set_userdata($ROWDATA);
                     echo json_encode(array("data" => $json_data));
@@ -44,7 +47,7 @@ class LoginControlador extends UTP_Controller {
 
     public function cerrar_sesion()
     {
-        if ($this->session->userdata('SESSION_USUARIO')) {
+        if ($this->session->userdata('SESSION_CORREO')) {
             $this->session->sess_destroy();
             redirect(base_url());
         }

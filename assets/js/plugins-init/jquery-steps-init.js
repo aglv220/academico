@@ -1,7 +1,7 @@
 (function($) {
     "use strict"
 
-    var form = $("#step-form-horizontal");
+    var form = $("#FRM_REGISTRO_2");
     form.children('div').steps({
         headerTag: "h4",
         bodyTag: "section",

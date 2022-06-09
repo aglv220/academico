@@ -17,16 +17,23 @@ $("#FRM_LOGIN").submit(function (e) {
         cache: false,
         processData: false,
         beforeSend: function () {
-            swal({
-                title: "Validando credenciales",
-                buttons: false
-            });
+            Swal.fire({
+                title: 'Validando credenciales',
+                text: 'Espera unos instantes',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+            })
         },
         success: function (data) {
-            if(data == false){
-                swal({
-                    title: "Error de credenciales"
-                });
+            swal.close();
+            if (data == false) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Credenciales incorrectas',
+                    timer: 3000
+                })
+                
             } else {
                 location.href = root_path + "UsuarioControlador/pagina_principal/";
             }
@@ -34,21 +41,63 @@ $("#FRM_LOGIN").submit(function (e) {
     });
 });
 
-function registrar(){
-    swal({
-    title: "Detalles del registro",
-    text: "Te preguntarás por qué necesitamos tus credenciales de la universidad. Es necesario para poder obtener la información relacionada a tus actividades, fechas de pagos y cursos. ¡No te preocupes! Mantenemos estándares altos de privacidad. ¿Desea continuar?",
-    type: "info",
-    showCancelButton: true,
-    cancelButtonText: "No",
-    cancelButtonColor: "#DD6B55",
-    confirmButtonColor: "#00945e",
-    confirmButtonText: "Si",
-    closeOnConfirm: false
-    }, function (isConfirm) {
-        if (!isConfirm) return;
+$("#FRM_REGISTRO_2").submit(function (e) {
+    e.preventDefault();
+    var form = $(this);
+    var idform = form.attr("id");
+    var url = form.attr('action');
+    var formElement = document.getElementById(idform);
+    var formData_rec = new FormData(formElement);
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: formData_rec,
+        contentType: false,
+        cache: false,
+        processData: false,
+        beforeSend: function () {
+            Swal.fire({
+                title: 'Validando credenciales',
+                text: 'Espera unos instantes',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+            })
+        },
+        success: function (data) {
+            swal.close();
+            if (data == false) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Credenciales incorrectas',
+                    timer: 3000
+                })
+                
+            } else {
+                location.href = root_path + "UsuarioControlador/pagina_principal/";
+            }
+        }
+    });
+});
+
+function registrar() {
+
+    Swal.fire({
+        title: "Detalles del registro",
+        text: "Te preguntarás por qué necesitamos tus credenciales de la universidad. Es necesario para poder obtener la información relacionada a tus actividades, fechas de pagos y cursos. ¡No te preocupes! Mantenemos estándares altos de privacidad. ¿Desea continuar?",
+        icon: 'info',
+        showCancelButton: true,
+        allowOutsideClick: false,
+        cancelButtonText: "No",
+        confirmButtonColor: '#00945e',
+        cancelButtonColor: '#DD6B55',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        
+        swal.close();
         var formElement = document.getElementById("FRM_REGISTRO");
         var formData_rec = new FormData(formElement);
+        var correo_alumno = $('input[name="usuario_correo"]').val();
         $.ajax({
             type: "POST",
             url: root_path + "RegistroControlador/validar_registro",
@@ -56,19 +105,26 @@ function registrar(){
             contentType: false,
             cache: false,
             processData: false,
-            success: function (data) {
-                if(data == "OK"){
-                    setTimeout(function(){
-                        swal("Primera parte del registro completa, serás redireccionado en 3 segundos", "success");
-                        location.href = root_path + "RegistroControlador/v_datos_personales/";
-                    }, 3000);                    
-                } else if(data == "EXIST"){
-                    swal("Error de registro", "El correo proporcionado ya existe", "error");
+            success: function (resp) {
+                if (resp == "OK") {
+                    Swal.fire({
+                        title: 'Primera parte del registro completa',
+                        html: 'Serás redireccionado en 3 segundos',                        
+                        timer: 3000,
+                        allowOutsideClick: false,
+                        showConfirmButton: false
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            location.href = root_path + "RegistroControlador/v_datos_personales?datoalumn=" + btoa(correo_alumno);
+                        }
+                    })
+                } else if (resp == "EXIST") {
+                    swal("Error de registro", "El correo proporcionado ya existe");
                 } else {
-                    swal("Error de registro", "Ha ocurrido un error en el sistema", "error");
-                }                
+                    swal("Error de registro", "Ha ocurrido un error en el sistema");
+                }
             }
         });
 
-    });
+      })
 }
