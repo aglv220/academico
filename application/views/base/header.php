@@ -108,7 +108,7 @@
                             </div>
                         </li>
                         <li class="icons dropdown d-none d-md-flex">
-                            <span>Hola, Yuri</span>
+                            <span>Hola, <?=$this->session->userdata('SESSION_NOMBRES')?></span>
                         </li>
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">

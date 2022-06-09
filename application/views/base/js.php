@@ -32,7 +32,7 @@
     <script src="<?= base_url() ?>assets/plugins/fullcalendar/js/fullcalendar.min.js"></script>
     <script src="<?= base_url() ?>assets/js/plugins-init/fullcalendar-init.js"></script>
     
-    <script src="<?= base_url() ?>assets/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- SWEET ALERT INIT
     <script src="<?= base_url() ?>assets/plugins/sweetalert/js/sweetalert.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/sweetalert/js/sweetalert.init.js"></script>-->

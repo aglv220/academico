@@ -13,12 +13,12 @@ class UsuarioModelo extends CI_Model
         $this->load->model('AlumnoModelo','alumm');
     }
 
-    public function inicio_sesion($correo_user)
+    public function inicio_sesion($correo_o_valor,$campo="correo")
     {
         $this->db->select('u.ID AS ID, correo, password, nombres, apellidos, codigo');
         $this->db->from('usuario u');
         $this->db->join('alumno a','a.usuario_ID = u.ID','left');
-        $this->db->where('u.correo', $correo_user);
+        $this->db->where('u.'.$campo, $correo_o_valor);
         $consulta = $this->db->get();
         $result = $consulta->result();
         return $result;

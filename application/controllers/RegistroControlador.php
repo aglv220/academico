@@ -7,6 +7,7 @@ class RegistroControlador extends UTP_Controller {
 		parent::__construct();
         $this->load->library('session');		
         $this->load->model('UsuarioModelo','usuariom');
+        $this->load->model('AlumnoModelo','alumnom');
         $this->load->model('CRUD_Modelo','crudm');
         date_default_timezone_set('America/lima');
 	}
@@ -34,20 +35,23 @@ class RegistroControlador extends UTP_Controller {
 		$this->load->view('base/js');
     }
 
-    public function validar_registro()
+    public function validar_registro() //PARTE 1 DEL REGISTRO
     {
         $this->usuariom->correo = $this->input->post("usuario_correo");
         $this->usuariom->password = $this->input->post("usuario_clave");
         $correo = $this->usuariom->correo;
         $pass = $this->usuariom->password;
 
+        //AQUI SE HARÍA LA VALIDACIÓN DE CREDENCIALES CON WEB SCRAPPING
+
+        //LUEGO SE PROCEDERÍA CON EL REGISTRO DEL ALUMNO
         $registrar_usuario = $this->usuariom->registrar_usuario($correo,$pass);        
         echo $registrar_usuario;
     }
 
     public function registrar_datos_personales()
     {
-        $user = base64_decode($this->input->post("u_user"));
+        $user_id = base64_decode($this->input->post("u_user"));
         $noms = $this->input->post("u_nombres");
         $apes = $this->input->post("u_apellidos");
         $carr = $this->input->post("u_carrera");
@@ -56,7 +60,19 @@ class RegistroControlador extends UTP_Controller {
         $celu = $this->input->post("u_celular");
         $fnac = $this->input->post("u_fecnac");
 
-        $registrar_alumno = $this->usuariom->registrar_alumno($user,$noms,$apes,$carr,$ciclo,$cod,$celu,$fnac);
-        echo $registrar_alumno;
+        $registrar_alumno = $this->alumnom->registrar_alumno($user_id,$noms,$apes,$carr,$ciclo,$cod,$celu,$fnac);
+        if($registrar_alumno == "OK"){ //SI NO OCURRIO ERRORES AL REGISTRAR EL ALUMNO
+            $lstuserxid = $this->usuariom->inicio_sesion($user_id,"ID");
+            if (count($lstuserxid) > 0) {
+                foreach ($lstuserxid as $row) {
+                    $ROWDATA['SESSION_CORREO'] = $row->correo;
+                    $ROWDATA['SESSION_NOMBRES'] = $row->nombres;
+                    $ROWDATA['SESSION_APELLIDOS'] = $row->apellidos;
+                    $ROWDATA['SESSION_ID'] = $row->ID;
+                    $this->session->set_userdata($ROWDATA);
+                }
+            }
+        }
+        echo $registrar_alumno;             
     }
 }
