@@ -42,9 +42,7 @@
                 mydata.forEach(tipos=>{
                     parte2.append(`<option value="${tipos.ID}" >${tipos.nombre}</option>`);
                 });
-                
-                parte3 = "</select></div></div>";
-                parte2.append(parte3);
+                parte2.append("</select></div></div>");
                 parte4 = i.find(".row").append('<div class="col-md-6"><label class="control-label">Fecha limite de la actividad</label><input class="form-control form-white"  type="date" name="fecha-actividad"></div><div class="col-md-6"><label class="control-label">Hora limite de la actividad</label><input class="form-control form-white"  type="time" name="hora-actividad"></div><div class="col-md-6"><label class="control-label">detalle</label><textarea name="detalle-actividad" id="" cols="30" rows="10"></textarea></div>');
                 
                 
