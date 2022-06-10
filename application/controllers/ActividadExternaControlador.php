@@ -54,8 +54,9 @@ class ActividadExternaControlador extends UTP_Controller {
         $fecha = $this->input->post("fecha");
         $hora = $this->input->post("hora");
         $descrip = $this->input->post("descrip");
+        $estado = $this->input->post("estado");
         $fechaDisp = $fecha." ".$hora;
-        $this->actextmodelo->crearActividad($idTabla,$tipo,$nombre,$descrip,$fechaDisp);
+        $this->actextmodelo->crearActividad($idTabla,$tipo,$nombre,$descrip,$fechaDisp,$estado);
         
     }
 }

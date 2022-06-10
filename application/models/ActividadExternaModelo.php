@@ -32,14 +32,14 @@ class ActividadExternaModelo extends CI_Model
 		return $this->db->insert_id();
     }
 
-    public function crearActividad($idTabla,$tipo,$nombre,$descrip,$fechaDisp){
+    public function crearActividad($idTabla,$tipo,$nombre,$descrip,$fechaDisp,$estado){
         $this->db->insert("actividad", [
 			"curso_ID" => $idTabla,
 			"tipo_actividad" => $tipo,
             "nombre" => $nombre,
             "descripcion" => $descrip,
             "fecha_disponible" => $fechaDisp,
-            "estado" => 0
+            "estado" => $estado
 		]);
     }
     public function listarActividades($idUser){
