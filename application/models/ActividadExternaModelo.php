@@ -42,5 +42,15 @@ class ActividadExternaModelo extends CI_Model
             "estado" => 0
 		]);
     }
+    public function listarActividades($idUser){
+        $query = "SELECT ac.ID, c.nombre as nombreCurso, ac.nombre as descpCurso FROM curso_alumno ca
+        INNER JOIN curso c ON c.ID = ca.curso_ID
+        INNER JOIN actividad ac on ac.curso_ID = ca.curso_ID
+        INNER JOIN actividad_tipo atp on atp.ID = ac.tipo_actividad
+        where usuario_ID = $idUser and estado = 0 and c.nombre like '%Actividad%' ORDER BY fecha_disponible" ;
+
+        $resultado = $this->db->query($query);
+        return $resultado->result_array();
+    }
 }
 ?>

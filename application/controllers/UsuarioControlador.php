@@ -8,6 +8,7 @@ class UsuarioControlador extends UTP_Controller {
         $this->load->library('session');		
         $this->load->model('UsuarioModelo','usuariom');
         $this->load->model('TareaModelo','tareamod');
+        $this->load->model('ActividadExternaModelo','actexmod');
         date_default_timezone_set('America/lima');
 	}
 
@@ -15,6 +16,7 @@ class UsuarioControlador extends UTP_Controller {
     {
         $idUser = $this->session->userdata('SESSION_ID');
         $data["tareas"] = $this->tareamod->listarCursos($idUser);
+        $data["actividades"] = $this->actexmod->listarActividades($idUser);
         $this->is_loged_off();
         $this->cabecera_pagina();
         $this->load->view('dashboard',$data);
