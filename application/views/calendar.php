@@ -26,10 +26,13 @@
                                         <a href="#" data-toggle="modal" data-target="#add-category" class="btn btn-primary btn-block"><i class="ti-plus f-s-12 m-r-5"></i> Crear Nueva Tarea</a>
                                         <div id="external-events" class="m-t-20">
                                             <p>Arrastra y suelta tu evento o haz clic en el calendario</p>
-                                            <div class="external-event bg-primary text-white" data-class="bg-primary"><i class="fa fa-move"></i>Tarea 1</div>
-                                            <div class="external-event bg-success text-white" data-class="bg-success"><i class="fa fa-move"></i>Tarea 2</div>
-                                            <div class="external-event bg-warning text-white" data-class="bg-warning"><i class="fa fa-move"></i>Tarea 3</div>
-                                            <div class="external-event bg-dark text-white" data-class="bg-dark"><i class="fa fa-move"></i>Tarea 4</div>
+                                            <?php
+                                                foreach($tareas as $val){
+                                            ?>
+                                            <div class="external-event bg-success text-white" data-class="bg-success" id="<?php echo $val["ID"]?>"><i class="fa fa-move"></i><?php echo ucwords($val["nombreCurso"])?> - <?php echo ucwords($val["descpCurso"])?></div>
+                                            <?php
+                                                }
+                                            ?>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -67,27 +70,31 @@
                                                         <div class="row">
                                                             <div class="col-md-6">
                                                                 <label class="control-label">Nombre de la actividad</label>
-                                                                <input class="form-control form-white" placeholder="Ingrese nombre" type="text" name="category-name">
+                                                                <input class="form-control form-white" placeholder="Ingrese nombre" type="text" name="nombre-actividad">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="control-label">Tipo de actividad</label>
-                                                                <select class="form-control form-white" data-placeholder="Choose a color..." name="category-color">
-                                                                    <option value="success">Proyecto</option>
-                                                                    <option value="danger">Casual</option>
-                                                                    <option value="info">Info</option>
+                                                                <select class="form-control form-white" data-placeholder="Choose a color..." name="tipo-actividad">
+                                                                    <?php
+                                                                        foreach($tipos_actividades as $key){
+                                                                    ?>
+                                                                    <option value="<?php echo $key["ID"] ?>"><?php echo ucwords($key["nombre"]) ?></option>
+                                                                    <?php
+                                                                        }
+                                                                    ?>
                                                                 </select>
                                                             </div><br>
                                                             <div class="col-md-6">
                                                                 <label class="control-label">Fecha limite de la actividad</label>
-                                                                <input class="form-control form-white"  type="date" name="category-name">
+                                                                <input class="form-control form-white"  type="date" name="fecha-actividad">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="control-label">Hora limite de la actividad</label>
-                                                                <input class="form-control form-white"  type="time" name="category-name">
+                                                                <input class="form-control form-white"  type="time" name="hora-actividad">
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <label class="control-label">detalle</label>
-                                                                <textarea name="" id="" cols="30" rows="10"></textarea>
+                                                                <textarea name="detalle-actividad" id="" cols="30" rows="10"></textarea>
                                                             </div>
                                                         </div>
                                                     </form>

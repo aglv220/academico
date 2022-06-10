@@ -54,52 +54,85 @@
         this.enableDrag();
         var t = new Date,
             n = (t.getDate(), t.getMonth(), t.getFullYear(), new Date(e.now())),
-            a = [{
-                title: "Hey!",
-                start: new Date(e.now() + 158e6),
-                className: "bg-dark"
-            }, {
-                title: "See John Deo",
-                start: n,
-                end: n,
-                className: "bg-danger"
-            }, {
-                title: "Buy a Theme",
-                start: new Date(e.now() + 338e6),
-                className: "bg-primary"
-            }],
+            
             o = this;
-        o.$calendarObj = o.$calendar.fullCalendar({
-            slotDuration: "00:15:00",
-            minTime: "08:00:00",
-            maxTime: "19:00:00",
-            defaultView: "month",
-            handleWindowResize: !0,
-            height: e(window).height() - 200,
-            header: {
-                left: "prev,next hoy",
-                center: "title",
-                right: "month,agendaWeek,agendaDay"
-            },
-            locale: 'es',
-            events: a,
-            editable: !0,
-            droppable: !0,
-            eventLimit: !0,
-            selectable: !0,
-            drop: function(t) {
-                o.onDrop(e(this), t)
-            },
-            select: function(e, t, n) {
-                o.onSelect(e, t, n)
-            },
-            eventClick: function(e, t, n) {
-                o.onEventClick(e, t, n)
-            }
-        }), this.$saveCategoryBtn.on("click", function() {
-            var e = o.$categoryForm.find("input[name='category-name']").val(),
-                t = o.$categoryForm.find("select[name='category-color']").val();
-            null !== e && 0 != e.length && (o.$extEvents.append('<div class="external-event bg-' + t + '" data-class="bg-' + t + '" style="position: relative;"><i class="fa fa-move"></i>' + e + "</div>"), o.enableDrag())
+            $.ajax({
+                type: "POST",
+                url: '../ActividadExternaControlador/llenarCalendario',
+                success: function(data){
+                    var mydata = JSON.parse(data);
+                    o.$calendarObj = o.$calendar.fullCalendar({
+                        slotDuration: "00:15:00",
+                        minTime: "08:00:00",
+                        maxTime: "19:00:00",
+                        defaultView: "month",
+                        handleWindowResize: !0,
+                        height: e(window).height() - 200,
+                        header: {
+                            left: "prev,next hoy",
+                            center: "title",
+                            right: "month,agendaWeek,agendaDay"
+                        },
+                        locale: 'es',
+                        events: mydata,
+                        editable: !0,
+                        droppable: !0,
+                        eventLimit: !0,
+                        selectable: !0,
+                        drop: function(t) {
+                            o.onDrop(e(this), t)
+                            var id, fecha;
+                            id = (e(this)[0].id);
+                            fecha = t._d;
+                            $.ajax({
+                                type: "POST",
+                                url: '../ActividadExternaControlador/agregarCalendario',
+                                data: { id: id, fecha: fecha },
+                                success: function(data){
+                                    setTimeout(function() {
+                                        window.location.reload();
+                                   },0);
+                                },
+                                    error: function(data){
+                                    console.log('Error: '+data);
+                                },
+                            });
+                           
+                        },
+                        select: function(e, t, n) {
+                            o.onSelect(e, t, n)
+                        },
+                        eventClick: function(e, t, n) {
+                            o.onEventClick(e, t, n)
+                        }
+                    })
+                },
+                    error: function(data){
+                    console.log('Error: '+data);
+                },
+            });
+            
+        
+        this.$saveCategoryBtn.on("click", function() {
+            var nombre = o.$categoryForm.find("input[name='nombre-actividad']").val();
+            var tipoActividad = o.$categoryForm.find("select[name='tipo-actividad']").val();
+            var fecha = o.$categoryForm.find("input[name='fecha-actividad']").val();
+            var hora = o.$categoryForm.find("input[name='hora-actividad']").val();
+            var descrip = o.$categoryForm.find("textarea[name='detalle-actividad']").val();
+            $.ajax({
+                type: "POST",
+                url: '../ActividadExternaControlador/crearActividad',
+                data: { nombre: nombre, tipoActividad: tipoActividad, fecha: fecha, hora: hora, descrip: descrip },
+                success: function(data){
+                    setTimeout(function() {
+                        window.location.reload();
+                   },0);
+                },
+                    error: function(data){
+                    console.log('Error: '+data);
+                },
+            });
+
         })
     }, e.CalendarApp = new t, e.CalendarApp.Constructor = t
 }(window.jQuery),
