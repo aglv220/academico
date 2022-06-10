@@ -7,28 +7,22 @@ class UsuarioControlador extends UTP_Controller {
 		parent::__construct();
         $this->load->library('session');		
         $this->load->model('UsuarioModelo','usuariom');
-        $this->load->model('TareaModelo','tareamod');
         date_default_timezone_set('America/lima');
 	}
 
     public function pagina_principal()
     {
-        $idUser = $this->session->userdata('SESSION_ID');
-        $data["tareas"] = $this->tareamod->listarCursos($idUser);
         $this->is_loged_off();
         $this->cabecera_pagina();
-        $this->load->view('dashboard',$data);
+        $this->load->view('dashboard');
 		$this->pie_pagina();
     }
 
     public function calendario()
     {
-        $idUser = $this->session->userdata('SESSION_ID');
-        $data["tareas"] = $this->tareamod->listarCursosFueraCalendario($idUser);
-        $data["tipos_actividades"] = $this->tareamod->listarActividadXtipo();
         $this->is_loged_off();
         $this->cabecera_pagina();
-        $this->load->view('calendar',$data);
+        $this->load->view('calendar');
 		$this->pie_pagina();
     }
 
