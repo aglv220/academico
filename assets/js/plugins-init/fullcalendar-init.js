@@ -25,10 +25,44 @@
         o.$modal.modal({
             backdrop: "static"
         });
-        var i = e("<form></form>");
-        i.append("<div class='row'></div>"), i.find(".row").append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Nombre de la actividad</label><input class='form-control' placeholder='Ingrese nombre' type='text' name='title'/></div></div>").append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Tipo de actividad</label><select class='form-control' name='category'></select></div></div>").find("select[name='category']").append("<option value='bg-danger'>Proyecto</option>").append("<option value='bg-success'>Casual</option>").append("<option value='bg-dark'>Info</option>"),i.find(".row").append('<div class="col-md-6"><label class="control-label">Fecha limite de la actividad</label><input class="form-control form-white"  type="date" name="category-name"></div><div class="col-md-6"><label class="control-label">Hora limite de la actividad</label><input class="form-control form-white"  type="time" name="category-name"></div><div class="col-md-6"><label class="control-label">detalle</label><textarea name="" id="" cols="30" rows="10"></textarea></div>'), o.$modal.find(".delete-event").hide().end().find(".save-event").show().end().find(".modal-body").empty().prepend(i).end().find(".save-event").unbind("click").on("click", function() {
-            i.submit()
-        }), o.$modal.find("form").on("submit", function() {
+        $.ajax({
+            type: "POST",
+            url: '../TareaControlador/listarTipoActividad',
+            success: function(data){
+                var mydata = JSON.parse(data);
+                
+                var i = e("<form></form>");
+                var parte1, parte2, parte3, parte4;
+
+                i.append("<div class='row'></div>"), 
+                
+                parte1 = i.find(".row").append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Nombre de la actividad</label><input class='form-control' placeholder='Ingrese nombre' type='text' name='nombre-actividad'/></div></div>").append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Tipo de actividad</label>");
+                
+                parte2 = i.find(".row").append("<select class='form-control' name='tipo-actividad'>");
+                mydata.forEach(tipos=>{
+                    parte2.append(`<option value="${tipos.ID}" >${tipos.nombre}</option>`);
+                });
+                
+                parte3 = "</select></div></div>";
+                parte2.append(parte3);
+                parte4 = i.find(".row").append('<div class="col-md-6"><label class="control-label">Fecha limite de la actividad</label><input class="form-control form-white"  type="date" name="fecha-actividad"></div><div class="col-md-6"><label class="control-label">Hora limite de la actividad</label><input class="form-control form-white"  type="time" name="hora-actividad"></div><div class="col-md-6"><label class="control-label">detalle</label><textarea name="detalle-actividad" id="" cols="30" rows="10"></textarea></div>');
+                
+                
+                o.$modal.find(".delete-event").hide().end().find(".save-event").show().end().find(".modal-body").empty().prepend(i).end().find(".save-event").unbind("click").on("click", function() {
+                    var nombre = i.find("input[name='nombre-actividad']").val();
+                    var tipoActividad = o.$categoryForm.find("select[name='tipo-actividad']").val();
+                    var fecha = o.$categoryForm.find("input[name='fecha-actividad']").val();
+                    var hora = o.$categoryForm.find("input[name='hora-actividad']").val();
+                    var descrip = o.$categoryForm.find("textarea[name='detalle-actividad']").val();
+                    
+                })
+                
+            },
+                error: function(data){
+                console.log('Error: '+data);
+            },
+        });
+        o.$modal.find("form").on("submit", function() {
             var e = i.find("input[name='title']").val(),
                 a = (i.find("input[name='beginning']").val(), i.find("input[name='ending']").val(), i.find("select[name='category'] option:checked").val());
             return null !== e && 0 != e.length ? (o.$calendarObj.fullCalendar("renderEvent", {
