@@ -43,10 +43,8 @@
                 mydata.forEach(tipos=>{
                     i.find(".select-tipact").append(`<option value="${tipos.ID}" >${tipos.nombre}</option>`);
                 });
-                
                 i.find(".div-tipo-act").append("</select></div></div>");
                 i.find(".row").append('<div class="col-md-6"><label class="control-label">Fecha limite de la actividad</label><input class="form-control form-white"  type="date" name="fecha-actividad"></div><div class="col-md-6"><label class="control-label">Hora limite de la actividad</label><input class="form-control form-white"  type="time" name="hora-actividad"></div><div class="col-md-6"><label class="control-label">detalle</label><textarea name="detalle-actividad" id="" cols="30" rows="10"></textarea></div>');
-                
                 
                 o.$modal.find(".delete-event").hide().end().find(".save-event").show().end().find(".modal-body").empty().prepend(i).end().find(".save-event").unbind("click").on("click", function() {
                     var nombre = i.find("input[name='nombre-actividad']").val();
