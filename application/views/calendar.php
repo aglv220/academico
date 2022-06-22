@@ -78,7 +78,7 @@
                                                                     <?php
                                                                         foreach($tipos_actividades as $key){
                                                                     ?>
-                                                                    <option value="<?php echo $key["ID"] ?>"><?php echo ucwords($key["nombre"]) ?></option>
+                                                                    <option value="<?php echo $key["pk_tipo_actividad"] ?>"><?php echo ucwords($key["nombre_tipo_actividad"]) ?></option>
                                                                     <?php
                                                                         }
                                                                     ?>

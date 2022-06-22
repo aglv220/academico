@@ -7,50 +7,68 @@ class ActividadExternaModelo extends CI_Model
         parent::__construct();
     }
 
-    public function asignarActividadCalendario($idActividad, $fecha)
+    public function asignarActividadCalendario($idActividad)
     {
-        $query = "UPDATE actividad set estado = 1, fecha_disponible = '".$fecha."' where ID = $idActividad";
+        $query = "UPDATE usuario_actividad_externa set estado_calendario = 1 where pk_usuario_actividad_externa = $idActividad";
         $this->db->query($query);
     }
 
     public function listarActividadesalCalendario($idUser){
-        $query = 'SELECT  ac.nombre as title, ac.fecha_disponible as start ,"bg-dark" as className FROM curso_alumno ca
-        INNER JOIN curso c ON c.ID = ca.curso_ID
-        INNER JOIN actividad ac on ac.curso_ID = ca.curso_ID
-        INNER JOIN actividad_tipo atp on atp.ID = ac.tipo_actividad
-        where usuario_ID = '.$idUser.' and estado = 1';
+        $query = "SELECT  ac.nombre_actividad as title, ac.fecdisp_actividad as start ,'bg-info' as className FROM actividad ac
+        INNER JOIN tipo_actividad ta on ta.pk_tipo_actividad = ac.fk_tipo_actividad
+        INNER JOIN usuario_actividad_externa uce on uce.fk_actividad = ac.pk_actividad
+        where fk_usuario = $idUser and fk_tipo_actividad != 1 and uce.estado_calendario = 1";
+
+        $resultado = $this->db->query($query);
+        return $resultado->result_array();//fecha_disponible = '".$fecha."'
+    }
+    public function listarCursosFueraCalendario($idUser){
+        $query = "SELECT uce.pk_usuario_actividad_externa as ID, ta.nombre_tipo_actividad as nombreCurso,ac.nombre_actividad as descpCurso from actividad ac
+        INNER JOIN tipo_actividad ta on ta.pk_tipo_actividad = ac.fk_tipo_actividad
+        INNER JOIN usuario_actividad_externa uce on uce.fk_actividad = ac.pk_actividad
+        where fk_usuario = $idUser and fk_tipo_actividad != 1 and uce.estado_calendario = 0 ORDER BY ac.fecdisp_actividad DESC LIMIT 3" ;
 
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
 
-    public function insertarCursoAlumno($idUser){
-        $this->db->insert("curso_alumno", [
-			"usuario_ID" => $idUser,
-			"curso_ID" => 1,
+    public function insertarUsuarioActividadExterna($idTabla,$estado){
+        $this->db->insert("usuario_actividad_externa", [
+			"fk_actividad" => $idTabla,
+			"estado_calendario" => $estado,
+            "estado_pizarra" => 0
 		]);
 		return $this->db->insert_id();
     }
 
-    public function crearActividad($idTabla,$tipo,$nombre,$descrip,$fechaDisp,$estado){
+    public function crearActividad($tipo,$idUser,$nombre,$descrip,$fechaDisp){
         $this->db->insert("actividad", [
-			"curso_ID" => $idTabla,
-			"tipo_actividad" => $tipo,
-            "nombre" => $nombre,
-            "descripcion" => $descrip,
-            "fecha_disponible" => $fechaDisp,
-            "estado" => $estado
+			"fk_tipo_actividad" => $tipo,
+			"fk_usuario" => $idUser,
+            "nombre_actividad" => $nombre,
+            "descripcion_actividad" => $descrip,
+            "fecdisp_actividad" => $fechaDisp,
 		]);
+        return $this->db->insert_id();
     }
     public function listarActividades($idUser){
-        $query = "SELECT ac.ID, c.nombre as nombreCurso, ac.nombre as descpCurso FROM curso_alumno ca
-        INNER JOIN curso c ON c.ID = ca.curso_ID
-        INNER JOIN actividad ac on ac.curso_ID = ca.curso_ID
-        INNER JOIN actividad_tipo atp on atp.ID = ac.tipo_actividad
-        where usuario_ID = $idUser and estado = 0 and c.nombre like '%Actividad%' ORDER BY fecha_disponible" ;
+        $query = "SELECT  ta.nombre_tipo_actividad as nombreCurso,ac.nombre_actividad as descpCurso from actividad ac
+        INNER JOIN tipo_actividad ta on ta.pk_tipo_actividad = ac.fk_tipo_actividad
+        INNER JOIN usuario_actividad_externa uce on uce.fk_actividad = ac.pk_actividad
+        where fk_usuario = $idUser and fk_tipo_actividad != 1 and uce.estado_pizarra = 0 ORDER BY ac.fecdisp_actividad DESC LIMIT 3" ;
 
         $resultado = $this->db->query($query);
         return $resultado->result_array();
+    }
+    public function consultarIdActividad($id){
+        $query = "SELECT fk_actividad from usuario_actividad_externa where pk_usuario_actividad_externa = $id";
+
+        $resultado = $this->db->query($query);
+        return $resultado->result_array();
+    }
+    public function asignarfechaActividad($id, $fecha){
+        $query = "UPDATE actividad set fecdisp_actividad = '".$fecha."' where pk_actividad = $id";
+        $this->db->query($query);
     }
 }
 ?>

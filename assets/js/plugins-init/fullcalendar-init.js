@@ -32,7 +32,6 @@
                 var mydata = JSON.parse(data);
                 
                 var i = e("<form></form>");
-                var parte1, parte2, parte3, parte4;
 
                 i.append("<div class='row'></div>"), 
                 
@@ -41,7 +40,7 @@
                 i.find(".div-tipo-act").append("<select class='form-control select-tipact' name='tipo-actividad'>");
                 
                 mydata.forEach(tipos=>{
-                    i.find(".select-tipact").append(`<option value="${tipos.ID}" >${tipos.nombre}</option>`);
+                    i.find(".select-tipact").append(`<option value="${tipos.pk_tipo_actividad}" >${tipos.nombre_tipo_actividad}</option>`);
                 });
                 i.find(".div-tipo-act").append("</select></div></div>");
                 i.find(".row").append('<div class="col-md-6"><label class="control-label">Fecha limite de la actividad</label><input class="form-control form-white"  type="date" name="fecha-actividad"></div><div class="col-md-6"><label class="control-label">Hora limite de la actividad</label><input class="form-control form-white"  type="time" name="hora-actividad"></div><div class="col-md-6"><label class="control-label">detalle</label><textarea name="detalle-actividad" id="" cols="30" rows="10"></textarea></div>');

@@ -18,7 +18,6 @@ class UsuarioControlador extends UTP_Controller {
         $idUser = $this->session->userdata('SESSION_ID');
         $data["tareas"] = $this->tareamod->listarCursos($idUser);
         $data["actividades"] = $this->actexmod->listarActividades($idUser);
-
         $this->cabecera_pagina();
         $this->load->view('dashboard',$data);
 		$this->pie_pagina();
@@ -28,7 +27,7 @@ class UsuarioControlador extends UTP_Controller {
     {        
         $this->is_loged_off();
         $idUser = $this->session->userdata('SESSION_ID');
-        $data["tareas"] = $this->tareamod->listarCursosFueraCalendario($idUser);
+        $data["tareas"] = $this->actexmod->listarCursosFueraCalendario($idUser);
         $data["tipos_actividades"] = $this->tareamod->listarActividadXtipo();
         
         $this->cabecera_pagina();
