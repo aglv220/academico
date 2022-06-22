@@ -13,22 +13,24 @@ class UsuarioControlador extends UTP_Controller {
 	}
 
     public function pagina_principal()
-    {
+    {        
+        $this->is_loged_off();
         $idUser = $this->session->userdata('SESSION_ID');
         $data["tareas"] = $this->tareamod->listarCursos($idUser);
         $data["actividades"] = $this->actexmod->listarActividades($idUser);
-        $this->is_loged_off();
+
         $this->cabecera_pagina();
         $this->load->view('dashboard',$data);
 		$this->pie_pagina();
     }
 
     public function calendario()
-    {
+    {        
+        $this->is_loged_off();
         $idUser = $this->session->userdata('SESSION_ID');
         $data["tareas"] = $this->tareamod->listarCursosFueraCalendario($idUser);
         $data["tipos_actividades"] = $this->tareamod->listarActividadXtipo();
-        $this->is_loged_off();
+        
         $this->cabecera_pagina();
         $this->load->view('calendar',$data);
 		$this->pie_pagina();

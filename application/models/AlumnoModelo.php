@@ -23,14 +23,14 @@ class AlumnoModelo extends CI_Model
         $alumnol = $this->crudm->listar_tabla_xcampo('alumno',$campos);
         if (count($alumnol) == 0) {
             $DATA_ALUMNO = array(
-                'usuario_ID ' => $user,
-                'nombres ' => $nom,
-                'apellidos ' => $ape,
-                'carrera ' => $carr,
-                'ciclo ' => $ciclo,
-                'codigo ' => $cod,
-                'celular ' => $cel,
-                'fec_nac ' => $fec_nac
+                'fk_usuario ' => $user,
+                'alumno_nombre ' => $nom,
+                'alumno_apellidos ' => $ape,
+                'alumno_carrera ' => $carr,
+                'alumno_ciclo ' => $ciclo,
+                'alumno_codigo ' => $cod,
+                'alumno_celular ' => $cel,
+                'alumno_fecnac ' => $fec_nac
             );
             $INSERT_ALUMNO = $this->db->insert('alumno', $DATA_ALUMNO);
             if ($INSERT_ALUMNO) {

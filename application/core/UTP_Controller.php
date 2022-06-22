@@ -8,7 +8,11 @@ class UTP_Controller extends CI_Controller {
         date_default_timezone_set('America/lima');
         $this->load->library('session');
         $this->load->helper('url');
-    }   
+    }
+
+    public function get_token(){
+        return base64_encode("UTP2022_INTEGRADOR2");
+    }
 
     public function is_loged_off()
     {
