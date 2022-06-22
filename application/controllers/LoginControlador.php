@@ -28,10 +28,10 @@ class LoginControlador extends UTP_Controller {
         $json_data = array();
         if (count($lst_login) > 0) {
             foreach ($lst_login as $row) {
-                if (password_verify($this->usuariom->password, $row->password)){
-                    $ROWDATA['SESSION_CORREO'] = $row->correo;
-                    $ROWDATA['SESSION_NOMBRES'] = $row->nombres;
-                    $ROWDATA['SESSION_APELLIDOS'] = $row->apellidos;
+                if (password_verify($this->usuariom->password, $row->usuario_password)){
+                    $ROWDATA['SESSION_CORREO'] = $row->usuario_correo;
+                    $ROWDATA['SESSION_NOMBRES'] = $row->alumno_nombre;
+                    $ROWDATA['SESSION_APELLIDOS'] = $row->alumno_apellidos;
                     $ROWDATA['SESSION_ID'] = $row->ID;
                     array_push($json_data, $ROWDATA);
                     $this->session->set_userdata($ROWDATA);

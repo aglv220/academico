@@ -18,7 +18,7 @@ class CRUD_Modelo extends CI_Model
     public function listar_tabla_xid($tabla,$id){
         $this->db->select('*');
         $this->db->from($tabla);
-        $this->db->where('ID',$id);
+        $this->db->where('pk_'.$tabla,$id);
         $consulta = $this->db->get();
         $result = $consulta->result();
         return $result;
@@ -40,7 +40,7 @@ class CRUD_Modelo extends CI_Model
     }
 
     public function listar_maxID_tabla($tabla){
-        $this->db->select('MAX(ID) AS MAXID');
+        $this->db->select('MAX(pk_'.$tabla.') AS MAXID');
         $this->db->from($tabla);
         $consulta = $this->db->get();
         $result = $consulta->result();
@@ -82,7 +82,7 @@ class CRUD_Modelo extends CI_Model
     }
 
     public function eliminar_xid_tabla($id,$tabla){
-        $this->db->where('ID', $id);
+        $this->db->where('pk_'.$tabla, $id);
         $DELETE = $this->db->delete($tabla);
         if ($DELETE) {
             return "OK";

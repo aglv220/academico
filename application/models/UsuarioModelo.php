@@ -13,11 +13,11 @@ class UsuarioModelo extends CI_Model
         $this->load->model('AlumnoModelo','alumm');
     }
 
-    public function inicio_sesion($correo_o_valor,$campo="correo")
+    public function inicio_sesion($correo_o_valor,$campo="usuario_correo")
     {
-        $this->db->select('u.ID AS ID, correo, password, nombres, apellidos, codigo');
+        $this->db->select('u.pk_usuario AS ID, usuario_correo, usuario_password, alumno_nombre, alumno_apellidos, alumno_codigo');
         $this->db->from('usuario u');
-        $this->db->join('alumno a','a.usuario_ID = u.ID','left');
+        $this->db->join('alumno a','a.fk_usuario = u.pk_usuario','left');
         $this->db->where('u.'.$campo, $correo_o_valor);
         $consulta = $this->db->get();
         $result = $consulta->result();
@@ -29,8 +29,8 @@ class UsuarioModelo extends CI_Model
         $userxacceso = $this->inicio_sesion($correo);
         if (count($userxacceso) == 0) { //SI EL CORREO NO EXISTE
             $DATA_USUARIO = array(
-                'correo' => $correo,
-                'password' => password_hash($password, PASSWORD_DEFAULT)
+                'usuario_correo' => $correo,
+                'usuario_password' => password_hash($password, PASSWORD_DEFAULT)
             );
             $INSERT_USUARIO = $this->db->insert('usuario', $DATA_USUARIO);
             if ($INSERT_USUARIO) {                

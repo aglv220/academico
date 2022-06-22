@@ -25,8 +25,8 @@ class RegistroControlador extends UTP_Controller {
         $this->is_loged_on();
         if($this->input->get('datoalumn')){
             $correo_alumno = base64_decode($this->input->get('datoalumn'));
-            $campos = [ ["campo" => "correo", "valor"=> $correo_alumno] ];
-            $usuario_id = $this->crudm->listar_campo_tabla_xcond('usuario','ID',$campos);
+            $campos = [ ["campo" => "usuario_correo", "valor"=> $correo_alumno] ];
+            $usuario_id = $this->crudm->listar_campo_tabla_xcond('usuario','pk_usuario',$campos);
             $data_usuario['ID_USUARIO'] = base64_encode($usuario_id);
         }
         
@@ -62,12 +62,12 @@ class RegistroControlador extends UTP_Controller {
 
         $registrar_alumno = $this->alumnom->registrar_alumno($user_id,$noms,$apes,$carr,$ciclo,$cod,$celu,$fnac);
         if($registrar_alumno == "OK"){ //SI NO OCURRIO ERRORES AL REGISTRAR EL ALUMNO
-            $lstuserxid = $this->usuariom->inicio_sesion($user_id,"ID");
+            $lstuserxid = $this->usuariom->inicio_sesion($user_id,"pk_usuario");
             if (count($lstuserxid) > 0) {
                 foreach ($lstuserxid as $row) {
-                    $ROWDATA['SESSION_CORREO'] = $row->correo;
-                    $ROWDATA['SESSION_NOMBRES'] = $row->nombres;
-                    $ROWDATA['SESSION_APELLIDOS'] = $row->apellidos;
+                    $ROWDATA['SESSION_CORREO'] = $row->usuario_correo;
+                    $ROWDATA['SESSION_NOMBRES'] = $row->alumno_nombre;
+                    $ROWDATA['SESSION_APELLIDOS'] = $row->alumno_apellidos;
                     $ROWDATA['SESSION_ID'] = $row->ID;
                     $this->session->set_userdata($ROWDATA);
                 }
