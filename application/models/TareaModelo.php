@@ -13,28 +13,30 @@ class TareaModelo extends CI_Model
 
     public function listarCursos($idUser)
     {
-        $query = "SELECT c.nombre as nombreCurso, ac.nombre as descpCurso FROM curso_alumno ca
-        INNER JOIN curso c ON c.ID = ca.curso_ID
-        INNER JOIN actividad ac on ac.curso_ID = ca.curso_ID
-        INNER JOIN actividad_tipo atp on atp.ID = ac.tipo_actividad
-        where usuario_ID = $idUser limit 3" ;
+        $query = "SELECT curso_nombre as nombreCurso, a.nombre_actividad as descpCurso FROM usuario_curso uc
+        INNER JOIN curso c on uc.fk_curso = c.pk_curso
+        INNER JOIN usuario_actividad ua on ua.fk_curso = c.pk_curso
+        INNER JOIN actividad a on a.pk_actividad = ua.fk_actividad
+        WHERE uc.fk_usuario = $idUser and a.fk_tipo_actividad = 1 and ua.estado_usuario_actividad = 0 ORDER BY a.fecdisp_actividad DESC LIMIT 3;" ;
 
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
-    public function listarCursosFueraCalendario($idUser){
-        $query = "SELECT ac.ID, c.nombre as nombreCurso, ac.nombre as descpCurso FROM curso_alumno ca
-        INNER JOIN curso c ON c.ID = ca.curso_ID
-        INNER JOIN actividad ac on ac.curso_ID = ca.curso_ID
-        INNER JOIN actividad_tipo atp on atp.ID = ac.tipo_actividad
-        where usuario_ID = $idUser and c.nombre like '%Actividad%' ORDER BY fecha_disponible" ;
+
+    public function listarTareasalCalendario($idUser){
+        $query = "SELECT  a.descripcion_actividad as title, a.fecdisp_actividad as start,'bg-warning' as className FROM usuario_curso uc
+        INNER JOIN curso c on uc.fk_curso = c.pk_curso
+        INNER JOIN usuario_actividad ua on ua.fk_curso = c.pk_curso
+        INNER JOIN actividad a on a.pk_actividad = ua.fk_actividad
+        WHERE uc.fk_usuario = $idUser and a.fk_tipo_actividad = 1 ";
 
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
+
 
     public function listarActividadXtipo(){
-        $query = "SELECT * FROM actividad_tipo where ID in(2,3,4,5,6)" ;
+        $query = "SELECT * FROM tipo_actividad where pk_tipo_actividad in(2,3,4,5,6)" ;
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }

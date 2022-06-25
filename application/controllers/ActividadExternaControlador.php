@@ -6,6 +6,7 @@ class ActividadExternaControlador extends UTP_Controller {
     function __construct() {
 		parent::__construct();
         $this->load->model('ActividadExternaModelo','actextmodelo');
+        $this->load->model('TareaModelo','tareamodelo');
         date_default_timezone_set('America/lima');
     }
     
@@ -37,25 +38,40 @@ class ActividadExternaControlador extends UTP_Controller {
 
         $fechaFormateada = $año."-".$numero."-".$dia." ".$hora;
 
-        die($this->actextmodelo->asignarActividadCalendario($id,$fechaFormateada));
+        //cambiar el estado en pizzarra
+        $this->actextmodelo->asignarActividadCalendario($id);
+
+        //consultar id de la actividad 
+        $idActvidad = $this->actextmodelo->consultarIdActividad($id);
+        
+        foreach($idActvidad as $key){
+            $idActvidad = $key["fk_actividad"];
+        }
+        
+        //asignar fecha
+        $this->actextmodelo->asignarfechaActividad($idActvidad,$fechaFormateada);
     }
 
     public function llenarCalendario(){
         $idUser = $this->session->userdata('SESSION_ID');
-        $data = $this->actextmodelo->listarActividadesalCalendario($idUser);
+        $dataActividad = $this->actextmodelo->listarActividadesalCalendario($idUser);
+        $dataTareas = $this->tareamodelo->listarTareasalCalendario($idUser);
+        $data = array_merge($dataActividad,$dataTareas);
         echo json_encode($data);
     }
 
     public function crearActividad(){
         $idUser = $this->session->userdata('SESSION_ID');
-        $idTabla = $this->actextmodelo->insertarCursoAlumno($idUser);
+
+        //crear Actividad 
         $nombre = $this->input->post("nombre");
         $tipo = $this->input->post("tipoActividad");
         $fecha = $this->input->post("fecha");
         $hora = $this->input->post("hora");
         $descrip = $this->input->post("descrip");
-        $fechaDisp = $fecha." ".$hora;
-        $this->actextmodelo->crearActividad($idTabla,$tipo,$nombre,$descrip,$fechaDisp);
-        
+        $estado = $this->input->post("estado");
+        $fechaDisp = $fecha." ".$hora;  
+        $idTabla = $this->actextmodelo->crearActividad($tipo,$idUser,$nombre,$descrip,$fechaDisp);
+        $this->actextmodelo->insertarUsuarioActividadExterna($idTabla, $estado);
     }
 }

@@ -32,7 +32,6 @@
                 var mydata = JSON.parse(data);
                 
                 var i = e("<form></form>");
-                var parte1, parte2, parte3, parte4;
 
                 i.append("<div class='row'></div>"), 
                 
@@ -41,25 +40,31 @@
                 i.find(".div-tipo-act").append("<select class='form-control select-tipact' name='tipo-actividad'>");
                 
                 mydata.forEach(tipos=>{
-                    i.find(".select-tipact").append(`<option value="${tipos.ID}" >${tipos.nombre}</option>`);
+                    i.find(".select-tipact").append(`<option value="${tipos.pk_tipo_actividad}" >${tipos.nombre_tipo_actividad}</option>`);
                 });
-<<<<<<< HEAD
-                
                 i.find(".div-tipo-act").append("</select></div></div>");
                 i.find(".row").append('<div class="col-md-6"><label class="control-label">Fecha limite de la actividad</label><input class="form-control form-white"  type="date" name="fecha-actividad"></div><div class="col-md-6"><label class="control-label">Hora limite de la actividad</label><input class="form-control form-white"  type="time" name="hora-actividad"></div><div class="col-md-6"><label class="control-label">detalle</label><textarea name="detalle-actividad" id="" cols="30" rows="10"></textarea></div>');
-=======
-                parte2.append("</select></div></div>");
-                parte4 = i.find(".row").append('<div class="col-md-6"><label class="control-label">Fecha limite de la actividad</label><input class="form-control form-white"  type="date" name="fecha-actividad"></div><div class="col-md-6"><label class="control-label">Hora limite de la actividad</label><input class="form-control form-white"  type="time" name="hora-actividad"></div><div class="col-md-6"><label class="control-label">detalle</label><textarea name="detalle-actividad" id="" cols="30" rows="10"></textarea></div>');
->>>>>>> 8cd3d7821e94da5c483e4fb66e4dc80466d9e8bc
-                
                 
                 o.$modal.find(".delete-event").hide().end().find(".save-event").show().end().find(".modal-body").empty().prepend(i).end().find(".save-event").unbind("click").on("click", function() {
                     var nombre = i.find("input[name='nombre-actividad']").val();
-                    var tipoActividad = o.$categoryForm.find("select[name='tipo-actividad']").val();
-                    var fecha = o.$categoryForm.find("input[name='fecha-actividad']").val();
-                    var hora = o.$categoryForm.find("input[name='hora-actividad']").val();
-                    var descrip = o.$categoryForm.find("textarea[name='detalle-actividad']").val();
-                    
+                    var tipoActividad = i.find("select[name='tipo-actividad']").val();
+                    var fecha = i.find("input[name='fecha-actividad']").val();
+                    var hora = i.find("input[name='hora-actividad']").val();
+                    var descrip = i.find("textarea[name='detalle-actividad']").val();
+                    var estado = 1;
+                    $.ajax({
+                        type: "POST",
+                        url: '../ActividadExternaControlador/crearActividad',
+                        data: { nombre: nombre, tipoActividad: tipoActividad, fecha: fecha, hora: hora, descrip: descrip, estado:estado },
+                        success: function(data){
+                            setTimeout(function() {
+                                window.location.reload();
+                           },0);
+                        },
+                            error: function(data){
+                            console.log('Error: '+data);
+                        },
+                    });
                 })
                 
             },
@@ -158,10 +163,11 @@
             var fecha = o.$categoryForm.find("input[name='fecha-actividad']").val();
             var hora = o.$categoryForm.find("input[name='hora-actividad']").val();
             var descrip = o.$categoryForm.find("textarea[name='detalle-actividad']").val();
+            var estado = 0;
             $.ajax({
                 type: "POST",
                 url: '../ActividadExternaControlador/crearActividad',
-                data: { nombre: nombre, tipoActividad: tipoActividad, fecha: fecha, hora: hora, descrip: descrip },
+                data: { nombre: nombre, tipoActividad: tipoActividad, fecha: fecha, hora: hora, descrip: descrip, estado: estado },
                 success: function(data){
                     setTimeout(function() {
                         window.location.reload();
