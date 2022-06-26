@@ -90,4 +90,27 @@ class CRUD_Modelo extends CI_Model
             return "ERROR";
         }
     }
+
+    public function ingresar_data($data,$table)
+    {
+      $this->db->insert($table, $data);
+      return $this->db->insert_id();
+    }
+
+    public function ingresar_datos_masivo($data,$table)
+    {
+      return $this->db->insert_batch($table, $data);
+    }
+
+    public function actualizar_data($where,$data,$tabla){
+
+      $this->db->update($tabla, $data, $where);
+
+      if ( $this->db->affected_rows() > 0 )
+      {
+        return true;
+      }  else {
+        return false;
+      }
+    }
 }

@@ -1,14 +1,5 @@
-
 <!DOCTYPE html>
 <html class="h-100" lang="en">
-<style>
-    .card-body {
-        margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    }
-</style>
 <body class="h-100">    
     <!--*******************
         Preloader start
@@ -46,7 +37,10 @@
                                     </div>
                                 </form>
                                 <button class="btn login-form__btn submit w-100 " onclick="registrar()">Validar y registrar</button>
-                                <p class="mt-5 login-form__footer"><a href="terminos.php" class="text-primary">Ver terminos y condiciones</a></p>
+
+                                <a href="<?= base_url() ?>LoginControlador" class="btn mt-3 btn-cancel-register btn-danger w-100 ">Cancelar operación</a>
+
+                                <p class="mt-5 login-form__footer"><a href="#" class="text-primary">Ver terminos y condiciones</a></p>
                             </div>
                         </div>
                     </div>

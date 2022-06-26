@@ -21,23 +21,24 @@
                         <div class="card login-form mb-0">
                             <div class="card-body pt-5">
                                 <img src="<?= base_url() ?>assets/images/logo_utp.png" alt="">
-                                <h2 style="text-align: center;">Ingresa a tu cuenta</h2>
+                                <h2 style="text-align: center;">Recupera tu contraseña</h2>
 
-                                <form id="FRM_LOGIN" class="mt-5 mb-5 login-input" action="<?php echo base_url(); ?>Logincontrolador/iniciar_sesion" method="POST">
+                                <form id="FRM_RECOVER_PASS" class="mt-5 mb-5 login-input" action="<?php echo base_url(); ?>LoginControlador/validar_correo_usuario" method="POST">
+                                    <input type="hidden" name="operation_phase" value="validate">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Ingresa tu correo institucional" name="usuario_correo" required>
+                                        <input type="email" class="form-control control_validate" placeholder="Ingresa tu correo institucional" name="usuario_correo" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Ingresa tu contraseña" name="usuario_clave" required>
+                                        <input type="text" class="form-control control_recover" placeholder="Ingresa tu código de recuperación" name="usuario_codigorecover">
                                     </div>
                                     <div class="form-group">
-                                        <a href="<?= base_url() ?>UsuarioControlador/recuperar_password">
-                                            <p class="title">¿Olvidaste tu contraseña?</p>
-                                        </a>
+                                        <input type="password" class="form-control control_recover" placeholder="Ingresa tu nueva contraseña" name="usuario_password">
                                     </div>
-                                    <button type="submit" class="btn login-form__btn submit w-100">Ingresar</button>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control control_recover" placeholder="Confirma tu nueva contraseña" name="usuario_password_c">
+                                    </div>
+                                    <button type="submit" class="btn login-form__btn submit w-100">Enviar correo de recuperación</button>
                                 </form>
-                                <p class="mt-5 login-form__footer">¿Eres nuevo? <a href="<?= base_url() ?>RegistroControlador" class="text-primary">Registrate aquí</a></p>
                             </div>
                         </div>
                     </div>

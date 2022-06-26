@@ -58,4 +58,13 @@ class UsuarioControlador extends UTP_Controller {
         $this->load->view('reporteTareas');
 		$this->pie_pagina();
     }
+
+    public function recuperar_password()
+	{
+        $this->is_loged_on();
+        $data_header['title_page'] = 'Recuperar contraseña';
+        $this->load->view('base/head',$data_header);
+		$this->load->view('usuario/recuperar_password');
+		$this->load->view('base/js');
+	}
 }
