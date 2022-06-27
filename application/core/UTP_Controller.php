@@ -42,14 +42,14 @@ class UTP_Controller extends CI_Controller {
     public function is_loged_off()
     {
         if (!$this->session->userdata('SESSION_CORREO')) {
-            redirect('/Logincontrolador');
+            redirect('/LoginControlador');
         }
     }
 
     public function is_loged_on()
     {
         if ($this->session->userdata('SESSION_CORREO')) {
-            redirect('/Usuariocontrolador/pagina_principal');
+            redirect('/UsuarioControlador/pagina_principal');
         }
     }
 

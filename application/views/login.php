@@ -23,7 +23,7 @@
                                 <img src="<?= base_url() ?>assets/images/logo_utp.png" alt="">
                                 <h2 style="text-align: center;">Ingresa a tu cuenta</h2>
 
-                                <form id="FRM_LOGIN" class="mt-5 mb-5 login-input" action="<?php echo base_url(); ?>Logincontrolador/iniciar_sesion" method="POST">
+                                <form id="FRM_LOGIN" class="mt-5 mb-5 login-input" action="<?php echo base_url(); ?>LoginControlador/iniciar_sesion" method="POST">
                                     <div class="form-group">
                                         <input type="email" class="form-control" placeholder="Ingresa tu correo institucional" name="usuario_correo" required>
                                     </div>
