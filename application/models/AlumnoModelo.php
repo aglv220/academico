@@ -19,7 +19,7 @@ class AlumnoModelo extends CI_Model
 
     public function registrar_alumno($user,$nom,$ape,$carr,$ciclo,$cod,$cel,$fec_nac)
     {
-        $campos = [ ["campo"=>"codigo", "valor"=>$cod] ];
+        $campos = [ ["campo"=>"alumno_codigo", "valor"=>$cod] ];
         $alumnol = $this->crudm->listar_tabla_xcampo('alumno',$campos);
         if (count($alumnol) == 0) {
             $DATA_ALUMNO = array(

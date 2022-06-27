@@ -63,9 +63,9 @@ class CRUD_Modelo extends CI_Model
         $consulta = $this->db->get();
         $result = $consulta->result();
         foreach ($result as $row) {
-            $campo = $row->$campo;
+            $rcampo = $row->$campo;
         }
-        return $campo;
+        return $rcampo;
     }
 
     public function listar_tabla_xcond($tabla,$cv){

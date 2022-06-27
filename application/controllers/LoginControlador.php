@@ -34,7 +34,7 @@ class LoginControlador extends UTP_Controller
                         $correo = $row->usuario_correo;
                         $nombre = $row->alumno_nombre;
                         $apellidos = $row->alumno_apellidos;
-                        if($nombre == "" || $nombre == NULL){
+                        if ($nombre == "" || $nombre == NULL) {
                             $nombre == "alumno";
                         }
                         $cod_rec = $this->generar_codigo_recuperacion($correo);
@@ -83,24 +83,29 @@ class LoginControlador extends UTP_Controller
 
     public function iniciar_sesion()
     {
-        $this->usuariom->correo = $this->input->post("usuario_correo");
-        $this->usuariom->password = $this->input->post("usuario_clave");
-        //$correo = $this->input->post("usuario_correo");
-        //$password = $this->input->post("usuario_clave");
-        $lst_login = $this->usuariom->inicio_sesion($this->usuariom->correo);
+        $usuario_correo = $this->input->post("usuario_correo");
+        $usuario_password = $this->input->post("usuario_clave");
+        $lst_login = $this->usuariom->inicio_sesion($usuario_correo);
         $json_data = array();
         if (count($lst_login) > 0) {
             foreach ($lst_login as $row) {
-                if (password_verify($this->usuariom->password, $row->usuario_password)) {
-                    $ROWDATA['SESSION_CORREO'] = $row->usuario_correo;
-                    $ROWDATA['SESSION_NOMBRES'] = $row->alumno_nombre;
-                    $ROWDATA['SESSION_APELLIDOS'] = $row->alumno_apellidos;
-                    $ROWDATA['SESSION_ID'] = $row->ID;
-                    array_push($json_data, $ROWDATA);
-                    $this->session->set_userdata($ROWDATA);
-                    echo json_encode(array("data" => $json_data));
-                } else {
-                    echo false;
+                $id_usuario = $row->ID;
+                $registro_completo = $row->usuario_regcomp;
+                if ($registro_completo == 0) { //NO HA COMPLETADO EL REGISTRO
+                    $correo_cod = base64_encode($usuario_correo);
+                    echo $correo_cod;
+                } else { // SI EL USUARIO HA CAMPLETADO EL REGISTRO ANTERIORMENTE
+                    if (password_verify($usuario_password, $row->usuario_password)) {
+                        $ROWDATA['SESSION_CORREO'] = $row->usuario_correo;
+                        $ROWDATA['SESSION_NOMBRES'] = $row->alumno_nombre;
+                        $ROWDATA['SESSION_APELLIDOS'] = $row->alumno_apellidos;
+                        $ROWDATA['SESSION_ID'] = $id_usuario;
+                        //array_push($json_data, $ROWDATA);
+                        //$this->session->set_userdata($ROWDATA);
+                        echo true;
+                    } else {
+                        echo false;
+                    }
                 }
             }
         } else {

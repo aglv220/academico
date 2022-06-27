@@ -36,16 +36,17 @@ $("#FRM_LOGIN").submit(function (e) {
         },
         success: function (data) {
             swal.close();
-            if (data == false) {
+            if(data == true) {
+                location.href = root_path + "UsuarioControlador/pagina_principal/";
+            } else if (data == false) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Credenciales incorrectas',
                     timer: 3000
-                })
-
-            } else {
-                location.href = root_path + "UsuarioControlador/pagina_principal/";
+                });
+            }  else {
+                location.href = root_path + "RegistroControlador/v_datos_personales?datoalumn=" + data;
             }
         }
     });

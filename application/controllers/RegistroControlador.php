@@ -64,6 +64,9 @@ class RegistroControlador extends UTP_Controller {
         if($registrar_alumno == "OK"){ //SI NO OCURRIO ERRORES AL REGISTRAR EL ALUMNO
             $lstuserxid = $this->usuariom->inicio_sesion($user_id,"pk_usuario");
             if (count($lstuserxid) > 0) {
+                $where_data = array("pk_usuario" => $user_id);
+                $data_user = array('usuario_regcomp' => 1);                
+                $this->crudm->actualizar_data($where_data,$data_user,'usuario');
                 foreach ($lstuserxid as $row) {
                     $ROWDATA['SESSION_CORREO'] = $row->usuario_correo;
                     $ROWDATA['SESSION_NOMBRES'] = $row->alumno_nombre;
