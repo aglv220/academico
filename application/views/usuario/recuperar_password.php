@@ -38,6 +38,8 @@
                                         <input type="password" class="form-control control_recover" placeholder="Confirma tu nueva contraseña" name="usuario_password_c">
                                     </div>
                                     <button type="submit" class="btn login-form__btn submit w-100">Enviar correo de recuperación</button>
+
+                                    <a href="<?= base_url() ?>iniciar_sesion" class="btn mt-3 btn-cancel-register btn-danger w-100 ">Cancelar operación</a>
                                 </form>
                             </div>
                         </div>

@@ -16,7 +16,7 @@ class RegistroControlador extends UTP_Controller {
 	{
         $this->is_loged_on();
         $this->load->view('base/head');
-		$this->load->view('register');
+		$this->load->view('usuario/registro_validacion');
 		$this->load->view('base/js');
 	}
 
@@ -31,7 +31,7 @@ class RegistroControlador extends UTP_Controller {
         }
         
         $this->load->view('base/head');
-		$this->load->view('register2',$data_usuario);
+		$this->load->view('usuario/registro_datos',$data_usuario);
 		$this->load->view('base/js');
     }
 
@@ -60,7 +60,7 @@ class RegistroControlador extends UTP_Controller {
         $celu = $this->input->post("u_celular");
         $fnac = $this->input->post("u_fecnac");
 
-        $registrar_alumno = $this->alumnom->registrar_alumno($user_id,$noms,$apes,$carr,$ciclo,$cod,$celu,$fnac);
+        $registrar_alumno = $this->alumnom->registrar_alumno($user_id,$noms,$apes,$carr,$ciclo,"u".$cod,$celu,$fnac);
         if($registrar_alumno == "OK"){ //SI NO OCURRIO ERRORES AL REGISTRAR EL ALUMNO
             $lstuserxid = $this->usuariom->inicio_sesion($user_id,"pk_usuario");
             if (count($lstuserxid) > 0) {

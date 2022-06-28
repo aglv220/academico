@@ -3,6 +3,36 @@ var data_path = pathname.split("/");
 var root_path = "/" + data_path[1] + "/";
 var re_correo_utp = new RegExp("([a-z]|[0-9])+@utp.edu.pe$");
 
+function numeros_decimales(e){
+
+    especiales = [8,9,37,39,46];
+    numeros = "0123456789.";
+
+    key = e.keyCode || e.which;
+    tecla = String.fromCharCode(key).toLowerCase();
+
+    tecla_especial = false
+    for(var i in especiales){
+        if(key == especiales[i]){ tecla_especial = true; break; }
+    }
+
+    if( numeros.indexOf(tecla)==-1 && !tecla_especial )
+        return false;
+}
+
+function numeros_enteros(e){
+    key = e.keyCode || e.which;
+    tecla = String.fromCharCode(key).toLowerCase();
+    letras = "0123456789";
+    especiales = [8,9,37,39,46];
+    tecla_especial = false
+    for(var i in especiales){
+        if(key == especiales[i]){ tecla_especial = true; break; }
+    }
+    if(letras.indexOf(tecla)==-1 && !tecla_especial)
+        return false;
+}
+
 function msg_swal(tipo, titulo, mensaje, tmr = 3000) {
     Swal.fire({
         icon: tipo,
@@ -38,7 +68,7 @@ $("#FRM_LOGIN").submit(function (e) {
             console.log(data);
             swal.close();
             if (data == true) {
-                location.href = root_path + "UsuarioControlador/pagina_principal/";
+                location.href = root_path + "pagina_principal";
             } else if (data == false) {
                 Swal.fire({
                     icon: 'error',
@@ -147,7 +177,7 @@ $("#FRM_RECOVER_PASS").submit(function (e) {
                             showConfirmButton: false
                         }).then((result) => {
                             if (result.dismiss === Swal.DismissReason.timer) {
-                                location.href = root_path + "LoginControlador/";
+                                location.href = root_path + "iniciar_sesion";
                             }
                         })
                         break;
@@ -193,7 +223,7 @@ $("#FRM_REGISTRO_2").submit(function (e) {
                 })
 
             } else {
-                location.href = root_path + "UsuarioControlador/pagina_principal/";
+                location.href = root_path + "pagina_principal";
             }
         }
     });
@@ -230,7 +260,7 @@ $('#FRM_REGISTRO_2 a[href="#finish"]').on('click', function (e) {
                     showConfirmButton: false
                 }).then((result) => {
                     if (result.dismiss === Swal.DismissReason.timer) {
-                        location.href = root_path + "LoginControlador/";
+                        location.href = root_path + "iniciar_sesion";
                     }
                 })
             } else if (resp == "EXIST") {

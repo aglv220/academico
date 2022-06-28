@@ -18,7 +18,8 @@ class UsuarioControlador extends UTP_Controller {
         $idUser = $this->session->userdata('SESSION_ID');
         $data["tareas"] = $this->tareamod->listarCursos($idUser);
         $data["actividades"] = $this->actexmod->listarActividades($idUser);
-        $this->cabecera_pagina();
+        $data_header['title_page'] = 'Página principal';
+        $this->cabecera_pagina($data_header);
         $this->load->view('dashboard',$data);
 		$this->pie_pagina();
     }
@@ -30,32 +31,36 @@ class UsuarioControlador extends UTP_Controller {
         $data["tareas"] = $this->actexmod->listarCursosFueraCalendario($idUser);
         $data["tipos_actividades"] = $this->tareamod->listarActividadXtipo();
         
-        $this->cabecera_pagina();
-        $this->load->view('calendar',$data);
+        $data_header['title_page'] = 'Calendario de Actividades';
+        $this->cabecera_pagina($data_header);
+        $this->load->view('actividades/calendar',$data);
 		$this->pie_pagina();
     }
 
     public function pizarra()
     {
         $this->is_loged_off();
-        $this->cabecera_pagina();
-        $this->load->view('board');
+        $data_header['title_page'] = 'Pizarra de Tareas';
+        $this->cabecera_pagina($data_header);
+        $this->load->view('tareas/board');
 		$this->pie_pagina();
     }
 
     public function reporte_actividades()
     {
         $this->is_loged_off();
-        $this->cabecera_pagina();
-        $this->load->view('reporteActividades');
+        $data_header['title_page'] = 'Reporte de Actividades';
+        $this->cabecera_pagina($data_header);
+        $this->load->view('reportes/reporteActividades');
 		$this->pie_pagina();
     }
 
     public function reporte_tareas()
     {
         $this->is_loged_off();
-        $this->cabecera_pagina();
-        $this->load->view('reporteTareas');
+        $data_header['title_page'] = 'Reporte de Tareas';
+        $this->cabecera_pagina($data_header);
+        $this->load->view('reportes/reporteTareas');
 		$this->pie_pagina();
     }
 

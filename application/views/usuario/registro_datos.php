@@ -45,7 +45,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>3. Número de celular</label>
-                                                <input type="text" class="form-control" id="u_celular" name="u_celular" placeholder="999-999-999" >
+                                                <input type="phone" class="form-control" id="u_celular" minlength="9" maxlength="9" name="u_celular" placeholder="999-999-999" onkeypress="return numeros_enteros(event);">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -63,7 +63,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>5. Código de estudiante</label>
-                                                <input type="text" name="u_codigo" class="form-control" placeholder="Ingrese su código de estudiante" >
+                                                <input type="text" name="u_codigo" class="form-control" placeholder="Ingrese su código de estudiante" onkeypress="return numeros_enteros(event);">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">

@@ -24,7 +24,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="<?= base_url()?>UsuarioControlador/pagina_principal">
+                <a href="<?= base_url()?>pagina_principal">
                     <b class="logo-abbr"><img src="<?= base_url() ?>assets/images/logo.png" alt=""> </b>
                     <span class="logo-compact"><img src="<?= base_url() ?>assets/images/logo-compact.png" alt=""></span>
                     <span class="brand-title">
@@ -148,12 +148,12 @@
                 <ul class="metismenu" id="menu">
                     <li class="nav-label">Tablero</li>
                     <li>
-                        <a href="<?= base_url()?>UsuarioControlador/calendario" aria-expanded="false">
+                        <a href="<?= base_url()?>calendario" aria-expanded="false">
                             <i class="icon-calender menu-icon"></i><span class="nav-text">Calendario</span>
                         </a>
                     </li>
                     <li>
-                        <a href="<?= base_url()?>UsuarioControlador/calendario" aria-expanded="false">
+                        <a href="<?= base_url()?>pizarra" aria-expanded="false">
                             <i class="icon-grid  menu-icon"></i><span class="nav-text">Pizarra</span>
                         </a>
                     </li>
@@ -162,8 +162,8 @@
                             <i class="icon-chart menu-icon"></i><span class="nav-text">Reportes</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="<?= base_url()?>UsuarioControlador/reporte_actividades">Reporte de Actividades</a></li>
-                            <li><a href="<?= base_url()?>UsuarioControlador/reporte_tareas">Reporte de Tareas</a></li>
+                            <li><a href="<?= base_url()?>reporte/actividades">Reporte de Actividades</a></li>
+                            <li><a href="<?= base_url()?>reporte/tareas">Reporte de Tareas</a></li>
                             <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                         </ul>
                     </li>

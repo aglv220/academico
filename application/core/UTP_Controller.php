@@ -62,8 +62,8 @@ class UTP_Controller extends CI_Controller {
         return date('Y-m-d');
     }
 
-    public function cabecera_pagina(){
-        $this->load->view('base/head');
+    public function cabecera_pagina($data_header=""){
+        $this->load->view('base/head',$data_header);
         $this->load->view('base/header');
     }
 

@@ -33,12 +33,12 @@
                                         <input type="email" name="usuario_correo" class="form-control" placeholder="Correo institucional" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="usuario_clave" class="form-control" placeholder="Contraseña" required>
+                                        <input type="password" name="usuario_clave" class="form-control" placeholder="Contraseña" minlength="8" maxlength="8" required>
                                     </div>
                                 </form>
                                 <button class="btn login-form__btn submit w-100 " onclick="registrar()">Validar y registrar</button>
 
-                                <a href="<?= base_url() ?>LoginControlador" class="btn mt-3 btn-cancel-register btn-danger w-100 ">Cancelar operación</a>
+                                <a href="<?= base_url() ?>iniciar_sesion" class="btn mt-3 btn-cancel-register btn-danger w-100 ">Cancelar operación</a>
 
                                 <p class="mt-5 login-form__footer"><a href="#" class="text-primary">Ver terminos y condiciones</a></p>
                             </div>
