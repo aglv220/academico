@@ -92,6 +92,7 @@ class LoginControlador extends UTP_Controller
 
     public function iniciar_sesion()
     {
+        $return_msg = "";
         $this->usuariom->correo = $this->input->post("usuario_correo");
         $this->usuariom->password = $this->input->post("usuario_clave");
         $lst_login = $this->usuariom->inicio_sesion($this->usuariom->correo);
@@ -101,22 +102,24 @@ class LoginControlador extends UTP_Controller
                 $registro_completo = $row->usuario_regcomp;
                 if ($registro_completo == 0) { //NO HA COMPLETADO EL REGISTRO
                     $correo_cod = base64_encode($this->usuariom->correo);
-                    echo $correo_cod;
+                    $return_msg = $correo_cod;
                 } else { // SI EL USUARIO HA CAMPLETADO EL REGISTRO ANTERIORMENTE
                     if (password_verify($this->usuariom->password, $row->usuario_password)) {
                         $ROWDATA['SESSION_CORREO'] = $row->usuario_correo;
                         $ROWDATA['SESSION_NOMBRES'] = $row->alumno_nombre;
                         $ROWDATA['SESSION_APELLIDOS'] = $row->alumno_apellidos;
                         $ROWDATA['SESSION_ID'] = $id_usuario;
-                        echo true;
+                        $this->session->set_userdata($ROWDATA);
+                        $return_msg = true;
                     } else {
-                        echo false;
+                        $return_msg = false;
                     }
                 }
             }
         } else {
-            echo false;
+            $return_msg = false;
         }
+        echo $return_msg;
     }
 
     public function cerrar_sesion()

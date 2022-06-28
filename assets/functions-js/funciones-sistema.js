@@ -35,18 +35,29 @@ $("#FRM_LOGIN").submit(function (e) {
             })
         },
         success: function (data) {
+            console.log(data);
             swal.close();
             if (data == true) {
                 location.href = root_path + "UsuarioControlador/pagina_principal/";
             } else if (data == false) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: 'Credenciales incorrectas',
+                    title: 'Credenciales incorrectas',
+                    text: 'Verifica tu correo institucional y/o tu constraseña',
                     timer: 3000
                 });
-            } else {
-                location.href = root_path + "RegistroControlador/v_datos_personales?datoalumn=" + data;
+            } else { // SI FALTA EL REGISTRO POR PARTE DEL ALUMNO
+                Swal.fire({
+                    title: 'Registro incompleto',
+                    html: 'Serás redireccionado a la página de registro para que completes tus datos',
+                    timer: 3000,
+                    allowOutsideClick: false,
+                    showConfirmButton: false
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        location.href = root_path + "RegistroControlador/v_datos_personales?datoalumn=" + data;
+                    }
+                })
             }
         }
     });
