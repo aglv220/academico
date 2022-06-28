@@ -15,7 +15,7 @@ class UsuarioModelo extends CI_Model
 
     public function inicio_sesion($correo_o_valor, $campo = "usuario_correo")
     {
-        $this->db->select('u.pk_usuario AS ID, usuario_correo, usuario_password, usuario_regcomp, alumno_nombre, alumno_apellidos, alumno_codigo');
+        $this->db->select('u.pk_usuario AS ID, usuario_correo, usuario_password, usuario_regcomp, usuario_codrecover, alumno_nombre, alumno_apellidos, alumno_codigo');
         $this->db->from('usuario u');
         $this->db->join('alumno a', 'a.fk_usuario = u.pk_usuario', 'left');
         $this->db->where('u.' . $campo, $correo_o_valor);

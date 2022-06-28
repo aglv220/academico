@@ -34,20 +34,27 @@ class LoginControlador extends UTP_Controller
                         $correo = $row->usuario_correo;
                         $nombre = $row->alumno_nombre;
                         $apellidos = $row->alumno_apellidos;
-                        if ($nombre == "" || $nombre == NULL) {
-                            $nombre == "alumno";
-                        }
-                        $cod_rec = $this->generar_codigo_recuperacion($correo);
-                        $set_codrec = $this->usuariom->actualizar_cod_rec($correo, $cod_rec);
-                        if ($set_codrec) {
-                            $asunto = 'Recuperación de contraseña';
-                            $mensaje = 'Estimado <b>' . $nombre . ' ' . $apellidos . '</b>,<br>Has solicitado la recuperación de tu contraseña, para lograr reestablecer tu cuenta, copia el código que se muestra a continuación:<br><br><b>' . $cod_rec . '</b><br><br>Luego de ello regresa a la página del aplicativo y pégalo donde el sistema te lo solicite.<br><br><b>Atte. Sistema de Actividades Académicas</b>';
-                            $enviar_correo = $this->enviar_email($correo, $asunto, $mensaje);
-                            if ($enviar_correo) {
-                                $return_msg = "validate_ok";
+                        $cod_rec = $row->usuario_codrecover;
+                        if ($cod_rec == "" || $cod_rec == NULL) {
+                            if ($nombre == "" || $nombre == NULL) {
+                                $nombre == "alumno";
+                            }
+                            $cod_rec = $this->generar_codigo_recuperacion($correo);
+                            $set_codrec = $this->usuariom->actualizar_cod_rec($correo, $cod_rec);
+                            if ($set_codrec) {
+                                $asunto = 'Recuperación de contraseña';
+                                $mensaje = 'Estimado <b>' . $nombre . ' ' . $apellidos . '</b>,<br>Has solicitado la recuperación de tu contraseña, para lograr reestablecer tu cuenta, copia el código que se muestra a continuación:<br><br><b>' . $cod_rec . '</b><br><br>Luego de ello regresa a la página del aplicativo y pégalo donde el sistema te lo solicite.<br><br><b>Atte. Sistema de Actividades Académicas</b>';
+                                $enviar_correo = $this->enviar_email($correo, $asunto, $mensaje);
+                                if ($enviar_correo) {
+                                    $return_msg = "validate_ok";
+                                } else {
+                                    $return_msg = "validate_error_mail";
+                                }
+                            } else {
+                                $return_msg = "validate_error_cr";
                             }
                         } else {
-                            $return_msg = "validate_error_cr";
+                            $return_msg = "validate_error_codsended";
                         }
                     }
                 } else {
@@ -66,6 +73,8 @@ class LoginControlador extends UTP_Controller
                     if (strcmp($codigo_recover, $get_codrecover_user) == 0) { //VALIDACIÓN DE CÓDIGO DE RECUPERACIÓN
                         $change_pass = $this->usuariom->actualizar_password($this->usuariom->correo, $new_pass_c);
                         if ($change_pass) { //VALIDAR SI SE CAMBIO DE CONTRASEÑA
+                            //VACIAR EL CAMPO CODIGO DE RECUPERACION SI YA SE CAMBIO LA CONTRASEÑA
+                            $this->usuariom->actualizar_cod_rec($this->usuariom->correo,"");
                             $return_msg = "changepass_ok";
                         } else {
                             $return_msg = "changepass_error";
@@ -83,25 +92,22 @@ class LoginControlador extends UTP_Controller
 
     public function iniciar_sesion()
     {
-        $usuario_correo = $this->input->post("usuario_correo");
-        $usuario_password = $this->input->post("usuario_clave");
-        $lst_login = $this->usuariom->inicio_sesion($usuario_correo);
-        $json_data = array();
+        $this->usuariom->correo = $this->input->post("usuario_correo");
+        $this->usuariom->password = $this->input->post("usuario_clave");
+        $lst_login = $this->usuariom->inicio_sesion($this->usuariom->correo);
         if (count($lst_login) > 0) {
             foreach ($lst_login as $row) {
                 $id_usuario = $row->ID;
                 $registro_completo = $row->usuario_regcomp;
                 if ($registro_completo == 0) { //NO HA COMPLETADO EL REGISTRO
-                    $correo_cod = base64_encode($usuario_correo);
+                    $correo_cod = base64_encode($this->usuariom->correo);
                     echo $correo_cod;
                 } else { // SI EL USUARIO HA CAMPLETADO EL REGISTRO ANTERIORMENTE
-                    if (password_verify($usuario_password, $row->usuario_password)) {
+                    if (password_verify($this->usuariom->password, $row->usuario_password)) {
                         $ROWDATA['SESSION_CORREO'] = $row->usuario_correo;
                         $ROWDATA['SESSION_NOMBRES'] = $row->alumno_nombre;
                         $ROWDATA['SESSION_APELLIDOS'] = $row->alumno_apellidos;
                         $ROWDATA['SESSION_ID'] = $id_usuario;
-                        //array_push($json_data, $ROWDATA);
-                        //$this->session->set_userdata($ROWDATA);
                         echo true;
                     } else {
                         echo false;

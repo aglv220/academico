@@ -36,7 +36,7 @@ $("#FRM_LOGIN").submit(function (e) {
         },
         success: function (data) {
             swal.close();
-            if(data == true) {
+            if (data == true) {
                 location.href = root_path + "UsuarioControlador/pagina_principal/";
             } else if (data == false) {
                 Swal.fire({
@@ -45,7 +45,7 @@ $("#FRM_LOGIN").submit(function (e) {
                     text: 'Credenciales incorrectas',
                     timer: 3000
                 });
-            }  else {
+            } else {
                 location.href = root_path + "RegistroControlador/v_datos_personales?datoalumn=" + data;
             }
         }
@@ -66,7 +66,7 @@ $("#FRM_RECOVER_PASS").submit(function (e) {
     //var input_pass = $('input[name="usuario_password"]');
     var control_fase = $('#' + idform + ' input[name="operation_phase"]');
     var txt_msg_carga = 'Validando correo';
-    if(control_fase.val() == "recover"){
+    if (control_fase.val() == "recover") {
         txt_msg_carga = "Validando código de recuperación y contraseña";
     }
     if (re_correo_utp.test(input_correo.val()) != "") {
@@ -86,7 +86,7 @@ $("#FRM_RECOVER_PASS").submit(function (e) {
                 })
             },
             success: function (data) {
-                swal.close();                
+                swal.close();
                 control_validate = $('#' + idform + ' .control_validate');
                 control_recover = $('#' + idform + ' .control_recover');
                 boton_frm = $('#' + idform + ' button');
@@ -103,8 +103,20 @@ $("#FRM_RECOVER_PASS").submit(function (e) {
                         boton_frm.text(txt_recover);
                         msg_swal("success", "Validación correcta", "Se ha enviado un código de recuperación al correo proporcionado");
                         break;
+                    case "validate_error_codsended":
+                        control_fase.val("recover");
+                        control_validate.prop("readonly", true);
+                        control_recover.prop("required", true);
+                        control_validate.hide();
+                        control_recover.show();
+                        boton_frm.text(txt_recover);
+                        msg_swal("warning", "Restablecimiento de cuenta detectado", "Recientemente ha solicitado un reestablecimiento de contraseña, use el código que se le envío a su correo");
+                        break;
                     case "validate_error_cr":
                         msg_swal("error", "Error", "Ha ocurrido un error al generar el código de recuperación");
+                        break;
+                    case "validate_error_mail":
+                        msg_swal("error", "Error", "Ha ocurrido un error al enviar el correo con el código de recuperación");
                         break;
                     case "pass_error":
                         msg_swal("error", "Error", "Las contraseñas no coinciden");
