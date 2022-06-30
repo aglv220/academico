@@ -70,5 +70,47 @@ class ActividadExternaModelo extends CI_Model
         $query = "UPDATE actividad set fecdisp_actividad = '".$fecha."' where pk_actividad = $id";
         $this->db->query($query);
     }
+    public function listarActividadesPausa($id){
+        $query = "SELECT uce.pk_usuario_actividad_externa as id,a.nombre_actividad, a.descripcion_actividad,a.fk_tipo_actividad as tipo FROM usuario_actividad_externa uce
+        INNER JOIN actividad a on a.pk_actividad = uce.fk_actividad
+        INNER JOIN tipo_actividad ta ON ta.pk_tipo_actividad = a.fk_tipo_actividad
+        WHERE uce.estado_pizarra = 0 AND uce.estado_calendario = 1 AND a.fk_usuario = $id";
+        $resultado = $this->db->query($query);
+        return $resultado->result_array();
+    }
+    public function listarActividadesProceso($id){
+        $query = "SELECT uce.pk_usuario_actividad_externa as id,a.nombre_actividad, a.descripcion_actividad,a.fk_tipo_actividad as tipo FROM usuario_actividad_externa uce
+        INNER JOIN actividad a on a.pk_actividad = uce.fk_actividad
+        INNER JOIN tipo_actividad ta ON ta.pk_tipo_actividad = a.fk_tipo_actividad
+        WHERE uce.estado_pizarra = 1 AND uce.estado_calendario = 1 AND a.fk_usuario = $id";
+        $resultado = $this->db->query($query);
+        return $resultado->result_array();
+    }
+    public function listarActividadesFinalizada($id){
+        $query = "SELECT uce.pk_usuario_actividad_externa as id,a.nombre_actividad, a.descripcion_actividad,a.fk_tipo_actividad as tipo FROM usuario_actividad_externa uce
+        INNER JOIN actividad a on a.pk_actividad = uce.fk_actividad
+        INNER JOIN tipo_actividad ta ON ta.pk_tipo_actividad = a.fk_tipo_actividad
+        WHERE uce.estado_pizarra = 2 AND uce.estado_calendario = 1 AND a.fk_usuario = $id";
+        $resultado = $this->db->query($query);
+        return $resultado->result_array();
+    }
+    public function estadoPizarra($pkActividad){
+        $query = "SELECT pk_usuario_actividad_externa as id, a.nombre_actividad, estado_pizarra from usuario_actividad_externa ua
+        INNER JOIN actividad a ON a.pk_actividad = ua.fk_actividad
+        where pk_usuario_actividad_externa = $pkActividad";
+        $resultado = $this->db->query($query);
+        return $resultado->result_array();
+    }
+    public function get_subTareas($pkActividad){
+        $query = "SELECT pk_usuario_actividad_externa as id, a.nombre_actividad, estado_pizarra from usuario_actividad_externa ua
+        INNER JOIN actividad a ON a.pk_actividad = ua.fk_actividad
+        where pk_usuario_actividad_externa = $pkActividad";
+        $resultado = $this->db->query($query);
+        return $resultado->result_array();
+    }
+    public function guardar_estado_pizarra($id,$estado){
+        $query = "UPDATE usuario_actividad_externa set estado_pizarra = $estado where pk_usuario_actividad_externa = $id";
+        $this->db->query($query);
+    }
 }
 ?>

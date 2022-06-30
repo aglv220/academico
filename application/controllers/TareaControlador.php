@@ -13,5 +13,10 @@ class TareaControlador extends UTP_Controller {
       $data = $this->tarea->listarActividadXtipo();
       echo json_encode($data);
     }
-
+    public function get_modal_edit_Tarea($pkActividad = null){
+      $post = $this->input->post(); 
+      $pkActividad = ($pkActividad == null) ? $post['pkActividad'] : $pkActividad;
+      $data["estado"] = $this->tarea->estadoPizarra($pkActividad);
+      $this->load->view('modales/modalEditActividad',$data);
+    }
 }

@@ -74,4 +74,53 @@ class ActividadExternaControlador extends UTP_Controller {
         $idTabla = $this->actextmodelo->crearActividad($tipo,$idUser,$nombre,$descrip,$fechaDisp);
         $this->actextmodelo->insertarUsuarioActividadExterna($idTabla, $estado);
     }
+
+    public function get_modal_externa($pkActividad = null){
+		$post = $this->input->post(); 
+		$pkActividad = ($pkActividad == null) ? $post['pkActividad'] : $pkActividad;
+        $estado = $this->actextmodelo->estadoPizarra($pkActividad);
+        //die(var_dump($estado));
+		$this->load->view('modales/modalSubtarea',$estado);
+	}
+    public function get_modal_edit_externa($pkActividad = null){
+        $post = $this->input->post(); 
+		$pkActividad = ($pkActividad == null) ? $post['pkActividad'] : $pkActividad;
+        $data["estado"] = $this->actextmodelo->estadoPizarra($pkActividad);
+		$this->load->view('modales/modalEditActividad',$data);
+    }
+
+    public function get_tareas_pausa(){
+       //listar actividades en pausa
+       $data["actPausa"] = $this->actextmodelo->listarActividadesPausa($this->session->userdata('SESSION_ID'));
+       //listar actividades en pausa
+       $data["tareaPausa"] = $this->tareamodelo->listarTareasPausa($this->session->userdata('SESSION_ID'));
+
+       $data = array_merge($data["actPausa"],$data["tareaPausa"]);
+       echo json_encode($data);
+    }
+
+    public function get_tareas_proceso(){
+        //listar actividades en pausa
+        $data["actProc"] = $this->actextmodelo->listarActividadesProceso($this->session->userdata('SESSION_ID'));
+        //listar actividades en pausa
+        $data["tareaProc"] = $this->tareamodelo->listarTareasProceso($this->session->userdata('SESSION_ID'));
+ 
+        $data = array_merge($data["actProc"],$data["tareaProc"]);
+        echo json_encode($data);
+     }
+
+     public function get_tareas_fin(){
+        //listar actividades en pausa
+        $data["actFin"] = $this->actextmodelo->listarActividadesFinalizada($this->session->userdata('SESSION_ID'));
+        //listar actividades en pausa
+        $data["tareaFin"] = $this->tareamodelo->listarTareasFinalizada($this->session->userdata('SESSION_ID'));
+ 
+        $data = array_merge($data["actFin"],$data["tareaFin"]);
+        echo json_encode($data);
+     }
+     public function guardar_estado_pizarra(){
+        $id = $this->input->post("id");
+        $estado = $this->input->post("estado");
+        $this->actextmodelo->guardar_estado_pizarra($id,$estado);
+     }
 }

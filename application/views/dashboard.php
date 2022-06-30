@@ -62,7 +62,7 @@
                                     }
                                 ?>
                                 <div class="cargar-mas">
-                                    <a href="./calendario"><i class="icon-arrow-down"></i><span>ver más</span></a>
+                                    <a href="./UsuarioControlador/calendario"><i class="icon-arrow-down"></i><span>ver más</span></a>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                                     ?>
                                 </div>
                                 <div class="cargar-mas">
-                                    <a href="./calendar.php"><i class="icon-arrow-down"></i><span>Cargar más</span></a>
+                                    <a href="./UsuarioControlador/calendario"><i class="icon-arrow-down"></i><span>Cargar más</span></a>
                                 </div>
                             </div>
                         </div>

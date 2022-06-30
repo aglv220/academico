@@ -1,3 +1,8 @@
+var pathname = window.location.pathname;
+var data_path = pathname.split("/");
+var root_path = "/" + data_path[1] + "/";
+var re_correo_utp = new RegExp("([a-z]|[0-9])+@utp.edu.pe$");
+
 ! function(e) {
     "use strict";
     var t = function() {
@@ -27,7 +32,7 @@
         });
         $.ajax({
             type: "POST",
-            url: '../TareaControlador/listarTipoActividad',
+            url:  root_path +'TareaControlador/listarTipoActividad',
             success: function(data){
                 var mydata = JSON.parse(data);
                 
@@ -54,7 +59,7 @@
                     var estado = 1;
                     $.ajax({
                         type: "POST",
-                        url: '../ActividadExternaControlador/crearActividad',
+                        url:  root_path +'ActividadExternaControlador/crearActividad',
                         data: { nombre: nombre, tipoActividad: tipoActividad, fecha: fecha, hora: hora, descrip: descrip, estado:estado },
                         success: function(data){
                             setTimeout(function() {
@@ -102,7 +107,7 @@
             o = this;
             $.ajax({
                 type: "POST",
-                url: '../ActividadExternaControlador/llenarCalendario',
+                url:  root_path +'ActividadExternaControlador/llenarCalendario',
                 success: function(data){
                     var mydata = JSON.parse(data);
                     o.$calendarObj = o.$calendar.fullCalendar({
@@ -166,7 +171,7 @@
             var estado = 0;
             $.ajax({
                 type: "POST",
-                url: '../ActividadExternaControlador/crearActividad',
+                url:  root_path +'ActividadExternaControlador/crearActividad',
                 data: { nombre: nombre, tipoActividad: tipoActividad, fecha: fecha, hora: hora, descrip: descrip, estado: estado },
                 success: function(data){
                     setTimeout(function() {
