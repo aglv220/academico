@@ -27,8 +27,6 @@ class UsuarioControlador extends UTP_Controller
         $carrera = $this->input->post("usuario_carrera");
         $ciclo = $this->input->post("usuario_ciclo");
 
-
-
         $where_data_a = array("fk_usuario" => $idUser);
         $data_alumno = array('alumno_nombre' => $nombre, 'alumno_apellidos' => $apellidos, 'alumno_carrera' => $carrera, 'alumno_ciclo' => $ciclo, 'alumno_celular' => $celular, 'alumno_fecnac' => $fec_nac);
         if ($this->input->post("usuario_newpass")) {
@@ -90,7 +88,7 @@ class UsuarioControlador extends UTP_Controller
         $data_header['title_page'] = 'Calendario de Actividades';
         $this->cabecera_pagina($data_header);
         $this->load->view('actividades/calendar',$data);
-		$this->load->view('base/footer'); 
+		$this->pie_pagina();
     }
 
     public function pizarra()
