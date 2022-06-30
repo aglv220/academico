@@ -24,7 +24,7 @@ class UTP_Controller extends CI_Controller {
         return $encode_1;
     }
 
-    function enviar_email($destinatario,$asunto,$mensaje) {     
+    public function enviar_email($destinatario,$asunto,$mensaje) {     
         $from = $this->config->item('smtp_user');
         $this->email->set_newline("\r\n");
         $this->email->from($from,'Sistema de Actividades académicas');
@@ -37,6 +37,19 @@ class UTP_Controller extends CI_Controller {
         } else {
             return false;
         }
+    }
+
+    public function llenar_select($lista,$slv="none"){
+        $options_html = "";        
+        foreach ($lista as $v) {
+            $nom_carr = $v->carrera_nombre;
+            $selected = "";
+            if($slv == $nom_carr){
+                $selected = "selected";
+            }
+            $options_html .= "<option value='".$nom_carr."' ".$selected.">".$nom_carr."</option>";
+        }
+        return $options_html;
     }
 
     public function is_loged_off()

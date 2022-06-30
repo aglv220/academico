@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="" tests="3" assertions="1" errors="2" warnings="0" failures="0" skipped="0" time="0.029698">
+    <testsuite name="CodeIgniter Application Test Suite" tests="3" assertions="1" errors="2" warnings="0" failures="0" skipped="0" time="0.029698">
+      <testsuite name="Welcome_test" file="C:\xampp\htdocs\academico\application\tests\controllers\Welcome_test.php" tests="3" assertions="1" errors="2" warnings="0" failures="0" skipped="0" time="0.029698">
+        <testcase name="test_index" class="Welcome_test" classname="Welcome_test" file="C:\xampp\htdocs\academico\application\tests\controllers\Welcome_test.php" line="13" assertions="0" time="0.017494">
+          <error type="RuntimeException">Welcome_test::test_index
+RuntimeException: Undefined index: HTTP_HOST on line 28 in file C:\xampp\htdocs\academico\application\config\config.php
+
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\CIPHPUnitTestCase.php:180
+C:\xampp\htdocs\academico\application\config\config.php:28
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\replacing\core\Common.php:350
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\replacing\core\Common.php:339
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\functions.php:114
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\functions.php:32
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\CIPHPUnitTestRequest.php:277
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\CIPHPUnitTestRequest.php:160
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\CIPHPUnitTestCase.php:155
+C:\xampp\htdocs\academico\application\tests\controllers\Welcome_test.php:15
+phpvfscomposer://C:\xampp\htdocs\academico\vendor\phpunit\phpunit\phpunit:97</error>
+        </testcase>
+        <testcase name="test_method_404" class="Welcome_test" classname="Welcome_test" file="C:\xampp\htdocs\academico\application\tests\controllers\Welcome_test.php" line="19" assertions="0" time="0.004931">
+          <error type="RuntimeException">Welcome_test::test_method_404
+RuntimeException: Undefined index: HTTP_HOST on line 28 in file C:\xampp\htdocs\academico\application\config\config.php
+
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\CIPHPUnitTestCase.php:180
+C:\xampp\htdocs\academico\application\config\config.php:28
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\replacing\core\Common.php:350
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\replacing\core\Common.php:339
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\functions.php:114
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\functions.php:32
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\CIPHPUnitTestRequest.php:277
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\CIPHPUnitTestRequest.php:160
+C:\xampp\htdocs\academico\application\tests\_ci_phpunit_test\CIPHPUnitTestCase.php:155
+C:\xampp\htdocs\academico\application\tests\controllers\Welcome_test.php:21
+phpvfscomposer://C:\xampp\htdocs\academico\vendor\phpunit\phpunit\phpunit:97</error>
+        </testcase>
+        <testcase name="test_APPPATH" class="Welcome_test" classname="Welcome_test" file="C:\xampp\htdocs\academico\application\tests\controllers\Welcome_test.php" line="25" assertions="1" time="0.007273"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

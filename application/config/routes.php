@@ -58,6 +58,7 @@ $route['iniciar_sesion'] = 'LoginControlador';
 $route['registro/validacion'] = 'RegistroControlador';
 $route['restablecer_cuenta'] = 'UsuarioControlador/recuperar_password';
 $route['pagina_principal'] = 'UsuarioControlador/pagina_principal';
+$route['usuario/perfil_personal'] = 'UsuarioControlador/perfil_usuario';
 
 //PAGINAS PRINCIPALES
 $route['calendario'] = 'UsuarioControlador/calendario';

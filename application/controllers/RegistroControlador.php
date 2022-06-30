@@ -28,6 +28,7 @@ class RegistroControlador extends UTP_Controller {
             $campos = [ ["campo" => "usuario_correo", "valor"=> $correo_alumno] ];
             $usuario_id = $this->crudm->listar_campo_tabla_xcond('usuario','pk_usuario',$campos);
             $data_usuario['ID_USUARIO'] = base64_encode($usuario_id);
+            $data_usuario['LST_CARRERAS'] = $this->llenar_select($this->crudm->listar_tabla('carrera'));            
         }
         
         $this->load->view('base/head');
@@ -52,11 +53,11 @@ class RegistroControlador extends UTP_Controller {
     public function registrar_datos_personales()
     {
         $user_id = base64_decode($this->input->post("u_user"));
-        $noms = $this->input->post("u_nombres");
-        $apes = $this->input->post("u_apellidos");
+        $noms = trim($this->input->post("u_nombres"));
+        $apes = trim($this->input->post("u_apellidos"));
         $carr = $this->input->post("u_carrera");
         $ciclo = $this->input->post("u_ciclo");
-        $cod = $this->input->post("u_codigo");
+        $cod = trim($this->input->post("u_codigo"));
         $celu = $this->input->post("u_celular");
         $fnac = $this->input->post("u_fecnac");
 

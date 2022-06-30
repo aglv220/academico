@@ -33,25 +33,25 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>1. Nombres</label>                                                
-                                                <input type="text" name="u_nombres" class="form-control" placeholder="Ingrese su nombre" >                                                
+                                                <input type="text" name="u_nombres" class="form-control" placeholder="Ingrese su nombre" onkeypress="return solo_texto(event);" required>                                                
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>2. Apellidos</label>
-                                                <input type="text" name="u_apellidos" class="form-control" placeholder="Ingrese sus apellidos" >
+                                                <input type="text" name="u_apellidos" class="form-control" placeholder="Ingrese sus apellidos" onkeypress="return solo_texto(event);" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>3. Número de celular</label>
-                                                <input type="phone" class="form-control" id="u_celular" minlength="9" maxlength="9" name="u_celular" placeholder="999-999-999" onkeypress="return numeros_enteros(event);">
+                                                <input type="phone" class="form-control" id="u_celular" minlength="9" maxlength="9" name="u_celular" placeholder="999-999-999" onkeypress="return numeros_enteros(event);" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>4. Fecha de nacimiento (día / mes / año)</label>
-                                                <input type="date" name="u_fecnac" class="form-control"  >
+                                                <input type="date" name="u_fecnac" class="form-control" required>
                                             </div>
                                         </div>
                                         
@@ -63,25 +63,22 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>5. Código de estudiante</label>
-                                                <input type="text" name="u_codigo" class="form-control" placeholder="Ingrese su código de estudiante" onkeypress="return numeros_enteros(event);">
+                                                <input type="text" name="u_codigo" class="form-control" placeholder="Ingrese su código de estudiante" onkeypress="return numeros_enteros(event);" required>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>6. Carrera universitaria</label>
-                                                <select class="form-control" id="u_carrera" name="u_carrera">
+                                                <select class="form-control" id="u_carrera" name="u_carrera" required>
                                                     <option value="">Seleccione su carrera</option>
-                                                    <option value="Ingeniería de software">Ingeniería de software</option>
-                                                    <option value="Ingeniería de sistemas">Ingeniería de sistemas</option>
-                                                    <option value="Ingeniería electrónica">Ingeniería electrónica</option>
-                                                    <option value="Ingeniería de redes y comunicaciones">Ingeniería de redes y comunicaciones</option>
+                                                    <?php if(isset($LST_CARRERAS)){echo $LST_CARRERAS;} ?>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label>7. Ciclo relativo</label>
-                                                <input type="text" name="u_ciclo" class="form-control" placeholder="Ingrese su ciclo relativo" >
+                                                <input type="number" name="u_ciclo" class="form-control" placeholder="Ingrese su ciclo relativo" min="1" max="10" required>
                                             </div>
                                         </div>
                                         <input type="hidden" name="u_user" value="<?php if(isset($ID_USUARIO)){echo $ID_USUARIO;} ?>" />
