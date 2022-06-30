@@ -3,6 +3,34 @@ var data_path = pathname.split("/");
 var root_path = "/" + data_path[1] + "/";
 var re_correo_utp = new RegExp("([a-z]|[0-9])+@utp.edu.pe$");
 
+function solo_texto(e){
+
+    especiales = [32];
+    caracteres = ["%"];
+
+    key = e.keyCode || e.which;
+    tecla = String.fromCharCode(key).toLowerCase();
+
+    tecla_especial = false;
+
+    if( caracteres.indexOf(tecla)==-1){
+      for(var i in especiales){
+          if( key == especiales[i] ){
+            tecla_especial = true; break;
+          } else if (key > 96 && key < 123){
+            //LETRAS MINUSCULAS
+            tecla_especial = true; break;
+          } else if (key > 64 && key < 91){
+            //LETRAS MAYUSCULAS
+            tecla_especial = true; break;
+          } 
+      }
+    }
+
+    if( !tecla_especial )
+        return false;
+}
+
 function numeros_decimales(e){
 
     especiales = [8,9,37,39,46];
@@ -188,6 +216,41 @@ $("#FRM_RECOVER_PASS").submit(function (e) {
         msg_swal("error", "Error", "Introduzca un correo válido");
     }
 
+});
+
+$("#FRM_RECOVER_PASS").submit(function (e) {
+    e.preventDefault();
+    var form = $(this);
+    var idform = form.attr("id");
+    var url = form.attr('action');
+    var formElement = document.getElementById(idform);
+    var formData_rec = new FormData(formElement);
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: formData_rec,
+        contentType: false,
+        cache: false,
+        processData: false,
+        beforeSend: function () {
+            Swal.fire({
+                title: 'Guardando información',
+                text: 'Espera unos instantes',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+            })
+        },
+        success: function (data) {
+            swal.close();
+            if (data == "ERROR_NO_CHANGES") {
+                msg_swal("warning", "Sin cambios", "No se ha realizado ningún cambio");
+            } else if (data == "ERROR_PASS_SHORT") {
+                msg_swal("error", "Sin cambios", "La contraseña es muy corta (mínimo 8 caracteres)");
+            } else if (data == "OK_SUCCESS") {
+                msg_swal("success", "Información guardada", "Tus datos personales han sido actualizados");
+            }
+        }
+    });
 });
 
 $("#FRM_REGISTRO_2").submit(function (e) {

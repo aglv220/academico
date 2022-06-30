@@ -119,10 +119,10 @@
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="app-profile.html"><i class="icon-user"></i> <span>Perfil</span></a>
+                                            <a href="<?= base_url()?>usuario/perfil_personal"><i class="icon-user"></i> <span>Perfil</span></a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void()">
+                                            <a href="#">
                                                 <i class="icon-settings"></i> <span>Configuración</span> <div class="badge gradient-3 badge-pill gradient-1"></div>
                                             </a>
                                         </li>
