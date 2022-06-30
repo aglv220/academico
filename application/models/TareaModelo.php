@@ -70,11 +70,18 @@ class TareaModelo extends CI_Model
     }
 
     public function estadoPizarra($pkActividad){
-        $query = "SELECT a.pk_actividad as id, a.nombre_actividad,ua.estado_usuario_actividad as estado_pizarra FROM actividad a
+        $query = "SELECT a.pk_actividad as id, CONCAT(c.curso_nombre,' - ',a.nombre_actividad) as nombre_actividad,ua.estado_usuario_actividad as estado_pizarra FROM actividad a
         INNER JOIN usuario_actividad ua ON ua.fk_actividad = a.pk_actividad
+				INNER JOIN usuario_curso uc ON uc.fk_usuario = a.fk_usuario
+				INNER JOIN curso c ON c.pk_curso = uc.fk_curso
         where a.pk_actividad = $pkActividad";
         $resultado = $this->db->query($query);
         return $resultado->result_array();
+    }
+    public function guardar_estado_pizarra($id,$estado){
+        $query = "UPDATE usuario_actividad set estado_usuario_actividad = $estado where fk_actividad = $id";
+        $this->db->query($query);
+
     }
 }
 ?>

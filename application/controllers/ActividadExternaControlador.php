@@ -78,9 +78,9 @@ class ActividadExternaControlador extends UTP_Controller {
     public function get_modal_externa($pkActividad = null){
 		$post = $this->input->post(); 
 		$pkActividad = ($pkActividad == null) ? $post['pkActividad'] : $pkActividad;
-        $estado = $this->actextmodelo->estadoPizarra($pkActividad);
-        //die(var_dump($estado));
-		$this->load->view('modales/modalSubtarea',$estado);
+        $data["actividad"] = $this->actextmodelo->get_Actividad($pkActividad);
+        $data["subtarea"] = $this->actextmodelo->get_subTareas($pkActividad);
+		$this->load->view('modales/modalSubtarea',$data);
 	}
     public function get_modal_edit_externa($pkActividad = null){
         $post = $this->input->post(); 
@@ -123,4 +123,25 @@ class ActividadExternaControlador extends UTP_Controller {
         $estado = $this->input->post("estado");
         $this->actextmodelo->guardar_estado_pizarra($id,$estado);
      }
+
+     public function save_subtareas(){
+        $id = $this->input->post("id");
+        $nombre = $this->input->post("nombre");
+        $this->actextmodelo->save_subtarea($id,$nombre);
+     }
+     public function guardar_estado_subtarea(){
+        $id = $this->input->post("id");
+        $campo = $this->input->post("campo");
+        $array = array();
+        foreach ($campo as $i => $value)
+        {
+            $cadena = explode(",",$value);
+            array_push($cadena,$id);
+            array_push($array,$cadena);
+        }
+        foreach($array as $i => $value){
+            $datos = $value[0]."-".$value[1]."-".$value[2];
+            echo $this->actextmodelo->cambiar_estado_subtarea($value[0]);
+        }  
+    }
 }

@@ -17,6 +17,12 @@ class TareaControlador extends UTP_Controller {
       $post = $this->input->post(); 
       $pkActividad = ($pkActividad == null) ? $post['pkActividad'] : $pkActividad;
       $data["estado"] = $this->tarea->estadoPizarra($pkActividad);
-      $this->load->view('modales/modalEditActividad',$data);
+      $this->load->view('modales/modalEditTarea',$data);
+    }
+    public function guardar_estado_pizarra(){
+        $id = $this->input->post("id");
+        $estado = $this->input->post("estado");
+        $this->tarea->guardar_estado_pizarra($id,$estado);
+     
     }
 }

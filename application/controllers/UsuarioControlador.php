@@ -90,7 +90,7 @@ class UsuarioControlador extends UTP_Controller
         $data_header['title_page'] = 'Calendario de Actividades';
         $this->cabecera_pagina($data_header);
         $this->load->view('actividades/calendar',$data);
-		$this->load->view('base/footer'); 
+		$this->pie_pagina();
     }
 
     public function pizarra()

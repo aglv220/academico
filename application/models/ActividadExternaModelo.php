@@ -102,15 +102,36 @@ class ActividadExternaModelo extends CI_Model
         return $resultado->result_array();
     }
     public function get_subTareas($pkActividad){
-        $query = "SELECT pk_usuario_actividad_externa as id, a.nombre_actividad, estado_pizarra from usuario_actividad_externa ua
-        INNER JOIN actividad a ON a.pk_actividad = ua.fk_actividad
-        where pk_usuario_actividad_externa = $pkActividad";
+        $query = "SELECT s.pk_subtarea,s.nombre_subtarea, s.detalle_subtarea, s.estado_subtarea from subtarea s
+        INNER JOIN actividad a on a.pk_actividad = s.fk_actividad
+        INNER JOIN usuario_actividad_externa ua ON ua.fk_actividad = a.pk_actividad
+        where ua.pk_usuario_actividad_externa = $pkActividad";
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
     public function guardar_estado_pizarra($id,$estado){
         $query = "UPDATE usuario_actividad_externa set estado_pizarra = $estado where pk_usuario_actividad_externa = $id";
         $this->db->query($query);
+    }
+    public function get_Actividad($pkActividad){
+        $query = "SELECT nombre_actividad, descripcion_actividad, a.pk_actividad as id from usuario_actividad_externa ua
+        INNER JOIN actividad a on a.pk_actividad = ua.fk_actividad
+        where ua.pk_usuario_actividad_externa = $pkActividad";
+        $resultado = $this->db->query($query);
+        return $resultado->result_array();
+    }
+    public function save_subtarea($id,$nombre){
+        $this->db->insert("subtarea", [
+			"fk_actividad" => $id,
+			"nombre_subtarea" => $nombre,
+            "detalle_subtarea" => "",
+            "estado_subtarea" => 0,
+		]);
+        return $this->db->insert_id();
+    }
+    public function cambiar_estado_subtarea($datos){
+        $query = "UPDATE subtarea set estado_subtarea = 1 where pk_subtarea = $datos";
+        return $this->db->query($query);
     }
 }
 ?>
