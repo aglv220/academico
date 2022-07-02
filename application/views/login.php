@@ -1,4 +1,5 @@
 <html class="h-100">
+
 <body class="h-100">
     <!--*******************
         Preloader start
@@ -13,6 +14,7 @@
     <!--*******************
         Preloader end
     ********************-->
+
     <div class="login-form-bg h-100">
         <div class="container h-100">
             <div class="row justify-content-center h-100">
@@ -23,9 +25,9 @@
                                 <img src="<?= base_url() ?>assets/images/logo_utp.png" alt="">
                                 <h2 style="text-align: center;">Ingresa a tu cuenta</h2>
 
-                                <form id="FRM_LOGIN" class="mt-5 mb-5 login-input" action="<?php echo base_url(); ?>LoginControlador/iniciar_sesion" method="POST">
+                                <form id="FRM_LOGIN" class="mt-5 mb-5 login-input form-valide" action="<?php echo base_url(); ?>LoginControlador/iniciar_sesion" method="POST">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Ingresa tu correo institucional" name="usuario_correo" pattern="([a-z]|[0-9])+@utp.edu.pe$" required>
+                                        <input type="email" class="form-control" placeholder="Ingresa tu correo institucional" name="usuario_correo" id="usuario_correo" pattern="([a-z]|[0-9])+@utp.edu.pe$" required>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control" placeholder="Ingresa tu contraseña" name="usuario_clave" required>
@@ -38,12 +40,15 @@
                                     <button type="submit" class="btn login-form__btn submit w-100">Ingresar</button>
                                 </form>
                                 <p class="mt-5 login-form__footer">¿Eres nuevo? <a href="<?= base_url() ?>registro/validacion" class="text-primary">Registrate aquí</a></p>
+
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

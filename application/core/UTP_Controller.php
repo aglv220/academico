@@ -9,6 +9,11 @@ class UTP_Controller extends CI_Controller {
         $this->load->library('session');
         $this->load->config('email');
         $this->load->helper('url');
+        $this->load->model('AuditoriaModelo', 'audmod');
+    }
+
+    public function get_SESSID(){
+        return $this->session->userdata('SESSION_ID');
     }
 
     public function get_token(){
@@ -55,6 +60,7 @@ class UTP_Controller extends CI_Controller {
     public function is_loged_off()
     {
         if (!$this->session->userdata('SESSION_CORREO')) {
+            //$this->audmod->registrar_evento_auditoria(5, $this->session->userdata('SESSION_ID'), 5, "Cierre de sesión", "La sesión del usuario ha expirado");
             redirect('/LoginControlador');
         }
     }
@@ -62,6 +68,7 @@ class UTP_Controller extends CI_Controller {
     public function is_loged_on()
     {
         if ($this->session->userdata('SESSION_CORREO')) {
+            $this->audmod->registrar_evento_auditoria(5, $this->session->userdata('SESSION_ID'), 4, "Inicio de sesión", "La sesión del usuario aún se encuentra activa");
             redirect('/UsuarioControlador/pagina_principal');
         }
     }
@@ -69,7 +76,6 @@ class UTP_Controller extends CI_Controller {
     function fecha_y_hora(){
         return date('Y-m-d H:i:s');
     }
-
 
     function fecha(){
         return date('Y-m-d');

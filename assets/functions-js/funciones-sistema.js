@@ -3,7 +3,7 @@ var data_path = pathname.split("/");
 var root_path = "/" + data_path[1] + "/";
 var re_correo_utp = new RegExp("([a-z]|[0-9])+@utp.edu.pe$");
 
-function solo_texto(e){
+function solo_texto(e) {
 
     especiales = [32];
     caracteres = ["%"];
@@ -13,51 +13,51 @@ function solo_texto(e){
 
     tecla_especial = false;
 
-    if( caracteres.indexOf(tecla)==-1){
-      for(var i in especiales){
-          if( key == especiales[i] ){
-            tecla_especial = true; break;
-          } else if (key > 96 && key < 123){
-            //LETRAS MINUSCULAS
-            tecla_especial = true; break;
-          } else if (key > 64 && key < 91){
-            //LETRAS MAYUSCULAS
-            tecla_especial = true; break;
-          } 
-      }
+    if (caracteres.indexOf(tecla) == -1) {
+        for (var i in especiales) {
+            if (key == especiales[i]) {
+                tecla_especial = true; break;
+            } else if (key > 96 && key < 123) {
+                //LETRAS MINUSCULAS
+                tecla_especial = true; break;
+            } else if (key > 64 && key < 91) {
+                //LETRAS MAYUSCULAS
+                tecla_especial = true; break;
+            }
+        }
     }
 
-    if( !tecla_especial )
+    if (!tecla_especial)
         return false;
 }
 
-function numeros_decimales(e){
+function numeros_decimales(e) {
 
-    especiales = [8,9,37,39,46];
+    especiales = [8, 9, 37, 39, 46];
     numeros = "0123456789.";
 
     key = e.keyCode || e.which;
     tecla = String.fromCharCode(key).toLowerCase();
 
     tecla_especial = false
-    for(var i in especiales){
-        if(key == especiales[i]){ tecla_especial = true; break; }
+    for (var i in especiales) {
+        if (key == especiales[i]) { tecla_especial = true; break; }
     }
 
-    if( numeros.indexOf(tecla)==-1 && !tecla_especial )
+    if (numeros.indexOf(tecla) == -1 && !tecla_especial)
         return false;
 }
 
-function numeros_enteros(e){
+function numeros_enteros(e) {
     key = e.keyCode || e.which;
     tecla = String.fromCharCode(key).toLowerCase();
     letras = "0123456789";
-    especiales = [8,9,37,39,46];
+    especiales = [8, 9, 37, 39, 46];
     tecla_especial = false
-    for(var i in especiales){
-        if(key == especiales[i]){ tecla_especial = true; break; }
+    for (var i in especiales) {
+        if (key == especiales[i]) { tecla_especial = true; break; }
     }
-    if(letras.indexOf(tecla)==-1 && !tecla_especial)
+    if (letras.indexOf(tecla) == -1 && !tecla_especial)
         return false;
 }
 
@@ -69,6 +69,59 @@ function msg_swal(tipo, titulo, mensaje, tmr = 3000) {
         timer: tmr
     })
 }
+
+$(".chkcfg_user").on("change", function () {
+    tipo_item = $(this).attr("js-type");
+    var checkboxs_target;
+    switch (tipo_item) {
+        case "activ":
+            checkboxs_target = $(".subopt_actividad");
+            break;
+        case "piza":
+            checkboxs_target = $(".subopt_tarea");
+            break;
+    }
+    if ($(this).is(':checked')) {
+        checkboxs_target.prop("checked",true);
+        checkboxs_target.prop("disabled",true);
+    } else {
+        checkboxs_target.removeAttr("disabled");
+        checkboxs_target.prop("checked",false);
+    }
+});
+
+$("#FRM_CONFIGURACION").submit(function (e) {
+    e.preventDefault();
+    var form = $(this);
+    var idform = form.attr("id");
+    var url = form.attr('action');
+    var formElement = document.getElementById(idform);
+    var formData_rec = new FormData(formElement);
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: formData_rec,
+        contentType: false,
+        cache: false,
+        processData: false,
+        beforeSend: function () {
+            Swal.fire({
+                title: 'Guardando información',
+                text: 'Espera unos instantes',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+            })
+        },
+        success: function (data) {
+            swal.close();
+            if (data == "OK") {
+                msg_swal("success", "Información guardada", "Tu configuración ha sido actualizada correctamente");
+            } else {
+                msg_swal("error", "Error de actualización", "Ha ocurrido un error al actualizar la configuración");
+            }
+        }
+    });
+});
 
 $("#FRM_LOGIN").submit(function (e) {
     e.preventDefault();

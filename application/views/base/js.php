@@ -46,6 +46,7 @@
 
     <script src="<?= base_url() ?>assets/plugins/jquery-steps/build/jquery.steps.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/plugins-init/jquery.validate-init.js"></script>
     <script src="<?= base_url() ?>assets/js/plugins-init/jquery-steps-init.js"></script>
     
     <!--  FUNCIONES SISTEMA js -->

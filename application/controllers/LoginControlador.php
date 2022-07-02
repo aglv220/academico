@@ -3,13 +3,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class LoginControlador extends UTP_Controller
 {
+    public $modsis = 5;
+
     function __construct()
     {
         parent::__construct();
+        date_default_timezone_set('America/lima');
         $this->load->library('session');
         $this->load->model('UsuarioModelo', 'usuariom');
-        $this->load->model('CRUD_Modelo', 'crudm');
-        date_default_timezone_set('America/lima');
+        $this->load->model('AuditoriaModelo', 'audmod');
+        $this->load->model('CRUD_Modelo', 'crudm');        
     }
 
     public function index()
@@ -35,6 +38,7 @@ class LoginControlador extends UTP_Controller
                         $nombre = $row->alumno_nombre;
                         $apellidos = $row->alumno_apellidos;
                         $cod_rec = $row->usuario_codrecover;
+                        $idUser = $row->ID;
                         if ($cod_rec == "" || $cod_rec == NULL) {
                             if ($nombre == "" || $nombre == NULL) {
                                 $nombre == "alumno";
@@ -47,6 +51,7 @@ class LoginControlador extends UTP_Controller
                                 $enviar_correo = $this->enviar_email($correo, $asunto, $mensaje);
                                 if ($enviar_correo) {
                                     $return_msg = "validate_ok";
+                                    $this->audmod->registrar_evento_auditoria($this->modsis, $idUser, 6, "Recuperación de contraseña", "El usuario ha solicitado recuperación de contraseña");
                                 } else {
                                     $return_msg = "validate_error_mail";
                                 }
@@ -74,8 +79,12 @@ class LoginControlador extends UTP_Controller
                         $change_pass = $this->usuariom->actualizar_password($this->usuariom->correo, $new_pass_c);
                         if ($change_pass) { //VALIDAR SI SE CAMBIO DE CONTRASEÑA
                             //VACIAR EL CAMPO CODIGO DE RECUPERACION SI YA SE CAMBIO LA CONTRASEÑA
-                            $this->usuariom->actualizar_cod_rec($this->usuariom->correo,"");
+                            $this->usuariom->actualizar_cod_rec($this->usuariom->correo, "");
                             $return_msg = "changepass_ok";
+                            //REGISTRO DE EVENTO DE AUDITORIA
+                            $where_idUser = [["campo" => "usuario_correo", "valor" => $this->usuariom->correo]];
+                            $idUser = $this->crudm->listar_campo_tabla_xcond("usuario", "pk_usuario", $where_idUser);
+                            $this->audmod->registrar_evento_auditoria($this->modsis, $idUser, 6, "Recuperación de contraseña", "El usuario ha restablecido su contraseña");
                         } else {
                             $return_msg = "changepass_error";
                         }
@@ -111,6 +120,8 @@ class LoginControlador extends UTP_Controller
                         $ROWDATA['SESSION_ID'] = $id_usuario;
                         $this->session->set_userdata($ROWDATA);
                         $return_msg = true;
+                        $this->audmod->registrar_evento_auditoria($this->modsis, $id_usuario, 4, "Inicio de sesión", "El usuario ha iniciado sesión en el sistema");
+                        $this->usuariom->establecer_configuracion($id_usuario);
                     } else {
                         $return_msg = false;
                     }
@@ -125,6 +136,7 @@ class LoginControlador extends UTP_Controller
     public function cerrar_sesion()
     {
         if ($this->session->userdata('SESSION_CORREO')) {
+            $this->audmod->registrar_evento_auditoria($this->modsis, $this->session->userdata('SESSION_ID'), 5, "Cierre de sesión", "El usuario ha cerrado sesión en el sistema");
             $this->session->sess_destroy();
             redirect(base_url());
         }

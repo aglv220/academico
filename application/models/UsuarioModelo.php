@@ -63,4 +63,46 @@ class UsuarioModelo extends CI_Model
             return "EXIST";
         }
     }
+
+    public function establecer_configuracion($userID, $config_opt=array())
+    {
+        $config_user = $this->crudm->listar_tabla_xcampo('configuracion_usuario', [["campo" => "fk_usuario", "valor" => $userID]]);
+        if (count($config_opt) == 0) { //CONFIGURACIÓN PREDETERMINADA
+            $config_opt = array(
+                'en_c_n' => 1,
+                'en_c_d' => 0,
+                'en_c_u' => 0,
+                'en_b_n' => 1,
+                'en_b_d' => 0,
+                'en_b_u' => 0,
+            );
+        }
+        $success = true;
+        if (count($config_user) > 0) { //ACTUALIZAR CONFIGURACION EXISTENTE
+            $data_config = array(
+                'emailnotify_calendar_new' => $config_opt["en_c_n"],
+                'emailnotify_calendar_delete' => $config_opt["en_c_d"],
+                'emailnotify_calendar_update' => $config_opt["en_c_u"],
+                'emailnotify_board_new' => $config_opt["en_b_n"],
+                'emailnotify_board_delete' => $config_opt["en_b_d"],
+                'emailnotify_board_update' => $config_opt["en_b_u"]
+            );
+            $where_data = array("fk_usuario" => $userID);
+            $this->crudm->actualizar_data($where_data, $data_config, 'configuracion_usuario');
+            //NO REGISTRAR ERROR AL ACTUALIZAR
+        } else { //INSERTAR CONFIGURACION
+            $data_config = array(
+                'emailnotify_calendar_new' => $config_opt["en_c_n"],
+                'emailnotify_calendar_delete' => $config_opt["en_c_d"],
+                'emailnotify_calendar_update' => $config_opt["en_c_u"],
+                'emailnotify_board_new' => $config_opt["en_b_n"],
+                'emailnotify_board_delete' => $config_opt["en_b_d"],
+                'emailnotify_board_update' => $config_opt["en_b_u"],
+                "fk_usuario" => $userID
+            );
+            $success = $this->db->insert('configuracion_usuario', $data_config);
+            //RETORNA UN ERROR SI NO SE GRABA
+        }
+        return $success;
+    }
 }
