@@ -12,7 +12,7 @@ class LoginControlador extends UTP_Controller
         $this->load->library('session');
         $this->load->model('UsuarioModelo', 'usuariom');
         $this->load->model('AuditoriaModelo', 'audmod');
-        $this->load->model('CRUD_Modelo', 'crudm');        
+        $this->load->model('CRUD_Modelo', 'crudm');
     }
 
     public function index()
@@ -109,11 +109,11 @@ class LoginControlador extends UTP_Controller
             foreach ($lst_login as $row) {
                 $id_usuario = $row->ID;
                 $registro_completo = $row->usuario_regcomp;
-                if ($registro_completo == 0) { //NO HA COMPLETADO EL REGISTRO
-                    $correo_cod = base64_encode($this->usuariom->correo);
-                    $return_msg = $correo_cod;
-                } else { // SI EL USUARIO HA CAMPLETADO EL REGISTRO ANTERIORMENTE
-                    if (password_verify($this->usuariom->password, $row->usuario_password)) {
+                if (password_verify($this->usuariom->password, $row->usuario_password)) {
+                    if ($registro_completo == 0) { //NO HA COMPLETADO EL REGISTRO
+                        $correo_cod = base64_encode($this->usuariom->correo);
+                        $return_msg = $correo_cod;
+                    } else { // SI EL USUARIO HA CAMPLETADO EL REGISTRO ANTERIORMENTE
                         $ROWDATA['SESSION_CORREO'] = $row->usuario_correo;
                         $ROWDATA['SESSION_NOMBRES'] = $row->alumno_nombre;
                         $ROWDATA['SESSION_APELLIDOS'] = $row->alumno_apellidos;
@@ -122,9 +122,9 @@ class LoginControlador extends UTP_Controller
                         $return_msg = true;
                         $this->audmod->registrar_evento_auditoria($this->modsis, $id_usuario, 4, "Inicio de sesión", "El usuario ha iniciado sesión en el sistema");
                         $this->usuariom->establecer_configuracion($id_usuario);
-                    } else {
-                        $return_msg = false;
                     }
+                } else {
+                    $return_msg = false;
                 }
             }
         } else {

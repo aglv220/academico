@@ -17,6 +17,11 @@ class UsuarioControlador extends UTP_Controller
         date_default_timezone_set('America/lima');
     }
 
+    public function validar_sesion_usuario()
+    {
+        echo $this->encript_data($this->get_SESSID());
+    }
+
     public function actualizar_perfil_personal()
     {
         $this->is_loged_off();

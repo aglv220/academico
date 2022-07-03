@@ -43,6 +43,9 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
+
+                                <!--<button type="button" class="test-notification btn btn-primary">Probar</button>-->
+
                                 <div class="cartitle">
                                     <p>Actividades próximas</p>
                                 </div>

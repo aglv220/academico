@@ -64,7 +64,7 @@ class UsuarioModelo extends CI_Model
         }
     }
 
-    public function establecer_configuracion($userID, $config_opt=array())
+    public function establecer_configuracion($userID, $config_opt = array())
     {
         $config_user = $this->crudm->listar_tabla_xcampo('configuracion_usuario', [["campo" => "fk_usuario", "valor" => $userID]]);
         if (count($config_opt) == 0) { //CONFIGURACIÓN PREDETERMINADA
