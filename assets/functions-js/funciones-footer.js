@@ -228,3 +228,7 @@ function msg_swal(tipo, titulo, mensaje, tmr = 3000) {
         timer: tmr
     })
 }
+
+function labelFormatter(label, series) {
+    return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
+}

@@ -14,26 +14,26 @@
     <!-- row -->
     <div class="container-fluid">
 
-        <div class="row">
+        <div class="row" id="contenedor-report">
             <div class="col-lg-6">
                 <div class="card" style="height: 700px;">
                     <div class="card-body">
-                        <select class="form-control" id="val-skill" name="val-skill">
-                            <option value="">Seleccione mes</option>
-                            <option value="html">Enero</option>
-                            <option value="css">Febreo</option>
-                            <option value="javascript">Marzo</option>
-                            <option value="angular">Abril</option>
-                            <option value="angular">Mayo</option>
-                            <option value="vuejs">Junio</option>
-                            <option value="ruby">Julio</option>
-                            <option value="php">Agosto</option>
-                            <option value="asp">Setiembre</option>
-                            <option value="python">Octubre</option>
-                            <option value="mysql">Noviembre</option>
-                            <option value="mysql">Diciembre</option>
+                        <select class="form-control" id="select-mes" name="select-mes">
+                            <option value="" selected>Todos los meses</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
                         </select>
-                        <div id="flotBar1" class="flot-chart" style="margin-top: 15%;"></div>
+                        <div id="chart_actividades" class="flot-chart" style="margin-top: 15%;"></div>
                     </div>
                 </div>
             </div>
