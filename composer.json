@@ -1,4 +1,9 @@
 {
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
 	"description": "The CodeIgniter framework",
 	"name": "codeigniter/framework",
 	"type": "project",
@@ -30,7 +35,6 @@
 		]
 	},
 	"require-dev": {
-		"mikey179/vfsstream": "1.6.*",
-		"phpunit/phpunit": "^9.5"
-	}
+        "phpunit/phpunit": "9"
+    }
 }
