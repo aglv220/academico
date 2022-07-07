@@ -33,7 +33,8 @@ class TareaControlador extends UTP_Controller
     
     $asunto = "";
     $msg = "";
-    $cfg_en = $this->valide_email_notification($this->get_SESSID(),"emailnotify_board_update",$asunto,$msg);
+    $cfg_en = $this->valide_email_notification($this->get_SESSID(),"emailnotify_calendar_new",$asunto,$msg);
+    
     $actividad = "";
     $nombre = "";
     $registrar_notificacion = $this->notifim->publicar_notificacion($this->get_SESSID(),$actividad,$nombre);

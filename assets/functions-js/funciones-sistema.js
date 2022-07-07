@@ -36,9 +36,9 @@ function print_notify_header(notify_html, user_notify, num_allnotify, type_notif
                 }
             } else { //ACTUALIZAR TODA LA LISTA DE NOTIFICACIONES
                 if (cantidad_notify_new == 0) {
-                    $(".c-notify-pending-none").removeClass("d-none");
+                    $(".c-notify-pending-none").removeClass("display-none");
                 } else {
-                    $(".c-notify-pending-none").addClass("d-none");
+                    $(".c-notify-pending-none").addClass("display-none");
                 }
                 contain_lst_notify.empty();
                 contain_lst_notify.html(notify_html);
@@ -74,7 +74,7 @@ function update_notifications() {
         cantidad_notify_new = cantidad_notify - 1;
         //SI LA NUEVA CANTIDAD DE NOTIFICACIONES ES 0
         if (cantidad_notify_new == 0) {
-            $(".c-notify-pending-none").removeClass("d-none");
+            $(".c-notify-pending-none").removeClass("display-none");
         }
         txt_notify = cantidad_notify_new == 1 ? " notificación" : " notificaciones";
         count_notify_num.html(cantidad_notify_new.toString());
@@ -84,7 +84,7 @@ function update_notifications() {
             /*if (data != "NONE") {
                 num_notify_new = parseInt(data);
                 if (num_notify_new == 0) { //YA NO HAY NOTIFICACIONES
-                    $(".c-notify-pending-none").removeClass("d-none");
+                    $(".c-notify-pending-none").removeClass("display-none");
                 }
                 txt_notify = num_notify_new == 1 ? " notificación" : " notificaciones";
                 count_notify_num.html(num_notify_new.toString());

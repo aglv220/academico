@@ -131,4 +131,19 @@ class CRUD_Modelo extends CI_Model
         $fase_4 = strrev($fase_3);
         return $fase_4;
     }
+
+    public function generate_token(){
+        $r1 = [rand(1389,2787),rand(3036,4668),rand(5187,6798)];
+        $r2 = [rand(7641,8315),rand(9961,10544),rand(11319,12634)];
+        $r3 = [rand(-8661,-6915),rand(-5761,-3644),rand(-2545,1345)];
+        $r4 = [rand(2567,4287),rand(5129,7856),rand(8896,10649)];
+        $vr1 = $r1[array_rand($r1)];
+        $vr2 = $r2[array_rand($r2)];
+        $vr3 = $r3[array_rand($r3)];
+        $vr4 = $r4[array_rand($r4)];
+        $time = date("ihs");
+        $num_rand = rand($vr1,$vr2).$time.rand($vr3,$vr4).$time.rand($vr1,$vr3);
+        $encode = $this->encript_data($num_rand);
+        return $encode;
+    }
 }

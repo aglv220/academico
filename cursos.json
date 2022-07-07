@@ -1,61 +1,67 @@
 {
-    "CURSO INTEGRADOR II: SOFTWARE (11117)":{
-        "1":{
-            "actividad":"Rúbrica de Avance de Proyecto Final 5",
-            "des_actividad":"No se agregaron detalles adicionales para esta tarea.",
-            "fecha": "2022-07-07  20:15:00"
-        },
-        "2":{
-            "actividad":"S15.s1-Tarea",
-            "des_actividad":"Ejecución del plan de pruebas de software. Mostrar reportes de la ejecución de pruebas.",
-            "fecha":"2022-07-10  23:59:00"
-        },
-        "3":{
-            "actividad":"S16.s1-Tarea",
-            "des_actividad":"esta tarea está bloqueada hasta 11 de jul en 0:00.",
-            "fecha":"2022-07-10  23:59:00"
-        }
-    },
-    "DISEÑO Y DESARROLLO DE JUEGOS INTERACTIVOS II (11116)":{
-        "1":{
-            "actividad":"S15.s1-Tarea",
-            "des_actividad":"Realizar trabajo final.",
-            "fecha":"2022-07-10  23:59:00"
-        },
-        "2":{
-            "actividad":"S16.s1-Tarea",
-            "des_actividad":"Realizar exposicion final del proyecto de juegos.",
-            "fecha":"2022-07-10  23:59:00"
-        },
-        "3":{
-            "actividad":"S17.s1-Tarea",
-            "des_actividad":"Realizar exposicion final del proyecto de juegos.",
-            "fecha":"2022-07-10  23:59:00"
-        }
-    },
-    "NETWORK SECURITY (11335)":{
-        "1":{
-            "curso":"Práctica calificada 3",
-            "actividad":"Bienvenido a tu práctica calificada 3.",
-            "des_actividad":"",
-            "fecha":"2022-07-11  22:30:00"
-        },
-        "2":{
-            "actividad":"S13.s2 - Tarea",
-            "des_actividad":"Se debe elaborar de forma grupal o individual máximo 2 personas las dos guías de laboratorio colgado en la semana 13.s1 y 13.s2, con sus propia topolia, se deberá presentar el informe junto con el archivo en el packet tracer.",
-            "fecha":"2022-07-12  22:30:00"
-        }
-    },
-    "TALLER DE INVESTIGACION - SOFTWARE (11133)":{
-        "1":{
-            "actividad":"S14.s1 - Actividades a realizar - Exposición Nota 3",
-            "des_actividad":"Publicar su trabajo de Investigación",
-            "fecha":"2022-07-11  22:30:00"
-        },
-        "2":{
-            "actividad":"S17.s1 - Actividades a realizar",
-            "des_actividad":"Publicar su trabajo de Investigación",
-            "fecha":"2022-07-30  22:30:00"
+    "data": {
+        "username": "u18218011@utp.edu.pe",
+        "password": "Gi@nell@2022",
+        "courses": {
+            "CURSO INTEGRADOR II: SOFTWARE (11117)": {
+                "1": {
+                    "actividad": "Rúbrica de Avance de Proyecto Final 5",
+                    "des_actividad": "No se agregaron detalles adicionales para esta tarea.",
+                    "fecha": "2022-07-07  20:15:00"
+                },
+                "2": {
+                    "actividad": "S15.s1-Tarea",
+                    "des_actividad": "Ejecución del plan de pruebas de software. Mostrar reportes de la ejecución de pruebas.",
+                    "fecha": "2022-07-10  23:59:00"
+                },
+                "3": {
+                    "actividad": "S16.s1-Tarea",
+                    "des_actividad": "esta tarea está bloqueada hasta 11 de jul en 0:00.",
+                    "fecha": "2022-07-10  23:59:00"
+                }
+            },
+            "DISEÑO Y DESARROLLO DE JUEGOS INTERACTIVOS II (11116)": {
+                "1": {
+                    "actividad": "S15.s1-Tarea",
+                    "des_actividad": "Realizar trabajo final.",
+                    "fecha": "2022-07-10  23:59:00"
+                },
+                "2": {
+                    "actividad": "S16.s1-Tarea",
+                    "des_actividad": "Realizar exposicion final del proyecto de juegos.",
+                    "fecha": "2022-07-10  23:59:00"
+                },
+                "3": {
+                    "actividad": "S17.s1-Tarea",
+                    "des_actividad": "Realizar exposicion final del proyecto de juegos.",
+                    "fecha": "2022-07-10  23:59:00"
+                }
+            },
+            "NETWORK SECURITY (11335)": {
+                "1": {
+                    "curso": "Práctica calificada 3",
+                    "actividad": "Bienvenido a tu práctica calificada 3.",
+                    "des_actividad": "",
+                    "fecha": "2022-07-11  22:30:00"
+                },
+                "2": {
+                    "actividad": "S13.s2 - Tarea",
+                    "des_actividad": "Se debe elaborar de forma grupal o individual máximo 2 personas las dos guías de laboratorio colgado en la semana 13.s1 y 13.s2, con sus propia topolia, se deberá presentar el informe junto con el archivo en el packet tracer.",
+                    "fecha": "2022-07-12  22:30:00"
+                }
+            },
+            "TALLER DE INVESTIGACION - SOFTWARE (11133)": {
+                "1": {
+                    "actividad": "S14.s1 - Actividades a realizar - Exposición Nota 3",
+                    "des_actividad": "Publicar su trabajo de Investigación",
+                    "fecha": "2022-07-11  22:30:00"
+                },
+                "2": {
+                    "actividad": "S17.s1 - Actividades a realizar",
+                    "des_actividad": "Publicar su trabajo de Investigación",
+                    "fecha": "2022-07-30  22:30:00"
+                }
+            }
         }
     }
 }

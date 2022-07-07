@@ -17,17 +17,31 @@ class UTP_Controller extends CI_Controller
         $this->load->model('CRUD_Modelo', 'crudm');
     }
 
-    public function get_SESSID()
+    protected function get_SESSID()
     {
         return $this->session->userdata('SESSION_ID');
     }
 
-    public function get_token()
+    protected function generate_token(){
+        $r1 = [rand(1389,2787),rand(3036,4668),rand(5187,6798)];
+        $r2 = [rand(7641,8315),rand(9961,10544),rand(11319,12634)];
+        $r3 = [rand(-8661,-6915),rand(-5761,-3644),rand(-2545,1345)];
+        $r4 = [rand(2567,4287),rand(5129,7856),rand(8896,10649)];
+        $vr1 = $r1[array_rand($r1)];
+        $vr2 = $r2[array_rand($r2)];
+        $vr3 = $r3[array_rand($r3)];
+        $vr4 = $r4[array_rand($r4)];
+        $time = date("ihs");
+        $num_rand = rand($vr1,$vr2).$time.rand($vr3,$vr4).$time.rand($vr1,$vr3);
+        $encode = $this->encript_data($num_rand);
+    }
+
+    protected function get_token()
     {
         return base64_encode("UTP2022_INTEGRADOR2");
     }
 
-    public function generar_codigo_recuperacion($valor)
+    protected function generar_codigo_recuperacion($valor)
     {
         $invertir_cod = strrev(strtolower($valor));
         $hora = date('His');
@@ -37,7 +51,7 @@ class UTP_Controller extends CI_Controller
         return $encode_1;
     }
 
-    public function enviar_email($destinatario, $asunto, $mensaje)
+    protected function enviar_email($destinatario, $asunto, $mensaje)
     {
         $from = $this->config->item('smtp_user');
         $this->email->set_newline("\r\n");
@@ -53,7 +67,7 @@ class UTP_Controller extends CI_Controller
         }
     }
 
-    public function valide_email_notification($userID, $config, $asunto, $msg)
+    protected function valide_email_notification($userID, $config, $asunto, $msg)
     {
         $config_user = $this->crudm->listar_tabla_xcampo('configuracion_usuario', [["campo" => "fk_usuario", "valor" => $userID]]);
         if (count($config_user) > 0) {
@@ -71,7 +85,7 @@ class UTP_Controller extends CI_Controller
         }
     }
 
-    public function llenar_select($lista, $slv = "none")
+    protected function llenar_select($lista, $slv = "none")
     {
         $options_html = "";
         foreach ($lista as $v) {
@@ -85,15 +99,14 @@ class UTP_Controller extends CI_Controller
         return $options_html;
     }
 
-    public function is_loged_off()
+    protected function is_loged_off()
     {
         if (!$this->session->userdata('SESSION_CORREO')) {
-            //$this->audmod->registrar_evento_auditoria(5, $this->session->userdata('SESSION_ID'), 5, "Cierre de sesión", "La sesión del usuario ha expirado");
             redirect('inicio-sesion');
         }
     }
 
-    public function is_loged_on()
+    protected function is_loged_on()
     {
         if ($this->session->userdata('SESSION_CORREO')) {
             $this->audmod->registrar_evento_auditoria(5, $this->session->userdata('SESSION_ID'), 4, "Inicio de sesión", "La sesión del usuario aún se encuentra activa");
@@ -101,17 +114,17 @@ class UTP_Controller extends CI_Controller
         }
     }
 
-    function fecha_y_hora()
+    protected function fecha_y_hora()
     {
         return date('Y-m-d H:i:s');
     }
 
-    function fecha()
+    protected function fecha()
     {
         return date('Y-m-d');
     }
 
-    public function cabecera_pagina($data_header = "")
+    protected function cabecera_pagina($data_header = "")
     {
         $get_lst_notify_pending = $this->notifim->obtener_notificaciones($this->get_SESSID(), "0", false, false);
         $data_nf['data_notify'] = $get_lst_notify_pending;
@@ -119,7 +132,7 @@ class UTP_Controller extends CI_Controller
         $this->load->view('base/header', $data_nf);
     }
 
-    public function include_js()
+    protected function include_js()
     {
         $nombre_archivo = "";
         $carpeta_archivo = "";
@@ -132,6 +145,7 @@ class UTP_Controller extends CI_Controller
                 $carpeta_archivo = "registro/";
             }
         }
+        
         if ($is_pagina_registro == false) {
             if (isset($url[5])) { //SI ES CUALQUIER OTRA PAGINA DEL PROYECTO
                 $nombre_archivo = $url[5];
@@ -148,6 +162,7 @@ class UTP_Controller extends CI_Controller
                 $carpeta_archivo = "usuario/";
             }
         }
+
         $file_js = "funciones-" . $nombre_archivo . ".js";
         $assets_js = "assets/functions-js/";
         $ruta_file_js = base_url() . $assets_js . $carpeta_archivo . $file_js;
@@ -167,13 +182,13 @@ class UTP_Controller extends CI_Controller
         $this->load->view('base/js', $data_js);
     }
 
-    public function pie_pagina()
+    protected function pie_pagina()
     {
         $this->load->view('base/footer');
         $this->include_js();
     }
 
-    public function encript_data($DATA)
+    protected function encript_data($DATA)
     {
         $fase_1 = strrev($DATA);
         $fase_2 = convert_uuencode($fase_1);
@@ -182,7 +197,7 @@ class UTP_Controller extends CI_Controller
         return $fase_4;
     }
 
-    public function decript_data($DATA)
+    protected function decript_data($DATA)
     {
         $fase_1 = strrev($DATA);
         $fase_2 = base64_decode($fase_1);
