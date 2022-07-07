@@ -11,6 +11,16 @@ class TareaModelo extends CI_Model
         parent::__construct();
     }
 
+    public function guardar_actividad($user,$nom,$des,$fec){
+        $data_act = ["fk_tipo_actividad" => 1, "fk_usuario" => $user, "nombre_actividad" => $nom, "descripcion_actividad" => $des, "fecdisp_actividad" => $fec];
+        return $this->crudm->ingresar_data($data_act,"actividad");
+    }
+
+    public function guardar_actividad_usuario($activ_id,$curso_id){
+        $data_actu = ["fk_actividad" => $activ_id, "fk_curso" => $curso_id, "estado_usuario_actividad" => 0];
+        return $this->crudm->ingresar_data($data_actu,"usuario_actividad");
+    }
+
     public function listarCursos($idUser)
     {
         $query = "SELECT curso_nombre as nombreCurso, a.nombre_actividad as descpCurso FROM usuario_curso uc
@@ -84,4 +94,3 @@ class TareaModelo extends CI_Model
 
     }
 }
-?>
