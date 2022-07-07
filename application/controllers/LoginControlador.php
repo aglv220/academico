@@ -21,7 +21,7 @@ class LoginControlador extends UTP_Controller
         $data_header['title_page'] = 'Inicio de sesión';
         $this->load->view('base/head', $data_header);
         $this->load->view('login');
-        $this->load->view('base/js');
+        $this->include_js();
     }
 
     public function validar_correo_usuario()
@@ -138,7 +138,7 @@ class LoginControlador extends UTP_Controller
         if ($this->session->userdata('SESSION_CORREO')) {
             $this->audmod->registrar_evento_auditoria($this->modsis, $this->session->userdata('SESSION_ID'), 5, "Cierre de sesión", "El usuario ha cerrado sesión en el sistema");
             $this->session->sess_destroy();
-            redirect(base_url());
+            redirect(base_url() . "inicio-sesion");
         }
     }
 }

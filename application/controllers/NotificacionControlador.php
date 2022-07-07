@@ -36,9 +36,10 @@ class NotificacionControlador extends UTP_Controller
         $update_notify = $this->notifim->actualizar_estado_notificacion($ID_notify, 1);
         if ($update_notify) {
             $this->notifim->obtener_notificaciones($id_user, "0", false);
-            return true;
+            $cant_notify_pend = count($this->notifim->listar_notificaciones($id_user,"0",false));
+            echo $cant_notify_pend;
         } else {
-            return false;
+            echo "NONE";
         }
     }
 }

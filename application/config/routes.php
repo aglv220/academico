@@ -54,10 +54,10 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 //USUARIO
-$route['iniciar_sesion'] = 'LoginControlador';
+$route['inicio-sesion'] = 'LoginControlador';
 $route['registro/validacion'] = 'RegistroControlador';
-$route['restablecer_cuenta'] = 'UsuarioControlador/recuperar_password';
 $route['pagina_principal'] = 'UsuarioControlador/pagina_principal';
+$route['usuario/restablecer_cuenta'] = 'UsuarioControlador/recuperar_password';
 $route['usuario/perfil_personal'] = 'UsuarioControlador/perfil_usuario';
 $route['usuario/configuracion'] = 'UsuarioControlador/configuracion_usuario';
 

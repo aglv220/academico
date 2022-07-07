@@ -39,7 +39,7 @@
                                     </div>
                                     <button type="submit" class="btn login-form__btn submit w-100">Enviar correo de recuperación</button>
 
-                                    <a href="<?= base_url() ?>iniciar_sesion" class="btn mt-3 btn-cancel-register btn-danger w-100 ">Cancelar operación</a>
+                                    <a href="<?= base_url() ?>inicio-sesion" class="btn mt-3 btn-cancel-register btn-danger w-100 ">Cancelar operación</a>
                                 </form>
                             </div>
                         </div>

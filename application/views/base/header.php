@@ -80,43 +80,14 @@
                                         <?php if (isset($data_notify)) {
                                             echo $data_notify["HTMLNOTIFY"];
                                         } ?>
-                                        <!--<li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Events near you</h6>
-                                                    <span class="notification-text">Within next 5 days</span> 
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Event Started</h6>
-                                                    <span class="notification-text">One hour ago</span> 
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Event Ended Successfully</h6>
-                                                    <span class="notification-text">One hour ago</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Events to Join</h6>
-                                                    <span class="notification-text">After two days</span> 
-                                                </div>
-                                            </a>
-                                        </li>-->
                                     </ul>
+                                    <div class="c-notify-pending-none mt-4 mb-4 <?php if (isset($data_notify) && $data_notify["NOTIFYPENDALL"] > 0) { echo "d-none"; } ?>" >
+                                        <a class="notify-pending-none">
+                                            <div class="notification-content">
+                                                <h6 class="notification-heading">No tienes notificaciones pendientes</h6>
+                                            </div>
+                                        </a>
+                                    </div>
 
                                 </div>
                             </div>

@@ -253,6 +253,12 @@ class UsuarioControlador extends UTP_Controller
         $data_header['title_page'] = 'Recuperar contraseña';
         $this->load->view('base/head', $data_header);
         $this->load->view('usuario/recuperar_password');
-        $this->load->view('base/js');
+        $this->include_js();
     }
+
+    //test
+    public function sum($n1, $n2){
+        return $n1 + $n2;
+    }
+
 }
