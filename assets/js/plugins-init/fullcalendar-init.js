@@ -135,7 +135,7 @@ var re_correo_utp = new RegExp("([a-z]|[0-9])+@utp.edu.pe$");
                             fecha = t._d;
                             $.ajax({
                                 type: "POST",
-                                url: '../ActividadExternaControlador/agregarCalendario',
+                                url: root_path + 'ActividadExternaControlador/agregarCalendario',
                                 data: { id: id, fecha: fecha },
                                 success: function(data){
                                     setTimeout(function() {
