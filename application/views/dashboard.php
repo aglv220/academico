@@ -50,6 +50,7 @@
                                     <p>Actividades próximas</p>
                                 </div>
                                 <?php
+                                if(count($tareas)> 0){
                                     foreach($tareas as $val){
                                 ?>
                                 <div class="content-actividades">
@@ -63,7 +64,15 @@
                                 </div>
                                 <?php
                                     }
-                                ?>
+                                }else{
+
+                                    ?>
+                                    <div class="actividades">
+                                        <span>No hay Tareas pendientes</span>
+                                    </div>
+                                    <?php
+                                        }   
+                                    ?>
                                 <div class="cargar-mas">
                                     <a href="./UsuarioControlador/calendario"><i class="icon-arrow-down"></i><span>ver más</span></a>
                                 </div>
