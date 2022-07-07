@@ -33,7 +33,7 @@
                                         <input type="password" class="form-control" placeholder="Ingresa tu contraseña" name="usuario_clave" required>
                                     </div>
                                     <div class="form-group">
-                                        <a href="<?= base_url() ?>restablecer_cuenta">
+                                        <a href="<?= base_url() ?>usuario/restablecer_cuenta">
                                             <p class="title">¿Olvidaste tu contraseña?</p>
                                         </a>
                                     </div>

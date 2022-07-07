@@ -17,7 +17,7 @@ class RegistroControlador extends UTP_Controller {
         $this->is_loged_on();
         $this->load->view('base/head');
 		$this->load->view('usuario/registro_validacion');
-		$this->load->view('base/js');
+		$this->include_js();
 	}
 
     public function v_datos_personales()
@@ -33,7 +33,7 @@ class RegistroControlador extends UTP_Controller {
         
         $this->load->view('base/head');
 		$this->load->view('usuario/registro_datos',$data_usuario);
-		$this->load->view('base/js');
+		$this->include_js();
     }
 
     public function validar_registro() //PARTE 1 DEL REGISTRO
@@ -74,6 +74,8 @@ class RegistroControlador extends UTP_Controller {
                     $ROWDATA['SESSION_APELLIDOS'] = $row->alumno_apellidos;
                     $ROWDATA['SESSION_ID'] = $row->ID;
                     $this->session->set_userdata($ROWDATA);
+                    //REGISTRAR INFORMACIÓN DE DATOS PERSONALES DEL USUARIO
+                    $this->usuariom->establecer_configuracion($row->ID);
                 }
             }
         }

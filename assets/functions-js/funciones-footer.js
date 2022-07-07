@@ -5,13 +5,6 @@ var url = window.location.href;
 var page_name = getPageName(url);
 var re_correo_utp = new RegExp("([a-z]|[0-9])+@utp.edu.pe$");
 
-//CONFIGURACIÓN DE PUSHER - NOTIFICACIONES
-Pusher.logToConsole = false;
-var pusher = new Pusher('41b56b5d9bc46b65d611', {
-    cluster: 'us3'
-});
-var channel_notif_user = pusher.subscribe('canal-notificaciones');
-
 function getPageName(url) {
     var index = url.lastIndexOf("/") + 1;
     var filenameWithExtension = url.substr(index);
@@ -162,64 +155,6 @@ function decript_data_js(cadena) {
     return fase_4;
 }
 
-function solo_texto(e) {
-
-    especiales = [32];
-    caracteres = ["%"];
-
-    key = e.keyCode || e.which;
-    tecla = String.fromCharCode(key).toLowerCase();
-
-    tecla_especial = false;
-
-    if (caracteres.indexOf(tecla) == -1) {
-        for (var i in especiales) {
-            if (key == especiales[i]) {
-                tecla_especial = true; break;
-            } else if (key > 96 && key < 123) {
-                //LETRAS MINUSCULAS
-                tecla_especial = true; break;
-            } else if (key > 64 && key < 91) {
-                //LETRAS MAYUSCULAS
-                tecla_especial = true; break;
-            }
-        }
-    }
-
-    if (!tecla_especial)
-        return false;
-}
-
-function numeros_decimales(e) {
-
-    especiales = [8, 9, 37, 39, 46];
-    numeros = "0123456789.";
-
-    key = e.keyCode || e.which;
-    tecla = String.fromCharCode(key).toLowerCase();
-
-    tecla_especial = false
-    for (var i in especiales) {
-        if (key == especiales[i]) { tecla_especial = true; break; }
-    }
-
-    if (numeros.indexOf(tecla) == -1 && !tecla_especial)
-        return false;
-}
-
-function numeros_enteros(e) {
-    key = e.keyCode || e.which;
-    tecla = String.fromCharCode(key).toLowerCase();
-    letras = "0123456789";
-    especiales = [8, 9, 37, 39, 46];
-    tecla_especial = false
-    for (var i in especiales) {
-        if (key == especiales[i]) { tecla_especial = true; break; }
-    }
-    if (letras.indexOf(tecla) == -1 && !tecla_especial)
-        return false;
-}
-
 function msg_swal(tipo, titulo, mensaje, tmr = 3000) {
     Swal.fire({
         icon: tipo,
@@ -228,6 +163,20 @@ function msg_swal(tipo, titulo, mensaje, tmr = 3000) {
         timer: tmr
     })
 }
+
+function msg_swal_loading(titulo, html) {
+    Swal.fire({
+        title: titulo,
+        html: html,
+        timerProgressBar: true,
+        didOpen: () => {
+            Swal.showLoading()
+        },
+        allowOutsideClick: false,
+        allowEscapeKey: false
+    })
+}
+
 
 function labelFormatter(label, series) {
     return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";

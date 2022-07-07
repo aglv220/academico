@@ -118,8 +118,7 @@ class NotificacionModelo extends CI_Model
         } else {
             $html_notify =
                 '<li class="contentedor-notify-pending">
-                    <a class="notify-pending">
-                        <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
+                    <a class="notify-pending-none">
                         <div class="notification-content">
                             <h6 class="notification-heading">No tienes notificaciones pendientes</h6>
                         </div>
