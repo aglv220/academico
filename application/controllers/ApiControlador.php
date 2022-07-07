@@ -22,7 +22,7 @@ class ApiControlador extends UTP_Controller
 
     function obtener_token()
     {
-        $result = "ERROR";
+        $result = ["token" => "ERROR"];
         $usuario = $this->input->get("usuario");
         $password = $this->input->get("password");
         if ($usuario != null && $password != null) {
@@ -33,7 +33,7 @@ class ApiControlador extends UTP_Controller
                 $result = ["token" => $token];
             }
         }
-        return json_encode($result);
+        echo json_encode($result);
     }
 
     function actualizar_token()
@@ -50,9 +50,9 @@ class ApiControlador extends UTP_Controller
 
     function web_scrapping() //$correo, $password, $fase, $token, $iduser = false
     {
-        $correo = $this->input->post("usuario_correo");
-        $pass = $this->input->post("usuario_clave");
-        $token = $this->input->post("token");
+        //$correo = $this->input->post("usuario_correo");
+        //$pass = $this->input->post("usuario_clave");
+        $token = $this->input->get("token");
         $url_ws = "http://web-scrapping.empiresoftgroup.online/?token=".$token;
 
         $data_ws = json_decode(file_get_contents($url_ws), true);
