@@ -75,10 +75,12 @@ class NotificacionModelo extends CI_Model
     {
         $limite = 1; //LIMITE POR DEFECTO SI SE IMPRIME UNA SOLA NOTIFICACION
         if ($onenotify == false) {
-            $lstnotify_all = $this->listar_notificaciones($idUser, $estado, false);
-            $cant_notify_all = count($lstnotify_all);
             $limite = 5;
         }
+        //LISTADO DE TODAS LAS NOTIFCACIONES PENDIENTES EN EL SISTEMA
+        $lstnotify_all = $this->listar_notificaciones($idUser, $estado, false);
+        $cant_notify_all = count($lstnotify_all);
+
         $userID_cript = $this->crudm->encript_data($idUser);
         $lstnotify = $this->listar_notificaciones($idUser, $estado, $limite);
         $html_notify = '';
@@ -115,7 +117,8 @@ class NotificacionModelo extends CI_Model
                         </a>
                     </li>';
             }
-        } else {
+        }
+        /*else {
             $html_notify =
                 '<li class="contentedor-notify-pending">
                     <a class="notify-pending-none">
@@ -124,26 +127,31 @@ class NotificacionModelo extends CI_Model
                         </div>
                      </a>
                 </li>';
-        }
+        }*/
         if ($onenotify == false) {
             $data_notify = [
                 "HTMLNOTIFY" => $html_notify,
                 "NOTIFYPENDALL" => $cant_notify_all,
-                "USERNOTIFY" => $userID_cript
+                "USERNOTIFY" => $userID_cript,
+                "TYPENOTIFY" => "LASTFIVE"
             ];
-            if ($pusher == false) {
+            /*if ($pusher == false) {
                 return $data_notify;
-            }
+            }*/
         } else { //IMPRIMIR ULTIMA NOTIFICACION PENDIENTE
             $data_notify = [
                 "HTMLNOTIFY" => $html_notify,
-                "USERNOTIFY" => $userID_cript
+                "NOTIFYPENDALL" => $cant_notify_all,
+                "USERNOTIFY" => $userID_cript,
+                "TYPENOTIFY" => "ONE"
             ];
         }
         if ($pusher) {
             //PUSHER NOTIFICATION
             $pusher = $this->ci_pusher->get_pusher();
             $pusher->trigger('canal-notificaciones', 'register-n', $data_notify);
+        } else {
+            return $data_notify;
         }
     }
 }

@@ -255,4 +255,10 @@ class UsuarioControlador extends UTP_Controller
         $this->load->view('usuario/recuperar_password');
         $this->include_js();
     }
+
+    //test
+    public function sum($n1, $n2){
+        return $n1 + $n2;
+    }
+
 }
