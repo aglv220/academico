@@ -161,4 +161,8 @@ class ActividadExternaControlador extends UTP_Controller {
             echo $this->actextmodelo->cambiar_estado_subtarea($value[0]);
         }  
     }
+    public function delete_subtareas(){
+        $id = $this->input->post("id");
+        $this->actextmodelo->delete_subtareas($id);
+    }
 }

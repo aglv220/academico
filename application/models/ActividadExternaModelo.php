@@ -135,5 +135,9 @@ class ActividadExternaModelo extends CI_Model
         $query = "UPDATE subtarea set estado_subtarea = 1 where pk_subtarea = $datos";
         return $this->db->query($query);
     }
+    public function delete_subtareas($id){
+        $query = "DELETE FROM subtarea WHERE pk_subtarea = $id";
+        return $this->db->query($query);
+    }
 }
 ?>

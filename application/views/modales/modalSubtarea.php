@@ -26,12 +26,12 @@ if( true )  { ?>
                                                     $contador = 0;
                                                     foreach($subtarea as $key){
                                                 ?>
-                                                <li>
+                                                <li id="<?php echo $key['pk_subtarea']?>">
                                                     <label>
                                                         <input type="checkbox" <?php echo $key["estado_subtarea"] == "0" ? '' : 'checked'?> name="campo[<?php echo $contador?>]" 
                                                         value="<?php echo $key["pk_subtarea"].",".$key["estado_subtarea"]?>"><i></i>
                                                         <span><?php echo ucfirst($key["nombre_subtarea"])." - ".$key["detalle_subtarea"]?></span>
-                                                        <a href='#' class="ti-close"></a>
+                                                        <a onclick="eliminar(<?php echo $key['pk_subtarea']?>)" class="ti-close"></a>
                                                     </label>
                                                 </li>
                                                 <?php
@@ -143,4 +143,19 @@ $('#form1').submit(function(event){
     });
 });
 
+function eliminar(id)
+{   
+    $.ajax({
+        type: "POST",
+        url:  "<?= base_url().'ActividadExternaControlador/delete_subtareas'; ?>",
+        data: {id: id},
+        success: function(data){
+            console.log(data);
+            document.getElementById(id).remove();
+        },
+            error: function(data){
+            console.log('Error: '+data);
+        },
+    });
+}
 </script>
