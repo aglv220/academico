@@ -1,15 +1,18 @@
 <?php
 
-namespace Sheetsu\Tests;
 use PHPUnit\Framework\TestCase;
-use Sheetsu\Connection;
-use Sheetsu\Response;
 
 final class OperacionTest extends TestCase
 {
-    public function testConstructSetsBasicHttpAuthWhenValidConfigurationGiven()
-    {
-        $mockDb = $this->getMockBuilder(DB::class)->disableOriginalConstructor()->getMock();
+    private $op;
+
+    public function setUp():void{
+        $this->op = new UsuarioModelo();
+    }
+
+    public function TestSumWithTwoValues(){
+        $correo = "u17200379@utp.edu.pe";
+        $this->assertEquals(1,$this->op->inicio_sesion($correo));
     }
 
 }
