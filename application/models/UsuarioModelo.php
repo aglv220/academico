@@ -44,7 +44,7 @@ class UsuarioModelo extends CI_Model
         return $UPDATE_PASS;
     }
 
-    public function registrar_usuario($correo, $password)
+    public function registrar_usuario($correo, $password, $getid = false)
     {
         $userxacceso = $this->inicio_sesion($correo);
         if (count($userxacceso) == 0) { //SI EL CORREO NO EXISTE
@@ -55,7 +55,11 @@ class UsuarioModelo extends CI_Model
             );
             $INSERT_USUARIO = $this->db->insert('usuario', $DATA_USUARIO);
             if ($INSERT_USUARIO) {
-                return "OK";
+                if ($getid) {
+                    return $this->db->insert_id();
+                } else {
+                    return "OK";
+                }
             } else {
                 return "ERROR";
             }

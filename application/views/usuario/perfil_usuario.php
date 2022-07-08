@@ -86,7 +86,7 @@
                                     <div class="basic-form">
                                         <div class="form-group">
                                             <label>Nueva contraseña</label>
-                                            <input type="password" name="usuario_newpass" class="form-control input-flat" placeholder="Ingrese su nueva contraseña si desea actualizarla" minlength="8" maxlength="8">
+                                            <input type="password" name="usuario_newpass" class="form-control input-flat" placeholder="Ingrese su nueva contraseña si desea actualizarla" minlength="8">
                                         </div>
                                     </div>
                                 </div>
