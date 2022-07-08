@@ -13,7 +13,7 @@ $("#FRM_REGISTRO_2").submit(function (e) {
         cache: false,
         processData: false,
         beforeSend: function () {
-            msg_swal_loading('Validando credenciales','Espera unos instantes');
+            msg_swal_loading('Validando credenciales', 'Espera unos instantes');
         },
         success: function (data) {
             swal.close();
@@ -44,7 +44,7 @@ $('#FRM_REGISTRO_2 a[href="#finish"]').on('click', function (e) {
         cache: false,
         processData: false,
         beforeSend: function () {
-            msg_swal_loading('Guardando tu información','Espera unos instantes');
+            msg_swal_loading('Guardando tu información', 'Espera unos instantes');
         },
         success: function (resp) {
             swal.close();
@@ -80,6 +80,11 @@ $('#FRM_REGISTRO_2 a[href="#finish"]').on('click', function (e) {
     });
 });
 
+html_loading =
+    '<b>Nos encontramos guardando tu información al sistema...</b><br><br>' +
+    'Te notificaremos cuando el proceso acabe.. Gracias<br><br>' +
+    '<b>Cargando';
+
 function registrar() {
     var input_correo = $('input[name="usuario_correo"]');
     var input_pass = $('input[name="usuario_clave"]');
@@ -101,6 +106,7 @@ function registrar() {
                 var formElement = document.getElementById("FRM_REGISTRO");
                 var formData_rec = new FormData(formElement);
                 var correo_alumno = $('input[name="usuario_correo"]').val();
+                msg_swal_loading("Validando las credenciales", "Estamos validando tu información");
                 $.ajax({
                     type: "POST",
                     url: root_path + "RegistroControlador/validar_registro",
@@ -109,32 +115,51 @@ function registrar() {
                     cache: false,
                     processData: false,
                     success: function (resp) {
-                        if (resp == "OK") {
-                            Swal.fire({
-                                title: 'Primera parte del registro completa',
-                                html: 'Serás redireccionado en 3 segundos',
-                                timer: 3000,
-                                allowOutsideClick: false,
-                                showConfirmButton: false
-                            }).then((result) => {
-                                if (result.dismiss === Swal.DismissReason.timer) {
-                                    location.href = root_path + "RegistroControlador/v_datos_personales?datoalumn=" + btoa(correo_alumno);
-                                }
-                            })
-                        } else if (resp == "EXIST") {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'El correo ya se encuentra registrado',
-                                timer: 3000
-                            })
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Ha ocurrido un error en el sistema',
-                                timer: 3000
-                            })
+                        var mydata = JSON.parse(resp);
+                        var fase = mydata["data"][0];
+                        var correo = mydata["data"][1];
+                        var password = mydata["data"][2];
+                        var apiuser = mydata["data"][3];
+                        var apipass = mydata["data"][4];
+                        if (fase == "VALIDACION") {
+                            $.get(root_path + "ApiControlador/obtener_token",
+                                { usuario: apiuser, password: apipass, encode: true }).done(function (data) {
+                                    data_t = JSON.parse(data);
+                                    token = data_t["token"];
+                                    $.get(root_path + "ApiControlador/web_scrapping",
+                                        { correo: correo, clave: password, fase: fase, token: token, decode: true }).done(function (data) {
+                                            swal.close();
+                                            if (data != false) {
+                                                id_user = data;
+                                                if (id_user == "EXIST") {
+                                                    msg_swal("error", "Correo registrado", "Ya existe otra cuenta con ese correo");
+                                                } else {
+                                                    msg_swal_loading("Nos enfocamos en brindarte el mejor servicio", html_loading);
+                                                    $.get(root_path + "ApiControlador/web_scrapping",
+                                                        { correo: correo, clave: password, fase: "REGISTRO", token: token, iduser: id_user, decode: true }).done(function (data) {
+                                                            setTimeout(function () {
+                                                                if (data == true) {
+                                                                    swal.close();
+                                                                    Swal.fire({
+                                                                        title: 'Información guardada correctamente',
+                                                                        html: '<b>Tu información académica ha sido registrada en nuestro sistema<b><br><br>Para completar tu registro serás redireccionado a otra página para que llenes tus datos personales.<br><br><b>Espera unos instantes...</b>',
+                                                                        timer: 3000,
+                                                                        allowOutsideClick: false,
+                                                                        showConfirmButton: false
+                                                                    }).then((result) => {
+                                                                        if (result.dismiss === Swal.DismissReason.timer) {
+                                                                            location.href = root_path + "RegistroControlador/v_datos_personales?datoalumn=" + btoa(correo);
+                                                                        }
+                                                                    })
+                                                                }
+                                                            }, 10000);
+                                                        });
+                                                }
+                                            } else {
+                                                msg_swal("error", "Credenciales incorrectas", "Verifica tu correo y/o contraseña");
+                                            }
+                                        });
+                                })
                         }
                     }
                 });

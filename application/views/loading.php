@@ -91,7 +91,7 @@ include_once('includes/head.php');
                             <div class="progress" style="height: 30px">
                                     <div class="progress-bar bg-success" style="width: 75%;" role="progressbar">75%</div>
                                 </div>
-                                    <div class="logo_utp">
+                                    <div class="logo_utp"></div>
                                 <img src="../public/images/logo_utp.png" alt="" srcset="">
                             </div>
                         </div>

@@ -11,6 +11,7 @@ class RegistroControlador extends UTP_Controller
         $this->load->model('UsuarioModelo', 'usuariom');
         $this->load->model('AlumnoModelo', 'alumnom');
         $this->load->model('CRUD_Modelo', 'crudm');
+        $this->load->model('ApiModelo', 'apim');
         date_default_timezone_set('America/lima');
     }
 
@@ -43,13 +44,13 @@ class RegistroControlador extends UTP_Controller
         $this->usuariom->correo = $this->input->post("usuario_correo");
         $this->usuariom->password = $this->input->post("usuario_clave");
         $correo = $this->usuariom->correo;
-        $pass = $this->usuariom->password;
-        //AQUI SE HARÍA LA VALIDACIÓN DE CREDENCIALES CON WEB SCRAPPING
+        $pass = $this->encript_data($this->usuariom->password);
+        $credentials = json_decode($this->apim->get_credentials());
+        $apiuser = $this->encript_data($credentials[0]);
+        $apipass = $this->encript_data($credentials[1]);
 
-        //redirect(base_url() . "inicio-sesion");
-        
-        //$this->op = new ApiControlador();
-        //$api_webscrapping = $this->op->web_scrapping($correo,$pass,"VALIDACION");
+        //VALIDACIÓN DE CREDENCIALES CON WEB SCRAPPING
+        echo json_encode(["data"=>["VALIDACION",$correo,$pass,$apiuser,$apipass]]);
 
         //LUEGO SE PROCEDERÍA CON EL REGISTRO DEL ALUMNO
         /*$registrar_usuario = $this->usuariom->registrar_usuario($correo, $pass);
