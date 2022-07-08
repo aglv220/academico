@@ -61,7 +61,9 @@ class ActividadExternaModelo extends CI_Model
         return $resultado->result_array();
     }
     public function consultarIdActividad($id){
-        $query = "SELECT fk_actividad from usuario_actividad_externa where pk_usuario_actividad_externa = $id";
+        $query = "SELECT fk_actividad,nombre_actividad from usuario_actividad_externa ua
+        inner join actividad a on a.pk_actividad = ua.fk_actividad
+        where pk_usuario_actividad_externa = $id";
 
         $resultado = $this->db->query($query);
         return $resultado->result_array();

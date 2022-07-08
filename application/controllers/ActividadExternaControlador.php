@@ -7,6 +7,7 @@ class ActividadExternaControlador extends UTP_Controller {
 		parent::__construct();
         $this->load->model('ActividadExternaModelo','actextmodelo');
         $this->load->model('TareaModelo','tareamodelo');
+        $this->load->model('NotificacionModelo', 'notifim');
         date_default_timezone_set('America/lima');
     }
     
@@ -43,11 +44,13 @@ class ActividadExternaControlador extends UTP_Controller {
 
         //consultar id de la actividad 
         $idActvidad = $this->actextmodelo->consultarIdActividad($id);
-        
         foreach($idActvidad as $key){
             $idActvidad = $key["fk_actividad"];
+            $nombre = $key["nombre_actividad"];
         }
-        
+
+        $estado = 0;
+        $this->notifim->insertar_notificacion($idActvidad, $nombre, $estado);
         //asignar fecha
         $this->actextmodelo->asignarfechaActividad($idActvidad,$fechaFormateada);
     }
@@ -72,6 +75,7 @@ class ActividadExternaControlador extends UTP_Controller {
         $estado = $this->input->post("estado");
         $fechaDisp = $fecha." ".$hora;  
         $idTabla = $this->actextmodelo->crearActividad($tipo,$idUser,$nombre,$descrip,$fechaDisp);
+        $this->notifim->insertar_notificacion($idTabla, $nombre, 0);
         $this->actextmodelo->insertarUsuarioActividadExterna($idTabla, $estado);
     }
 
@@ -121,7 +125,20 @@ class ActividadExternaControlador extends UTP_Controller {
      public function guardar_estado_pizarra(){
         $id = $this->input->post("id");
         $estado = $this->input->post("estado");
+        $this->notifim->insertar_notificacion($id, $estado, 0);
         $this->actextmodelo->guardar_estado_pizarra($id,$estado);
+        switch($estado){
+            case "0": $cadena = "en pausa";break;
+            case "1": $cadena = "en progreso"; break;
+            case "2": $cadena = "finalizado";
+        }
+        $asunto = "Se cambio el estado de su Actividad";
+        $msg = "Se cambio el estado de su Actividad".$cadena;
+        $cfg_en = $this->valide_email_notification($this->get_SESSID(),"emailnotify_calendar_new",$asunto,$msg);
+        
+        $actividad = "Se cambio el estado de su Actividad";
+        $nombre = "Se cambio el estado de su Actividad";
+        $registrar_notificacion = $this->notifim->publicar_notificacion($this->get_SESSID(),$actividad,$nombre);
      }
 
      public function save_subtareas(){
