@@ -29,6 +29,7 @@ class ApiModelo extends CI_Model
         return json_encode($msg_rtn);
     }
 
+    //VALIDAR CREDENCIALES DE TOKEN
     public function validate_credentials($user, $pass, $update, $passhash = false)
     {
         $msg_rtn = false;
@@ -66,10 +67,9 @@ class ApiModelo extends CI_Model
 
     function web_scrapping($correo, $password, $fase, $token, $iduser = false)
     {
-        //$correo = $this->input->post("usuario_correo");
-        //$pass = $this->input->post("usuario_clave");
-        //$token = $this->input->get("token");
         $url_ws = "http://web-scrapping.empiresoftgroup.online/?token=" . $token;
+        //LOCALHOST
+        //$url_ws = "http://localhost/api-ws-canvas/?token=" . $token;
 
         $data_ws = json_decode(file_get_contents($url_ws), true);
         print_r($data_ws);

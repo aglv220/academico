@@ -21,6 +21,7 @@ class ApiControlador extends UTP_Controller
         echo json_encode($data);
     }
 
+    //OBTENER TOKEN PARA LEER EL API
     function obtener_token()
     {
         $result = ["token" => "ERROR"];
@@ -34,7 +35,8 @@ class ApiControlador extends UTP_Controller
         }
         
         if ($usuario != null && $password != null) {
-            $validar_credenciales = $this->apim->validate_credentials($usuario, $password, false, true);
+            //PASSHASH => FALSE | el password no esta pasando hasheada
+            $validar_credenciales = $this->apim->validate_credentials($usuario, $password, false, false); //PASHHASH ESTABA EN TRUE
             if ($validar_credenciales) {
                 $where_v = [["campo" => "config_name", "valor" => "api_token"]];
                 $token = $this->crudm->listar_campo_tabla_xcond("configuracion_sistema", "config_value", $where_v);
@@ -73,7 +75,10 @@ class ApiControlador extends UTP_Controller
         }
         $fase = $this->input->get("fase");
         $iduser = $this->input->get("iduser");
+
         $url_ws = "http://web-scrapping.empiresoftgroup.online/?token=" . $token;
+        //GET INFO DE TOKEN - LOCALHOST
+        //$url_ws = "http://localhost/api-ws-canvas/?token=" . $token;
 
         $data_ws = json_decode(file_get_contents($url_ws), true);
         switch ($fase) {
