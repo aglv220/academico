@@ -36,7 +36,9 @@ class ApiControlador extends UTP_Controller
         
         if ($usuario != null && $password != null) {
             //PASSHASH => FALSE | el password no esta pasando hasheada
-            $validar_credenciales = $this->apim->validate_credentials($usuario, $password, false, false); //PASHHASH ESTABA EN TRUE
+            //LA VARIABLE ENCODE ES CUANDO EL USER Y PASS DE LA API ESTA PASANDO ENCRIPTADA
+            $pass_hash = $encode == true ? true : false;
+            $validar_credenciales = $this->apim->validate_credentials($usuario, $password, false, $pass_hash); //PASHHASH ESTABA EN TRUE
             if ($validar_credenciales) {
                 $where_v = [["campo" => "config_name", "valor" => "api_token"]];
                 $token = $this->crudm->listar_campo_tabla_xcond("configuracion_sistema", "config_value", $where_v);

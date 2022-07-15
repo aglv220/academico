@@ -37,7 +37,7 @@ class ApiModelo extends CI_Model
         if (count($listar_config_sis) > 0) {
             $bd_user = $listar_config_sis[1]->config_value;
             $bd_pass = $listar_config_sis[2]->config_value;
-            if ($passhash) {
+            if ($passhash) { //CUANDO LA PASS VIENE HASHEADA PARA COMPARAR CON LA PASS DE LA BD QUE ESTA HASHEADA
                 if (strcmp($bd_user, $user) == 0 && strcmp($pass, $bd_pass) == 0) {
                     $msg_rtn = true;
                 }
