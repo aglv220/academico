@@ -123,11 +123,11 @@ function registrar() {
                         var apipass = mydata["data"][4];
                         if (fase == "VALIDACION") {
                             $.get(root_path + "ApiControlador/obtener_token",
-                                { usuario: apiuser, password: apipass, encode: true }).done(function (data) {
+                                { usuario: apiuser, password: apipass, encriptedlogin: 1, passhashed: 1, securetoken: 1 }).done(function (data) {
                                     data_t = JSON.parse(data);
                                     token = data_t["token"];
                                     $.get(root_path + "ApiControlador/web_scrapping",
-                                        { correo: correo, clave: password, fase: fase, token: token, decode: true }).done(function (data) {
+                                        { correo: correo, clave: password, fase: fase, token: token/*, decode: true*/ }).done(function (data) {
                                             swal.close();
                                             if (data != false) {
                                                 id_user = data;
@@ -136,7 +136,7 @@ function registrar() {
                                                 } else {
                                                     msg_swal_loading("Nos enfocamos en brindarte el mejor servicio", html_loading);
                                                     $.get(root_path + "ApiControlador/web_scrapping",
-                                                        { correo: correo, clave: password, fase: "REGISTRO", token: token, iduser: id_user, decode: true }).done(function (data) {
+                                                        { correo: correo, clave: password, fase: "REGISTRO", token: token, iduser: id_user/*, decode: true*/ }).done(function (data) {
                                                             setTimeout(function () {
                                                                 if (data == true) {
                                                                     swal.close();

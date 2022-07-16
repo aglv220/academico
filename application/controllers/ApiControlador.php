@@ -25,24 +25,30 @@ class ApiControlador extends UTP_Controller
     function obtener_token()
     {
         $result = ["token" => "ERROR"];
-        $encode = $this->input->get("encode") == null ? false : $this->input->get("encode");
-        if ($encode) {
+
+        //CREDENCIALES VIENEN ENCRIPTADAS
+        $encripted_login = $this->input->get("encriptedlogin") == null ? 0 : $this->input->get("encriptedlogin");
+        //SEGURIDAD EN EL TOKEN
+        $securetoken = $this->input->get("securetoken") == null ? 0 : $this->input->get("securetoken");
+
+        if ($encripted_login == 1) {
             $usuario = $this->decript_data($this->input->get("usuario"));
             $password = $this->decript_data($this->input->get("password"));
         } else {
             $usuario = $this->input->get("usuario");
             $password = $this->input->get("password");
         }
-        
+
         if ($usuario != null && $password != null) {
-            //PASSHASH => FALSE | el password no esta pasando hasheada
-            //LA VARIABLE ENCODE ES CUANDO EL USER Y PASS DE LA API ESTA PASANDO ENCRIPTADA
-            $pass_hash = $encode == true ? true : false;
-            $validar_credenciales = $this->apim->validate_credentials($usuario, $password, false, $pass_hash); //PASHHASH ESTABA EN TRUE
+            //LA VARIABLE passhashed ES CUANDO PASS DE LA API ESTA PASANDO HASHEADA
+            $hashedpass = $this->input->get("passhashed") == null ? 0 : $this->input->get("passhashed");
+            //$pass_hash = $encode == true ? true : false;
+
+            $validar_credenciales = $this->apim->validate_credentials($usuario, $password, false, $hashedpass); //PASHHASH ESTABA EN TRUE
             if ($validar_credenciales) {
                 $where_v = [["campo" => "config_name", "valor" => "api_token"]];
                 $token = $this->crudm->listar_campo_tabla_xcond("configuracion_sistema", "config_value", $where_v);
-                if ($encode) {
+                if ($securetoken == 1) {
                     $token_final = $this->encript_data($token);
                 } else {
                     $token_final = $token;
@@ -67,19 +73,20 @@ class ApiControlador extends UTP_Controller
 
     function web_scrapping()
     {
-        $decode = $this->input->get("decode") == null ? false : $this->input->get("decode");
+        //$decode = $this->input->get("decode") == null ? false : $this->input->get("decode");
         $correo = $this->input->get("correo");
         $pass = $this->input->get("clave");
-        if($decode){
+        /*if($decode){
             $token = $this->decript_data($this->input->get("token"));
         } else {
             $token = $this->input->get("token");
-        }
+        }*/
+        $token = $this->input->get("token");
+
         $fase = $this->input->get("fase");
         $iduser = $this->input->get("iduser");
 
         $url_ws = "http://web-scrapping.empiresoftgroup.online/?token=" . $token;
-        //GET INFO DE TOKEN - LOCALHOST
         //$url_ws = "http://localhost/api-ws-canvas/?token=" . $token;
 
         $data_ws = json_decode(file_get_contents($url_ws), true);
@@ -88,22 +95,23 @@ class ApiControlador extends UTP_Controller
                 foreach ($data_ws as $key => $value) {
                     $user_api = $value["username"];
                     $pass_api = $value["password"];
-                    $new_pass_get = $pass;
+                    /*$new_pass_get = $pass;
                     if($decode){
                         $new_pass_get = $this->decript_data($pass);
                     } else {
                         $new_pass_get = $pass;
-                    }
-                    if (strcmp($pass_api, $new_pass_get) == 0 && strcmp($correo, $user_api) == 0) {
+                    }*/
+                    $new_pass_get = $this->decript_data($pass);
+                    if (strcmp($pass_api, $new_pass_get) == 0 && strcmp($correo, $user_api) == 0) { /* password_verify($new_pass_get, $pass_api) */
                         $registrar_usuario = $this->usuariom->registrar_usuario($correo, $pass, true);
-                        if($registrar_usuario == "EXIST"){
+                        if ($registrar_usuario == "EXIST") {
                             echo "EXIST";
                         } else {
                             echo $this->encript_data($registrar_usuario);
                         }
                     } else {
                         echo false;
-                    }                  
+                    }
                 }
                 break;
             case 'REGISTRO':
@@ -132,7 +140,7 @@ class ApiControlador extends UTP_Controller
                         }
                     }
                 }
-                if($msg_return != false && $msg_return != 0){
+                if ($msg_return != false && $msg_return != 0) {
                     echo true;
                 } else {
                     echo false;

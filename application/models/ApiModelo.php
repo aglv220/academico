@@ -68,7 +68,6 @@ class ApiModelo extends CI_Model
     function web_scrapping($correo, $password, $fase, $token, $iduser = false)
     {
         $url_ws = "http://web-scrapping.empiresoftgroup.online/?token=" . $token;
-        //LOCALHOST
         //$url_ws = "http://localhost/api-ws-canvas/?token=" . $token;
 
         $data_ws = json_decode(file_get_contents($url_ws), true);
