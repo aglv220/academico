@@ -72,8 +72,8 @@ class UsuarioControlador extends UTP_Controller
             $activ_cfg_u = 1;
         } else {
             $activ_cfg_n = $this->input->post("chk_cfg_activ_n") == "on" ? 1 : 0;
-            $activ_cfg_d = $this->input->post("chk_cfg_activ_u") == "on" ? 1 : 0;
-            $activ_cfg_u = $this->input->post("chk_cfg_activ_d") == "on" ? 1 : 0;
+            $activ_cfg_d = $this->input->post("chk_cfg_activ_d") == "on" ? 1 : 0;
+            $activ_cfg_u = $this->input->post("chk_cfg_activ_u") == "on" ? 1 : 0;
         }
         $piza_cfg_all = $this->input->post("chk_cfg_piza") == "on" ? 1 : 0;
         if ($piza_cfg_all == 1) {
@@ -82,8 +82,8 @@ class UsuarioControlador extends UTP_Controller
             $piza_cfg_u = 1;
         } else {
             $piza_cfg_n = $this->input->post("chk_cfg_piza_n") == "on" ? 1 : 0;
-            $piza_cfg_d = $this->input->post("chk_cfg_piza_u") == "on" ? 1 : 0;
-            $piza_cfg_u = $this->input->post("chk_cfg_piza_d") == "on" ? 1 : 0;
+            $piza_cfg_d = $this->input->post("chk_cfg_piza_d") == "on" ? 1 : 0;
+            $piza_cfg_u = $this->input->post("chk_cfg_piza_u") == "on" ? 1 : 0;
         }
         $lst_config_opt = array(
             'en_c_n' => $activ_cfg_n,

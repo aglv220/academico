@@ -15,7 +15,10 @@ class CursoModelo extends CI_Model
             $id_curso = $lst_curso_xnom[0]->pk_curso;
             return $id_curso;
         } else {
-            $data_c = ["curso_nombre" => $curso_nom];
+            //OBTENER EL NOMBRE DE LA SECCIÓN
+            $array_value = explode("(", $curso_nom);
+            $get_seccion = str_replace(")", "", $array_value[1]);
+            $data_c = ["curso_nombre" => $curso_nom, "curso_seccion" => $get_seccion];
             return $this->crudm->ingresar_data($data_c, "curso");
         }
     }

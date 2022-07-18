@@ -75,10 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
+	//'hostname' => 'localhost',
 	'hostname' => '149.62.37.204',
-	'username' => 'u726886248_utp',
+	'username' => 'u726886248_utp2', //u726886248_utp
 	'password' => 'Qw3rTy2O22',
-	'database' => 'u726886248_bd_academico',
+	'database' => 'u726886248_bd_academicov2', //u726886248_bd_academico
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

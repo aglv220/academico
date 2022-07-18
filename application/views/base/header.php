@@ -81,7 +81,9 @@
                                             echo $data_notify["HTMLNOTIFY"];
                                         } ?>
                                     </ul>
-                                    <div class="c-notify-pending-none mt-4 mb-4 <?php if (isset($data_notify) && $data_notify["NOTIFYPENDALL"] > 0) { echo "display-none"; } ?>" >
+                                    <div class="c-notify-pending-none mt-4 mb-4 <?php if (isset($data_notify) && $data_notify["NOTIFYPENDALL"] > 0) {
+                                                                                    echo "display-none";
+                                                                                } ?>">
                                         <a class="notify-pending-none">
                                             <div class="notification-content">
                                                 <h6 class="notification-heading">No tienes notificaciones pendientes</h6>
@@ -90,7 +92,16 @@
                                     </div>
 
                                 </div>
+
+                                <div class="dropdown-content-heading d-flex justify-content-center">
+                                        <a class="notify-pending-deleteall text-black">
+                                            <i class="fa fa-trash"></i>  Eliminar todas las notificaciones
+                                        </a>
+                                </div>
                             </div>
+
+
+
                         </li>
                         <li class="icons dropdown d-none d-md-flex">
                             <span>Hola, <?= $this->session->userdata('SESSION_NOMBRES') ?></span>

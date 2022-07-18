@@ -15,6 +15,8 @@ function print_notify_header(notify_html, user_notify, num_allnotify, type_notif
             //CANTIDAD DE NOTIFICACIONES POR HTML
             var count_notify = containt_notify.length;
 
+            console.log("nro. actualizado => " + parseInt(count_notify_num.html()) + " | new number => " + num_allnotify);
+
             var first_notify = containt_notify.last();
             if (type_notify == "ONE") { //SI SE AGREGO UNA NUEVA NOTIFICACION
                 cantidad_notify = parseInt(count_notify_num.html());
@@ -90,6 +92,8 @@ function update_notifications() {
                 count_notify_num.html(num_notify_new.toString());
                 count_notify_txt.html(num_notify_new.toString() + txt_notify);
             }*/
+        }).done(function () {
+            //$.post(root_path + "NotificacionControlador/listar_notificaciones_actualizadas");
         });
     })
 }
