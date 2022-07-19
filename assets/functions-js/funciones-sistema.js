@@ -15,7 +15,7 @@ function print_notify_header(notify_html, user_notify, num_allnotify, type_notif
             //CANTIDAD DE NOTIFICACIONES POR HTML
             var count_notify = containt_notify.length;
 
-            console.log("nro. actualizado => " + parseInt(count_notify_num.html()) + " | new number => " + num_allnotify);
+            //console.log("nro. actualizado => " + parseInt(count_notify_num.html()) + " | new number => " + num_allnotify);
 
             var first_notify = containt_notify.last();
             if (type_notify == "ONE") { //SI SE AGREGO UNA NUEVA NOTIFICACION

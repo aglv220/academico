@@ -11,7 +11,6 @@ function actividadesyTareasPausa() {
         url: root_path + "ActividadExternaControlador/get_tareas_pausa",
         success: function (data) {
             var mydata = JSON.parse(data);
-            console.log(mydata);
             mydata.forEach(pausa => {
                 button1 = ``;
                 if (pausa.tipo !== "1") {
@@ -33,8 +32,7 @@ function actividadesyTareasPausa() {
                         </div>                                               
                     </div>
                 `;
-            });
-            
+            });            
             $(".inicio").append(html);
         },
         error: function (data) {
@@ -61,7 +59,7 @@ function actividadesyTareasProceso() {
                                 <i class="fa fa-edit"></i></button>`;
                 } else {
                     button1 = ``;
-                    button2 = `<button title="Editar Estado" type="button" class="open-modal-container btn-modal-exam" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodalEditTarea(${pausa.id})" data-id="${pausa.id}">
+                    button2 = `<button title="Editar Estado" type="button" class="open-modal-container btn-modal-exam btn-action a-estado" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodalEditTarea(${pausa.id})" data-id="${pausa.id}">
                                 <i class="fa fa-edit"></i></button>`;
                 }
                 html += `<div class="actividad-tj actividad-proceso">
@@ -97,14 +95,14 @@ function actividadesyTareasFin() {
             var mydata = JSON.parse(data);
             mydata.forEach(pausa => {
                 if (pausa.tipo !== "1") {
-                    button1 = `<button style="max-width: 38px;" title="Crear subtarea" type="button" class="open-modal-container btn btn-ligh btn-modal-exam" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodal(${pausa.id})" data-id="${pausa.id}">
+                    button1 = `<button style="max-width: 38px;" title="Crear subtarea" type="button" class="open-modal-container btn-action a-subtarea btn-modal-exam" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodal(${pausa.id})" data-id="${pausa.id}">
                                 <i class="fa fa-eye"></i>
                             </button>`;
-                    button2 = `<button style="max-width: 10px;" title="Editar Estado" type="button" class="open-modal-container btn btn-ligh btn-modal-exam" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodalEdit(${pausa.id})" data-id="${pausa.id}">
+                    button2 = `<button style="max-width: 10px;" title="Editar Estado" type="button" class="open-modal-container btn-action a-estado btn-modal-exam" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodalEdit(${pausa.id})" data-id="${pausa.id}">
                                 <i class="fa fa-edit"></i></button>`;
                 } else {
                     button1 = ``;
-                    button2 = `<button style="max-width: 10px;" title="Editar Estado" type="button" class="open-modal-container btn btn-ligh btn-modal-exam" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodalEditTarea(${pausa.id})" data-id="${pausa.id}">
+                    button2 = `<button style="max-width: 10px;" title="Editar Estado" type="button" class="open-modal-container btn-action a-estado btn-modal-exam" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodalEditTarea(${pausa.id})" data-id="${pausa.id}">
                                 <i class="fa fa-edit"></i></button>`;
                 }
                 html += `<div class="actividad-tj actividad-fin">
@@ -130,7 +128,6 @@ function actividadesyTareasFin() {
 }
 
 function capitalizarPrimeraLetra(str) {
-    console.log(str);
     new_str = str != null && str != "" ? str.charAt(0).toUpperCase() + str.slice(1) : "";
     return new_str;
 }
