@@ -94,9 +94,9 @@
                                 </div>
 
                                 <div class="dropdown-content-heading d-flex justify-content-center">
-                                        <a class="notify-pending-deleteall text-black">
-                                            <i class="fa fa-trash"></i>  Eliminar todas las notificaciones
-                                        </a>
+                                    <a class="notify-pending-deleteall text-black">
+                                        <i class="fa fa-trash"></i> Eliminar todas las notificaciones
+                                    </a>
                                 </div>
                             </div>
 

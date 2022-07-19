@@ -30,18 +30,25 @@ class TareaControlador extends UTP_Controller
     $id = $this->input->post("id");
     $estado = $this->input->post("estado");
     $this->tarea->guardar_estado_pizarra($id, $estado);
-    $this->notifim->insertar_notificacion($id, $estado, 0);
-    switch($estado){
-      case "0": $cadena = "en pausa";break;
-      case "1": $cadena = "en progreso"; break;
-      case "2": $cadena = "finalizado";
-  }
+    //$this->notifim->insertar_notificacion($id, $estado, 0);
+    switch ($estado) {
+      case "0":
+        $cadena = "en pausa";
+        break;
+      case "1":
+        $cadena = "en progreso";
+        break;
+      case "2":
+        $cadena = "finalizado";
+    }
     $asunto = "Se cambio el estado de su Actividad";
-        $msg = "Se cambio el estado de su Actividad".$cadena;
-        $cfg_en = $this->valide_email_notification($this->get_SESSID(),"emailnotify_calendar_new",$asunto,$msg);
-        
-        $actividad = "Se cambio el estado de su Actividad";
-        $nombre = "Se cambio el estado de su Actividad";
-        $registrar_notificacion = $this->notifim->publicar_notificacion($this->get_SESSID(),$actividad,$nombre);
+    $msg = "Se cambio el estado de su Actividad" . $cadena;
+    $cfg_en = $this->valide_email_notification($this->get_SESSID(), "emailnotify_calendar_new", $asunto, $msg);
+
+    $where_c = [["campo" => "pk_usuario_actividad", "valor" => $id]];
+    $id_actividad = $this->crudm->listar_campo_tabla_xcond("usuario_actividad", "fk_actividad", $where_c);
+    $actividad = "Se cambio el estado de su Actividad";
+    $nombre = "Se cambio el estado de su Actividad";
+    $registrar_notificacion = $this->notifim->publicar_notificacion($this->get_SESSID(), $id_actividad, $nombre);
   }
 }

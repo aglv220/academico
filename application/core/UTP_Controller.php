@@ -71,11 +71,11 @@ class UTP_Controller extends CI_Controller
     {
         $config_user = $this->crudm->listar_tabla_xcampo('configuracion_usuario', [["campo" => "fk_usuario", "valor" => $userID]]);
         if (count($config_user) > 0) {
-            if ($config_user[$config] == 1) {
+            $value_configbd = $config_user[0]->$config;
+            if ($value_configbd == "1") {
                 $lst_user = $this->userm->inicio_sesion($userID, "pk_usuario");
-                $asunto = "";
-                $msg = "";
-                $send_mail = $this->enviar_email($lst_user->usuario_correo, $asunto, $msg);
+                $correo_user = $lst_user[0]->usuario_correo;
+                $send_mail = $this->enviar_email($correo_user, $asunto, $msg);
                 return $send_mail;
             } else {
                 return false;
@@ -144,8 +144,7 @@ class UTP_Controller extends CI_Controller
                 $nombre_archivo = "registro";
                 $carpeta_archivo = "registro/";
             }
-        }
-        
+        }        
         if ($is_pagina_registro == false) {
             if (isset($url[5])) { //SI ES CUALQUIER OTRA PAGINA DEL PROYECTO
                 $nombre_archivo = $url[5];
@@ -161,8 +160,7 @@ class UTP_Controller extends CI_Controller
                 $nombre_archivo = "inicio-sesion";
                 $carpeta_archivo = "usuario/";
             }
-        }
-
+        }        
         $file_js = "funciones-" . $nombre_archivo . ".js";
         $assets_js = "assets/functions-js/";
         $ruta_file_js = base_url() . $assets_js . $carpeta_archivo . $file_js;
@@ -175,7 +173,6 @@ class UTP_Controller extends CI_Controller
         if (file_exists($ruta_rel_file)) {
             $script_file = '<script src="' . $ruta_file_js . '"></script>'; //type="module"
         }
-
         $data_js["footer_validar_page"] = $is_pagina_registro;
         $data_js["footer_script_file"] = $script_file;
         //CARGAR EL ARCHIVO JS

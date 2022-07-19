@@ -74,7 +74,7 @@ class NotificacionModelo extends CI_Model
     function obtener_notificaciones($idUser, $estado, $onenotify, $pusher = true)
     {
         $limite = 1; //LIMITE POR DEFECTO SI SE IMPRIME UNA SOLA NOTIFICACION
-        if ($onenotify == false) {
+        if ($onenotify == false) { //SI SE IMPRIMIRAN LAS ULTIMAS 5 NOTIFICACIONES
             $limite = 5;
         }
         //LISTADO DE TODAS LAS NOTIFCACIONES PENDIENTES EN EL SISTEMA
