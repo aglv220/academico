@@ -94,6 +94,7 @@ class ActividadExternaControlador extends UTP_Controller
         $data["subtarea"] = $this->actextmodelo->get_subTareas($pkActividad);
         $this->load->view('modales/modalSubtarea', $data);
     }
+
     public function get_modal_edit_externa($pkActividad = null)
     {
         $post = $this->input->post();
@@ -166,6 +167,29 @@ class ActividadExternaControlador extends UTP_Controller
         $id = $this->input->post("id");
         $nombre = $this->input->post("nombre");
         $this->actextmodelo->save_subtarea($id, $nombre);
+        $where_c1 = [["campo" => "fk_actividad", "valor" => $id]];
+        $id_actext = $this->crudm->listar_campo_tabla_xcond("usuario_actividad_externa", "pk_usuario_actividad_externa", $where_c1);
+        //OBTENER LISTADO ACTUALIZADO DE SUBTAREAS DE LA ACTIVIDAD
+        $return = ["subtareas" => "ERROR"];
+        $subtareas = $this->actextmodelo->get_subTareas($id_actext);
+        if (count($subtareas) > 0) {
+            $contador = 0;
+            $html_subtareas = "";
+            foreach ($subtareas as $key) {
+                $estado = $key["estado_subtarea"] == "0" ? '' : 'checked';
+                $class_chk = ".chkdel_st";
+                $html_subtareas .= '<li id="' . $key['pk_subtarea'] . '">' .
+                    '<label>' .
+                    '<input class="checkbox" type="checkbox" ' . $estado . '  name="campo[' . $contador . ']" value="' . $key["pk_subtarea"] . "," . $key["estado_subtarea"] . '"><i></i>' .
+                    '<span>' . ucfirst($key["nombre_subtarea"]) . " - " . $key["detalle_subtarea"] . '</span>' .
+                    '<a onclick="eliminar(' . $key['pk_subtarea'] . ')" class="ti-close"></a>' .
+                    '</label>' .
+                    '</li>';
+                $contador++;
+            }//onchange="select_st(' . $class_chk . ')"
+            $return = ["subtareas" => $html_subtareas];
+        }
+        echo json_encode($return);
     }
     public function guardar_estado_subtarea()
     {

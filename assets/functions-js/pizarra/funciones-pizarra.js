@@ -62,8 +62,7 @@ function actividadesyTareasProceso() {
                     button2 = `<button title="Editar Estado" type="button" class="open-modal-container btn-modal-exam btn-action a-estado" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodalEditTarea(${pausa.id})" data-id="${pausa.id}">
                                 <i class="fa fa-edit"></i></button>`;
                 }
-                html += `<div class="actividad-tj actividad-proceso">
-            <div class="title-actividad">
+                html += `<div class="actividad-tj actividad-proceso"><div class="title-actividad">
                         <span>${capitalizarPrimeraLetra(pausa.nombre_actividad)}</span>
                         </div>
                         <div class="descrp-actividad">
@@ -155,9 +154,10 @@ function showmodal(pkActividad) {
             mostrarLoader();
         },
         success: function (data) {
-            ocultarLoader();
-            if (data !== null && data !== '' && data !== undefined) {
-                $('#my-modal-content').html('').html(data);
+            ocultarLoader();            
+            if (data !== null && data !== '' && data !== undefined) {           
+                $('#my-modal-content').html('');     
+                $('#my-modal-content').html(data);
                 $("#my-modal").modal();
             }
         },
