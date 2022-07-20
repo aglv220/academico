@@ -54,6 +54,9 @@
         <script src="<?= base_url() ?>assets/js/plugins-init/jquery-steps-init.js"></script>
     <?php } ?>
 
+    <!-- Data Table -->
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
     <!--  flot-chart js -->
     <script src="<?= base_url() ?>assets/plugins/flot/js/jquery.flot.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/flot/js/jquery.flot.pie.js"></script>

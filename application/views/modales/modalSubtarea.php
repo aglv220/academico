@@ -42,7 +42,7 @@ if (true) { ?>
                                     </div>
 
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-block btn-update-selected" disabled>Actualizar seleccionadas</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-update-selected" disabled>Marcar seleccionadas como completado</button>
                             </form>
 
                         </div>

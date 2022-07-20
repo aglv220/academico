@@ -23,6 +23,8 @@
 
     <link href="<?= base_url() ?>assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
 
+    <link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+
     <script src="<?= base_url() ?>assets/functions-js/funciones-header.js"></script>
 
     <!--<link href="<?= base_url() ?>assets/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">-->

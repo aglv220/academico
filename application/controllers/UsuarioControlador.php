@@ -94,11 +94,34 @@ class UsuarioControlador extends UTP_Controller
             'en_b_u' => $piza_cfg_u,
         );
         $update_configuracion = $this->usuariom->establecer_configuracion($idUser, $lst_config_opt);
-        if($update_configuracion){
+        if ($update_configuracion) {
             echo "OK";
         } else {
             echo "ERROR";
         }
+    }
+
+    public function obtener_historial_usuario($userID)
+    {
+        $this->is_loged_off();
+        $html_history = "";
+        $history_user = $this->usuariom->listar_historial_usuario($userID);
+        foreach ($history_user as $row) {
+            $fecha = $row->FECHA;
+            $modulo = $row->NOM_MOD;
+            $accion = $row->ACCION;
+            $titulo = $row->TITULO;
+            $detalle = $row->DETALLE;
+            $nombres = $row->NOMBRES;
+            $html_history .= "<tr>";
+            $html_history .= "<td>" . $fecha . "</td>";
+            $html_history .= "<td>" . $modulo . "</td>";
+            $html_history .= "<td>" . $accion . "</td>";
+            $html_history .= "<td>" . $titulo . "</td>";
+            $html_history .= "<td>" . $detalle . "</td>";
+            $html_history .= "</tr>";
+        }
+        return $html_history;
     }
 
     public function obtener_configuracion_usuario($userID)
@@ -247,6 +270,16 @@ class UsuarioControlador extends UTP_Controller
         $this->pie_pagina();
     }
 
+    public function historial_usuario()
+    {
+        $this->is_loged_off();
+        $data_header['title_page'] = 'Historial de usuario';
+        $data_page['history_user'] = $this->obtener_historial_usuario($this->get_SESSID());
+        $this->cabecera_pagina($data_header);
+        $this->load->view('usuario/historial', $data_page);
+        $this->pie_pagina();
+    }
+
     public function recuperar_password()
     {
         $this->is_loged_on();
@@ -257,8 +290,8 @@ class UsuarioControlador extends UTP_Controller
     }
 
     //test
-    public function sum($n1, $n2){
+    public function sum($n1, $n2)
+    {
         return $n1 + $n2;
     }
-
 }

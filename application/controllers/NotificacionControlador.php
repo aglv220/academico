@@ -22,7 +22,7 @@ class NotificacionControlador extends UTP_Controller
         $id_user = $this->get_SESSID();
         $insertar_notificacion = $this->notifim->insertar_notificacion($actividad, $nombre, $estado);
         if ($insertar_notificacion) {
-            $this->notifim->obtener_notificaciones($id_user, "0", false);
+            $this->notifim->obtener_notificaciones($id_user, "0", false, true);
             return true;
         } else {
             return false;
@@ -32,20 +32,28 @@ class NotificacionControlador extends UTP_Controller
     public function actualizar_estado_notificacion()
     {
         $id_user = $this->get_SESSID();
-        $ID_notify = $this->decript_data($this->input->post("ID_notify"));
+        $ID_notify = $this->decript_data($this->input->post("ID_notify"));        
         $update_notify = $this->notifim->actualizar_estado_notificacion($ID_notify, 1);
         if ($update_notify) {
-            $this->notifim->obtener_notificaciones($id_user, "0", false);
-            $cant_notify_pend = count($this->notifim->listar_notificaciones($id_user, "0", false));
-            echo $cant_notify_pend;
+            $only_update = true;
+            $this->notifim->obtener_notificaciones($id_user, "0", false, true, $only_update);
         } else {
             echo "NONE";
+        }
+    }
+
+    public function actualizar_estado_notificaciones()
+    {
+        $id_user = $this->get_SESSID();
+        $status = $this->notifim->actualizar_estado_notificaciones($id_user, "1");
+        if($status){
+            $this->notifim->obtener_notificaciones($id_user, "0", false, true);
         }
     }
 
     public function listar_notificaciones_actualizadas()
     {
         $id_user = $this->get_SESSID();
-        $this->notifim->obtener_notificaciones($id_user, "0", false);
+        $this->notifim->obtener_notificaciones($id_user, "0", false, true);
     }
 }

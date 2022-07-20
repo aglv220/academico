@@ -68,6 +68,19 @@ class UsuarioModelo extends CI_Model
         }
     }
 
+    public function listar_historial_usuario($userID)
+    {
+        $REPORT_SQL = "CALL LISTAR_HISTORIAL_USUARIO(?)";
+        $DATA = array(
+            'IDUSER' => $userID
+        );
+        $consulta = $this->db->query($REPORT_SQL, $DATA);
+        $result = $consulta->result();
+        $consulta->next_result();
+        $consulta->free_result();
+        return $result;
+    }
+
     public function establecer_configuracion($userID, $config_opt = array())
     {
         $config_user = $this->crudm->listar_tabla_xcampo('configuracion_usuario', [["campo" => "fk_usuario", "valor" => $userID]]);

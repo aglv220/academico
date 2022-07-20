@@ -50,7 +50,7 @@ class NotificacionModelo extends CI_Model
         $estado = "0";
         $insertar_notificacion = $this->notifim->insertar_notificacion($actividad, $nombre, $estado);
         if ($insertar_notificacion) {
-            $this->notifim->obtener_notificaciones($id_user, "0", false);
+            $this->notifim->obtener_notificaciones($id_user, "0", false, true);
             return true;
         } else {
             return false;
@@ -71,7 +71,18 @@ class NotificacionModelo extends CI_Model
         return $success;
     }
 
-    function obtener_notificaciones($idUser, $estado, $onenotify, $pusher = true)
+    public function actualizar_estado_notificaciones($userID, $estado)
+    {
+        $NOTIFY_SQL = "CALL CAMBIAR_ESTADO_NOTIFICACIONES(?,?)";
+        $DATA = array(
+            'ID' => $userID,
+            'ESTADO' => $estado
+        );
+        $consulta = $this->db->query($NOTIFY_SQL, $DATA);
+        return true;
+    }
+
+    function obtener_notificaciones($idUser, $estado, $onenotify, $pusher, $onlyupdate = false)
     {
         $limite = 1; //LIMITE POR DEFECTO SI SE IMPRIME UNA SOLA NOTIFICACION
         if ($onenotify == false) { //SI SE IMPRIMIRAN LAS ULTIMAS 5 NOTIFICACIONES
@@ -89,9 +100,6 @@ class NotificacionModelo extends CI_Model
                 $id_notif = $row->ID;
                 $nom_notif = $row->NOMBRE;
                 $fecreg_notif = $row->FECREG;
-                //$estado_notif = $row->ESTADO;
-                //$nom_act = $row->ACTIVIDAD;
-
                 $DATE_NOW = date("d-m-Y");
                 $DATE_YESTERDAY = date("d-m-Y", strtotime("-1 day", strtotime($DATE_NOW)));
                 $FULLDAY_NOTIF = date("d-m-Y", strtotime($fecreg_notif));
@@ -103,9 +111,7 @@ class NotificacionModelo extends CI_Model
                 } else {
                     $FECHA_NOTIF = date("d-m-Y h:ia", strtotime($fecreg_notif));
                 }
-
                 $id_encript = $this->crudm->encript_data($id_notif);
-
                 $html_notify .=
                     '<li class="contentedor-notify-pending">
                         <a class="notify-pending" js-id="' . $id_encript . '">
@@ -118,32 +124,21 @@ class NotificacionModelo extends CI_Model
                     </li>';
             }
         }
-        /*else {
-            $html_notify =
-                '<li class="contentedor-notify-pending">
-                    <a class="notify-pending-none">
-                        <div class="notification-content">
-                            <h6 class="notification-heading">No tienes notificaciones pendientes</h6>
-                        </div>
-                     </a>
-                </li>';
-        }*/
         if ($onenotify == false) {
             $data_notify = [
                 "HTMLNOTIFY" => $html_notify,
                 "NOTIFYPENDALL" => $cant_notify_all,
                 "USERNOTIFY" => $userID_cript,
-                "TYPENOTIFY" => "LASTFIVE"
+                "TYPENOTIFY" => "LASTFIVE",
+                "ONLYUPDATE" => $onlyupdate
             ];
-            /*if ($pusher == false) {
-                return $data_notify;
-            }*/
         } else { //IMPRIMIR ULTIMA NOTIFICACION PENDIENTE
             $data_notify = [
                 "HTMLNOTIFY" => $html_notify,
                 "NOTIFYPENDALL" => $cant_notify_all,
                 "USERNOTIFY" => $userID_cript,
-                "TYPENOTIFY" => "ONE"
+                "TYPENOTIFY" => "ONE",
+                "ONLYUPDATE" => $onlyupdate
             ];
         }
         if ($pusher) {

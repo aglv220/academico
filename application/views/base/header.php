@@ -90,18 +90,13 @@
                                             </div>
                                         </a>
                                     </div>
-
                                 </div>
-
                                 <div class="dropdown-content-heading d-flex justify-content-center">
                                     <a class="notify-pending-deleteall text-black">
                                         <i class="fa fa-trash"></i> Eliminar todas las notificaciones
                                     </a>
                                 </div>
                             </div>
-
-
-
                         </li>
                         <li class="icons dropdown d-none d-md-flex">
                             <span>Hola, <?= $this->session->userdata('SESSION_NOMBRES') ?></span>
@@ -123,7 +118,12 @@
                                                 <div class="badge gradient-3 badge-pill gradient-1"></div>
                                             </a>
                                         </li>
-
+                                        <li>
+                                            <a href="<?= base_url() ?>usuario/historial">
+                                                <i class="mdi mdi-history"></i> <span>Mi historial</span>
+                                                <div class="badge gradient-3 badge-pill gradient-1"></div>
+                                            </a>
+                                        </li>
                                         <hr class="my-2">
                                         <li><a href="<?= base_url() ?>LoginControlador/cerrar_sesion"><i class="icon-logout"></i> <span>Cerrar Sesión</span></a></li>
                                     </ul>

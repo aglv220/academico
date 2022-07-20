@@ -175,3 +175,9 @@ $("#FRM_CONFIGURACION").submit(function (e) {
         }
     });
 });
+
+/******** HISTORIAL DE SISTEMA *******/
+
+if($("#tblhistory").length != 0){
+    var tblhistory = $('#tblhistory').DataTable();
+}
