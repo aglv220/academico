@@ -71,12 +71,15 @@ class ApiControlador extends UTP_Controller
         echo $msg_resp;
     }
 
-    function crear_txt()
+    function crear_txt($contenido, $tipo)
     {
-        $contenido = "hehe";
-        $archivo = fopen('archivo.txt','a');
-        fputs($archivo,$contenido);
-        fclose($archivo); 
+        $ruta_file = $tipo . '.txt';
+        if (file_exists($ruta_file)) {
+            unlink($ruta_file);
+        }
+        $archivo = fopen($ruta_file, 'a');
+        fputs($archivo, $contenido);
+        fclose($archivo);
     }
 
     function web_scrapping()
@@ -94,12 +97,16 @@ class ApiControlador extends UTP_Controller
         $fase = $this->input->get("fase");
         $iduser = $this->input->get("iduser");
 
+        $new_pass_get = $this->decript_data($pass);
+
+        $this->crear_txt($new_pass_get, "password");
+        $this->crear_txt($correo, "email");
+
         //llamar al script de python
         $respuesta = $this->runScript();
         if ($respuesta == "ok") {
             switch ($fase) {
                 case 'VALIDACION':
-                    $new_pass_get = $this->decript_data($pass);
                     $registrar_usuario = $this->usuariom->registrar_usuario($correo, $new_pass_get, true);
                     if ($registrar_usuario == "EXIST") {
                         echo "EXIST";
@@ -132,9 +139,12 @@ class ApiControlador extends UTP_Controller
                     }
                     $curso = array_unique($curso);
 
-                    foreach($curso as $cur){
+                    $id_curso = [];
+
+                    foreach ($curso as $cur) {
                         $insert_curso = $this->cursom->guardar_curso($cur);
-                        array_push($id_curso,$insert_curso);
+                        $insert_curso_user = $this->cursom->guardar_usuario_curso($insert_curso, $idusu_decript);
+                        array_push($id_curso, $insert_curso_user);
                     }
 
                     $contenido = str_replace($curso, $id_curso, $items);
@@ -145,7 +155,11 @@ class ApiControlador extends UTP_Controller
                         //acceder al detalle y a la fecha
                         $partes2 = explode(",", $partes[1]);
                         //crear array de detalle de tarea
-                        array_push($detalle, $partes2[0]);
+                        //array_push($detalle, $partes2[0]);
+
+                        $actividad = explode("-", $partes2[0]);
+                        $nombre = $actividad[0];
+                        $detalle = array_key_exists(1, $actividad) == 1 ?  $actividad[1] : "";
 
                         //array_push($fecha, $partes2[2]);
                         $fecha = explode(" ", $partes2[2]);
@@ -158,34 +172,15 @@ class ApiControlador extends UTP_Controller
                         $dia = $fecha[1];
                         $año = $fecha[5];
                         $hora = explode(".", $fecha[6]);
-                        $dateTime = $año . "-" . $mes . "-" . $dia . " " . $hora[0];
+                        $dateTime = $año . "-" . $mes . "-" . $dia . " " . $hora[0] . ":00";
+
+                        //INSERTAR ACTIVIDAD
+                        $insert_actividad = $this->taream->guardar_actividad($idusu_decript, $nombre, $detalle, $dateTime);
+                        //INSERTAR ACTIVIDAD USUARIO
+                        $insert_actividad_user = $this->taream->guardar_actividad_usuario($insert_actividad, $partes[0]);
+                        $msg_return = $insert_actividad_user;
                     }
 
-
-                    foreach ($data_ws as $key => $value) {
-                        foreach ($value["courses"] as $kc => $vc) {
-                            $nombre_curso = $kc;
-                            //INSERTAR CURSO
-                            $insert_curso = $this->cursom->guardar_curso($nombre_curso);
-                            $msg_return = false;
-                            if ($insert_curso > 0) {
-                                //INSERTAR CURSO USUARIO
-                                $insert_curso_user = $this->cursom->guardar_usuario_curso($insert_curso, $idusu_decript);
-                                if ($insert_curso_user > 0) {
-                                    foreach ($vc as $ka => $va) {
-                                        $nom_act = $va["actividad"];
-                                        $des_act = $va["des_actividad"];
-                                        $fec_act = $va["fecha"];
-                                        //INSERTAR ACTIVIDAD
-                                        $insert_actividad = $this->taream->guardar_actividad($idusu_decript, $nom_act, $des_act, $fec_act);
-                                        //INSERTAR ACTIVIDAD USUARIO
-                                        $insert_actividad_user = $this->taream->guardar_actividad_usuario($insert_actividad, $insert_curso);
-                                        $msg_return = $insert_actividad_user;
-                                    }
-                                }
-                            }
-                        }
-                    }
                     if ($msg_return != false && $msg_return != 0) {
                         echo true;
                     } else {
@@ -194,73 +189,16 @@ class ApiControlador extends UTP_Controller
                     break;
             }
         }
-
-        //$url_ws = "http://web-scrapping.empiresoftgroup.online/?token=" . $token;
-        //$url_ws = "http://localhost/api-ws-canvas/?token=" . $token;
-
-        /*$data_ws = json_decode(file_get_contents($url_ws), true);
-        switch ($fase) {
-            case 'VALIDACION':
-                foreach ($data_ws as $key => $value) {
-                    $user_api = $value["username"];
-                    $pass_api = $value["password"];
-                    /*$new_pass_get = $pass;
-                    if($decode){
-                        $new_pass_get = $this->decript_data($pass);
-                    } else {
-                        $new_pass_get = $pass;
-                    }
-                    $new_pass_get = $this->decript_data($pass);
-                    if (strcmp($pass_api, $new_pass_get) == 0 && strcmp($correo, $user_api) == 0) { /* password_verify($new_pass_get, $pass_api) 
-                        $registrar_usuario = $this->usuariom->registrar_usuario($correo, $pass, true);
-                        if ($registrar_usuario == "EXIST") {
-                            echo "EXIST";
-                        } else {
-                            echo $this->encript_data($registrar_usuario);
-                        }
-                    } else {
-                        echo false;
-                    }
-                }
-                break;
-            case 'REGISTRO':
-                $idusu_decript = $this->decript_data($iduser);
-                foreach ($data_ws as $key => $value) {
-                    foreach ($value["courses"] as $kc => $vc) {
-                        $nombre_curso = $kc;
-                        //INSERTAR CURSO
-                        $insert_curso = $this->cursom->guardar_curso($nombre_curso);
-                        $msg_return = false;
-                        if ($insert_curso > 0) {
-                            //INSERTAR CURSO USUARIO
-                            $insert_curso_user = $this->cursom->guardar_usuario_curso($insert_curso, $idusu_decript);
-                            if ($insert_curso_user > 0) {
-                                foreach ($vc as $ka => $va) {
-                                    $nom_act = $va["actividad"];
-                                    $des_act = $va["des_actividad"];
-                                    $fec_act = $va["fecha"];
-                                    //INSERTAR ACTIVIDAD
-                                    $insert_actividad = $this->taream->guardar_actividad($idusu_decript, $nom_act, $des_act, $fec_act);
-                                    //INSERTAR ACTIVIDAD USUARIO
-                                    $insert_actividad_user = $this->taream->guardar_actividad_usuario($insert_actividad, $insert_curso);
-                                    $msg_return = $insert_actividad_user;
-                                }
-                            }
-                        }
-                    }
-                }
-                if ($msg_return != false && $msg_return != 0) {
-                    echo true;
-                } else {
-                    echo false;
-                }
-                break;
-        }*/
     }
     function runScript()
     {
-        $command = escapeshellcmd('python loginScrapp.py');
+        $command = escapeshellcmd('C:/Users/gelvs/AppData/Local/Programs/Python/Python39/python.exe c:/xampp/htdocs/academico/loginScrapp.py');
         $output = shell_exec($command);
-        return $output;
+        if (!empty($output)) {
+            return "ok";
+        } else {
+            return "error";
+        }
+        //return $output;
     }
 }

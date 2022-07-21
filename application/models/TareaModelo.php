@@ -34,12 +34,12 @@ class TareaModelo extends CI_Model
     }
 
     public function listarTareasalCalendario($idUser){
-        $query = "SELECT  a.descripcion_actividad as title, a.fecdisp_actividad as start,'bg-warning' as className FROM usuario_curso uc
-        INNER JOIN curso c on uc.fk_curso = c.pk_curso
-        INNER JOIN usuario_actividad ua on ua.fk_curso = c.pk_curso
-        INNER JOIN actividad a on a.pk_actividad = ua.fk_actividad
-        WHERE uc.fk_usuario = $idUser and a.fk_tipo_actividad = 1 ";
-
+        // $query = "SELECT  a.descripcion_actividad as title, a.fecdisp_actividad as start,'bg-warning' as className FROM usuario_curso uc
+        // INNER JOIN curso c on uc.fk_curso = c.pk_curso
+        // INNER JOIN usuario_actividad ua on ua.fk_curso = c.pk_curso
+        // INNER JOIN actividad a on a.pk_actividad = ua.fk_actividad
+        // WHERE uc.fk_usuario = $idUser and a.fk_tipo_actividad = 1 ";
+        $query = "SELECT a.nombre_actividad as title, a.fecdisp_actividad as start,'bg-warning' as className FROM actividad a INNER JOIN usuario_actividad ua on ua.fk_actividad = a.pk_actividad WHERE a.fk_usuario = $idUser and a.fk_tipo_actividad = 1";
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
