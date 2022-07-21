@@ -12,12 +12,9 @@ if (page_name == "actividades" || page_name == "tareas") {
     $("#select-mes").on("change", function () {
         var elem = $(this);
         var mes = elem.val();
-        $('#chart_actividades').html("");
         elem.prop("disabled", true);
+        $('#chart_actividades').html("");        
         obtener_reporte_actividades(mes, tipo_reporte);
-        setTimeout(function () {
-            elem.prop("disabled", false);
-        }, 2000);
     })
 
     obtener_reporte_actividades("", tipo_reporte);
@@ -62,6 +59,8 @@ if (page_name == "actividades" || page_name == "tareas") {
             }
         }).done(function () {
             Swal.close();
+            // setTimeout(function () {}, 1000);
+            $("#select-mes").prop("disabled", false);
         });
     }
 

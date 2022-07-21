@@ -1,0 +1,141 @@
+.h-200 {
+    height: 200% !important;
+}
+
+.login-form-bg .card-body {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+}
+
+.btn-cancel-register {
+    padding: 15px 40px;
+}
+
+.control_recover {
+    display: none;
+}
+
+.color {
+    color: #7CD9E2;
+    font-weight: bold;
+}
+
+.porcentaje {
+    font-size: 4rem;
+}
+
+.nombre {
+    font-size: 3rem;
+}
+
+.display-none{
+    display: none !important;
+}
+
+.font-p{
+    color: #76838f;
+}
+
+
+/************ ESTILOS - PAGINA PIZARRA - BOARD ***********/
+
+#page-board .contenedor {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 65px;
+}
+
+.btn-action {   
+    border: 1px solid #fff;
+    padding: 0.3rem 0.6rem 0.3rem 0.6rem;
+    border-radius: 50%;    
+    color: #fff;
+    font-size: 1rem;
+}
+
+.a-estado {
+    background-color: #39a05d;
+    /* margin-right: 12rem; */
+}
+
+.a-subtarea {
+    background-color: #1a77b0;
+    /* margin-right: 8rem; */
+}
+
+#page-board .tarjeta {
+    /* border-radius: 6px;
+    min-width: 470px;
+    max-width: 470px;
+    height: 750px;
+    margin-left: 6px; 
+    margin: 0.5rem;  
+    box-shadow: initial;
+    background-color: #F4F5F7;*/  
+    min-height: 600px;
+}
+
+#page-board .title-card {
+    margin-left: 10px;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1rem;
+    width: 95%;
+    border-bottom: 1px solid black;
+}
+
+#page-board .actividad-tj {
+    /* width: 90%; */
+    height: 100px;
+    margin: 1rem 0rem 1rem 0rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    box-shadow: var(--ds-shadow-raised, 0 1px 1px rgba(23, 43, 77, 0.2), 0 0 1px rgba(23, 43, 77, 0.2));
+    border-radius: 8px;
+}
+
+#page-board .actividad-inicio {
+    background-color: #FF9F1A;
+}
+
+#page-board .actividad-proceso {
+    background-color: #00C2E0;
+}
+
+#page-board .actividad-fin {
+    background-color: #51E898;
+}
+
+#page-board .title-actividad {
+    width: 90%;
+    margin-left: 5px;
+    margin-top: 10px;
+    border-bottom: 1px solid white;
+    color: white;
+}
+
+#page-board .actividad-footer {
+    /* margin-left: 280px;
+    margin-top: 6px; */
+    margin-top: 0.5rem;
+}
+
+#page-board .actividad-footer button {
+    align-items: center;
+}
+
+#page-board .descrp-actividad {
+    width: 95%;
+    margin-left: 5px;
+    margin-top: 10px;
+    color: white;
+}
+
+#page-board #preloader.none {
+    display: none;
+}
+
+#page-board #preloader.active {
+    display: block;
+}

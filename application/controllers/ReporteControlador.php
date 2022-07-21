@@ -32,20 +32,6 @@ class ReporteControlador extends UTP_Controller
         $pie_data = [];
         $color_lst = ["#456487", '#7571F9', '#ff5e5e', '#e62739', '#9097c4', '#1f8023'];
 
-        // for ($i = 0; $i < count($reporte_graph["data"]); $i++) {
-        //     $nombre = $reporte_graph["data"][$i]["NOMBRE"];
-        //     $cantidad = $reporte_graph["data"][$i]["CANTIDAD"];
-        //     $color_sel = $color_lst[$i];
-        //     array_push(
-        //         $pie_data,
-        //         [
-        //             "label" => $nombre,
-        //             "data" => [$cantidad],
-        //             "color" => $color_sel
-        //         ]
-        //     );
-        // }
-
         $cont = 0;
         foreach ($reporte_graph as $row) {
             $nombre = $row->NOMBRE;

@@ -16,8 +16,6 @@ class ReporteModelo extends CI_Model
             'USUARIO' => $userID
         );
         $consulta = $this->db->query($REPORT_SQL, $DATA);
-        // $resultado['data'] = $consulta -> result_array();
-        // return $resultado;
         $result = $consulta->result();
         $consulta->next_result();
         $consulta->free_result();
@@ -32,8 +30,6 @@ class ReporteModelo extends CI_Model
             'USUARIO' => $userID
         );
         $consulta = $this->db->query($REPORT_SQL, $DATA);
-        // $resultado['data'] = $consulta -> result_array();
-        // return $resultado;
         $result = $consulta->result();
         $consulta->next_result();
         $consulta->free_result();
