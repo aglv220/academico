@@ -71,6 +71,14 @@ class ApiControlador extends UTP_Controller
         echo $msg_resp;
     }
 
+    function crear_txt()
+    {
+        $contenido = "hehe";
+        $archivo = fopen('archivo.txt','a');
+        fputs($archivo,$contenido);
+        fclose($archivo); 
+    }
+
     function web_scrapping()
     {
         //$decode = $this->input->get("decode") == null ? false : $this->input->get("decode");
