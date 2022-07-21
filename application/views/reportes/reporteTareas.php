@@ -37,24 +37,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body" style="text-align: center; height: 200px;">
-                        <span class="color porcentaje">15%</span> <span class="color nombre">Tareas pendientes</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body" style="text-align: center; height: 200px;">
-                        <span class="color porcentaje">50%</span> <span class="color nombre">Tareas en curso</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body" style="text-align: center; height: 200px;">
-                        <span class="color porcentaje">30%</span> <span class="color nombre">Tareas finalizadas</span>
-                    </div>
-                </div>
-            </div>
-
+            <div class="col-lg-6" id="div-porcentajes"></div>
         </div>
     </div>
 </div>

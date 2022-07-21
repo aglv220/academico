@@ -13,7 +13,6 @@
             </div>
             <!-- row -->
             <div class="container-fluid">
-
                 <div class="row" id="contenedor-report">
                     <div class="col-lg-6">
                         <div class="card" style="height: 715px;">
@@ -37,29 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-body" style="text-align: center;">
-                                <span class="color porcentaje">20%</span> <span class="color nombre">Clases</span>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body" style="text-align: center;">
-                                <span class="color porcentaje">32%</span> <span class="color nombre">Trabajo</span>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body" style="text-align: center;">
-                                <span class="color porcentaje">35%</span> <span class="color nombre">Reuniones</span>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body" style="text-align: center;">
-                                <span class="color porcentaje">13%</span> <span class="color nombre">Exposiciones</span>
-                            </div>
-                        </div>
-                    </div>
-
+                    <div class="col-lg-6" id="div-porcentajes"></div>
                 </div>
             </div>
         </div>

@@ -51,6 +51,7 @@ class ActividadExternaModelo extends CI_Model
 		]);
         return $this->db->insert_id();
     }
+
     public function listarActividades($idUser){
         $query = "SELECT  ta.nombre_tipo_actividad as nombreCurso,ac.nombre_actividad as descpCurso from actividad ac
         INNER JOIN tipo_actividad ta on ta.pk_tipo_actividad = ac.fk_tipo_actividad
@@ -60,6 +61,7 @@ class ActividadExternaModelo extends CI_Model
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
+    
     public function consultarIdActividad($id){
         $query = "SELECT fk_actividad,nombre_actividad from usuario_actividad_externa ua
         inner join actividad a on a.pk_actividad = ua.fk_actividad
