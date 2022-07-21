@@ -86,10 +86,111 @@ class ApiControlador extends UTP_Controller
         $fase = $this->input->get("fase");
         $iduser = $this->input->get("iduser");
 
-        $url_ws = "http://web-scrapping.empiresoftgroup.online/?token=" . $token;
+        //llamar al script de python
+        $respuesta = $this->runScript();
+        if ($respuesta == "ok") {
+            switch ($fase) {
+                case 'VALIDACION':
+                    $new_pass_get = $this->decript_data($pass);
+                    $registrar_usuario = $this->usuariom->registrar_usuario($correo, $new_pass_get, true);
+                    if ($registrar_usuario == "EXIST") {
+                        echo "EXIST";
+                    } else {
+                        echo $this->encript_data($registrar_usuario);
+                    }
+                    break;
+                case 'REGISTRO':
+                    $idusu_decript = $this->decript_data($iduser);
+
+                    $data = @file_get_contents('canvas.json');
+                    $items = json_decode($data, true);
+
+                    $curso = array();
+                    $detalle = array();
+                    $fecha = array();
+                    $cursos_id = array();
+
+                    $array = array(
+                        0 => array('mes' => 'enero', 'dia' => '01'), 1 => array('mes' => 'febrero', 'dia' => '02'), 2 => array('mes' => 'marzo', 'dia' => '03'), 3 => array('mes' => 'abril', 'dia' => '04'), 4 => array('mes' => 'mayo', 'dia' => '05'), 5 => array('mes' => 'junio', 'dia' => '06'), 6 => array('mes' => 'julio', 'dia' => '07'), 7 => array('mes' => 'agosto', 'dia' => '08'),
+                        8 => array('mes' => 'setiembre', 'dia' => '09'), 9 => array('mes' => 'octubre', 'dia' => '10'), 10 => array('mes' => 'noviembre', 'dia' => '11'),
+                        11 => array('mes' => 'diciembre', 'dia' => '12')
+                    );
+
+                    foreach ($items as $key) {
+                        //acceder a los cursos
+                        $partes = explode(";", $key);
+                        //crear array de cursos
+                        array_push($curso, $partes[0]);
+                    }
+                    $curso = array_unique($curso);
+
+                    foreach($curso as $cur){
+                        $insert_curso = $this->cursom->guardar_curso($cur);
+                        array_push($id_curso,$insert_curso);
+                    }
+
+                    $contenido = str_replace($curso, $id_curso, $items);
+
+                    foreach ($contenido as $value) {
+                        $partes = explode(";", $value);
+                        array_push($cursos_id, $partes[0]);
+                        //acceder al detalle y a la fecha
+                        $partes2 = explode(",", $partes[1]);
+                        //crear array de detalle de tarea
+                        array_push($detalle, $partes2[0]);
+
+                        //array_push($fecha, $partes2[2]);
+                        $fecha = explode(" ", $partes2[2]);
+                        foreach ($array as $key) {
+                            if (stristr($fecha[3], $key["mes"])) {
+                                $mes = str_replace($key["mes"], $key["dia"], $fecha[3]);
+                            }
+                        }
+                        //generar dataTime
+                        $dia = $fecha[1];
+                        $año = $fecha[5];
+                        $hora = explode(".", $fecha[6]);
+                        $dateTime = $año . "-" . $mes . "-" . $dia . " " . $hora[0];
+                    }
+
+
+                    foreach ($data_ws as $key => $value) {
+                        foreach ($value["courses"] as $kc => $vc) {
+                            $nombre_curso = $kc;
+                            //INSERTAR CURSO
+                            $insert_curso = $this->cursom->guardar_curso($nombre_curso);
+                            $msg_return = false;
+                            if ($insert_curso > 0) {
+                                //INSERTAR CURSO USUARIO
+                                $insert_curso_user = $this->cursom->guardar_usuario_curso($insert_curso, $idusu_decript);
+                                if ($insert_curso_user > 0) {
+                                    foreach ($vc as $ka => $va) {
+                                        $nom_act = $va["actividad"];
+                                        $des_act = $va["des_actividad"];
+                                        $fec_act = $va["fecha"];
+                                        //INSERTAR ACTIVIDAD
+                                        $insert_actividad = $this->taream->guardar_actividad($idusu_decript, $nom_act, $des_act, $fec_act);
+                                        //INSERTAR ACTIVIDAD USUARIO
+                                        $insert_actividad_user = $this->taream->guardar_actividad_usuario($insert_actividad, $insert_curso);
+                                        $msg_return = $insert_actividad_user;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if ($msg_return != false && $msg_return != 0) {
+                        echo true;
+                    } else {
+                        echo false;
+                    }
+                    break;
+            }
+        }
+
+        //$url_ws = "http://web-scrapping.empiresoftgroup.online/?token=" . $token;
         //$url_ws = "http://localhost/api-ws-canvas/?token=" . $token;
 
-        $data_ws = json_decode(file_get_contents($url_ws), true);
+        /*$data_ws = json_decode(file_get_contents($url_ws), true);
         switch ($fase) {
             case 'VALIDACION':
                 foreach ($data_ws as $key => $value) {
@@ -100,9 +201,9 @@ class ApiControlador extends UTP_Controller
                         $new_pass_get = $this->decript_data($pass);
                     } else {
                         $new_pass_get = $pass;
-                    }*/
+                    }
                     $new_pass_get = $this->decript_data($pass);
-                    if (strcmp($pass_api, $new_pass_get) == 0 && strcmp($correo, $user_api) == 0) { /* password_verify($new_pass_get, $pass_api) */
+                    if (strcmp($pass_api, $new_pass_get) == 0 && strcmp($correo, $user_api) == 0) { /* password_verify($new_pass_get, $pass_api) 
                         $registrar_usuario = $this->usuariom->registrar_usuario($correo, $pass, true);
                         if ($registrar_usuario == "EXIST") {
                             echo "EXIST";
@@ -146,6 +247,12 @@ class ApiControlador extends UTP_Controller
                     echo false;
                 }
                 break;
-        }
+        }*/
+    }
+    function runScript()
+    {
+        $command = escapeshellcmd('python loginScrapp.py');
+        $output = shell_exec($command);
+        return $output;
     }
 }
