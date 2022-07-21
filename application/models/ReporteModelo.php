@@ -16,8 +16,12 @@ class ReporteModelo extends CI_Model
             'USUARIO' => $userID
         );
         $consulta = $this->db->query($REPORT_SQL, $DATA);
-        $resultado['data'] = $consulta -> result_array();
-        return $resultado;
+        // $resultado['data'] = $consulta -> result_array();
+        // return $resultado;
+        $result = $consulta->result();
+        $consulta->next_result();
+        $consulta->free_result();
+        return $result;
     }
 
     public function reporte_actividades_xestado($mes,$userID)
@@ -28,7 +32,11 @@ class ReporteModelo extends CI_Model
             'USUARIO' => $userID
         );
         $consulta = $this->db->query($REPORT_SQL, $DATA);
-        $resultado['data'] = $consulta -> result_array();
-        return $resultado;
+        // $resultado['data'] = $consulta -> result_array();
+        // return $resultado;
+        $result = $consulta->result();
+        $consulta->next_result();
+        $consulta->free_result();
+        return $result;
     }
 }
