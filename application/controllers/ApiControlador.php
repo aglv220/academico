@@ -149,8 +149,8 @@ class ApiControlador extends UTP_Controller
                         $insert_curso_user = $this->cursom->guardar_usuario_curso($insert_curso, $idusu_decript);
                         array_push($id_curso, $insert_curso_user);
                     }
-
-                    $contenido = str_replace($curso, $id_curso, $items);
+                    $datos_unique = array_unique($items);
+                    $contenido = str_replace($curso, $id_curso, $datos_unique);
 
                     foreach ($contenido as $value) {
                         $partes = explode(";", $value);
@@ -185,6 +185,8 @@ class ApiControlador extends UTP_Controller
                     }
 
                     if ($msg_return != false && $msg_return != 0) {
+                        unlink('email.txt');
+                        unlink('password.txt');
                         echo true;
                     } else {
                         echo false;
