@@ -26,7 +26,7 @@ def apiCanvas():
      buton1.click() 
 
      #definir credenciales 
-     user = open('correo.txt').readline().strip()
+     user = open('email.txt').readline().strip()
      #definir contraseña y leer el archivo  
      password = open('password.txt').readline().strip()
 
@@ -68,6 +68,7 @@ def apiCanvas():
 
      with open('canvas.json', 'w') as file:
           json.dump(datos, file)
+     print("ok")
      return "ok"
 
 apiCanvas()
