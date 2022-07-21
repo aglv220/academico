@@ -82,21 +82,21 @@ class ApiControlador extends UTP_Controller
         fclose($archivo);
     }
 
+    function delete_txt($tipo)
+    {
+        $ruta_file = $tipo . '.txt';
+        if (file_exists($ruta_file)) {
+            unlink($ruta_file);
+        }
+    }
+
     function web_scrapping()
     {
-        //$decode = $this->input->get("decode") == null ? false : $this->input->get("decode");
         $correo = $this->input->get("correo");
         $pass = $this->input->get("clave");
-        /*if($decode){
-            $token = $this->decript_data($this->input->get("token"));
-        } else {
-            $token = $this->input->get("token");
-        }*/
         $token = $this->input->get("token");
-
         $fase = $this->input->get("fase");
         $iduser = $this->input->get("iduser");
-
         $new_pass_get = $this->decript_data($pass);
 
         $this->crear_txt($new_pass_get, "password");
@@ -112,6 +112,9 @@ class ApiControlador extends UTP_Controller
                         echo "EXIST";
                     } else {
                         echo $this->encript_data($registrar_usuario);
+                        //ELIMINAR TXT DE USUARIO Y PASSWORD DESPUES DE VALIDAR
+                        $this->delete_txt("password");
+                        $this->delete_txt("email");
                     }
                     break;
                 case 'REGISTRO':
