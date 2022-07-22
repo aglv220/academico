@@ -11,14 +11,38 @@ class TareaModelo extends CI_Model
         parent::__construct();
     }
 
-    public function guardar_actividad($user,$nom,$des,$fec){
-        $data_act = ["fk_tipo_actividad" => 1, "fk_usuario" => $user, "nombre_actividad" => $nom, "descripcion_actividad" => $des, "fecdisp_actividad" => $fec];
-        return $this->crudm->ingresar_data($data_act,"actividad");
+    public function guardar_actividad($user, $nom, $des, $fec)
+    {
+        $where_act = [
+            ["campo" => "fk_usuario", "valor" => $user],
+            ["campo" => "nombre_actividad", "valor" => $nom],
+            ["campo" => "descripcion_actividad", "valor" => $des],
+            ["campo" => "fecdisp_actividad", "valor" => $fec]
+        ];
+        $lst_act_xdatos = $this->crudm->listar_tabla_xcampo("actividad", $where_act);
+        if (count($lst_act_xdatos) > 0) {
+            $id_actividad = $lst_act_xdatos[0]->pk_actividad;
+            return $id_actividad;
+        } else {
+            $data_act = ["fk_tipo_actividad" => 1, "fk_usuario" => $user, "nombre_actividad" => $nom, "descripcion_actividad" => $des, "fecdisp_actividad" => $fec];
+            return $this->crudm->ingresar_data($data_act, "actividad");
+        }
     }
 
-    public function guardar_actividad_usuario($activ_id,$curso_id){
-        $data_actu = ["fk_actividad" => $activ_id, "fk_curso" => $curso_id, "estado_usuario_actividad" => 0];
-        return $this->crudm->ingresar_data($data_actu,"usuario_actividad");
+    public function guardar_actividad_usuario($activ_id, $curso_id)
+    {
+        $where_usuact = [
+            ["campo" => "fk_actividad", "valor" => $activ_id],
+            ["campo" => "fk_curso", "valor" => $curso_id]
+        ];
+        $lst_usuact_xdatos = $this->crudm->listar_tabla_xcampo("usuario_actividad", $where_usuact);
+        if (count($lst_usuact_xdatos) > 0) {
+            $id_usuact = $lst_usuact_xdatos[0]->pk_usuario_actividad;
+            return $id_usuact;
+        } else {
+            $data_actu = ["fk_actividad" => $activ_id, "fk_curso" => $curso_id, "estado_usuario_actividad" => 0];
+            return $this->crudm->ingresar_data($data_actu, "usuario_actividad");
+        }
     }
 
     public function listarCursos($idUser)
@@ -33,7 +57,8 @@ class TareaModelo extends CI_Model
         return $resultado->result_array();
     }
 
-    public function listarTareasalCalendario($idUser){
+    public function listarTareasalCalendario($idUser)
+    {
         // $query = "SELECT  a.descripcion_actividad as title, a.fecdisp_actividad as start,'bg-warning' as className FROM usuario_curso uc
         // INNER JOIN curso c on uc.fk_curso = c.pk_curso
         // INNER JOIN usuario_actividad ua on ua.fk_curso = c.pk_curso
@@ -43,12 +68,14 @@ class TareaModelo extends CI_Model
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
-    public function listarActividadXtipo(){
-        $query = "SELECT * FROM tipo_actividad where pk_tipo_actividad in(2,3,4,5,6)" ;
+    public function listarActividadXtipo()
+    {
+        $query = "SELECT * FROM tipo_actividad where pk_tipo_actividad in(2,3,4,5,6)";
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
-    public function listarTareasPausa($id){
+    public function listarTareasPausa($id)
+    {
         $query = "SELECT a.pk_actividad as id , c.curso_nombre as nombre_actividad, a.nombre_actividad as descripcion_actividad, a.fk_tipo_actividad as tipo 
         FROM actividad a 
         INNER JOIN usuario_actividad ua on ua.fk_actividad = a.pk_actividad
@@ -58,7 +85,8 @@ class TareaModelo extends CI_Model
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
-    public function listarTareasProceso($id){
+    public function listarTareasProceso($id)
+    {
         $query = "SELECT a.pk_actividad as id , c.curso_nombre as nombre_actividad, a.nombre_actividad as descripcion_actividad, a.fk_tipo_actividad as tipo 
         FROM actividad a 
         INNER JOIN usuario_actividad ua on ua.fk_actividad = a.pk_actividad
@@ -68,7 +96,8 @@ class TareaModelo extends CI_Model
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
-    public function listarTareasFinalizada($id){
+    public function listarTareasFinalizada($id)
+    {
         $query = "SELECT a.pk_actividad as id , c.curso_nombre as nombre_actividad, a.nombre_actividad as descripcion_actividad, a.fk_tipo_actividad as tipo 
         FROM actividad a 
         INNER JOIN usuario_actividad ua on ua.fk_actividad = a.pk_actividad
@@ -79,7 +108,8 @@ class TareaModelo extends CI_Model
         return $resultado->result_array();
     }
 
-    public function estadoPizarra($pkActividad){
+    public function estadoPizarra($pkActividad)
+    {
         $query = "SELECT a.pk_actividad as id, CONCAT(c.curso_nombre,' - ',a.nombre_actividad) as nombre_actividad,ua.estado_usuario_actividad as estado_pizarra 
         FROM actividad a
         INNER JOIN usuario_actividad ua ON ua.fk_actividad = a.pk_actividad
@@ -89,9 +119,9 @@ class TareaModelo extends CI_Model
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }
-    public function guardar_estado_pizarra($id,$estado){
+    public function guardar_estado_pizarra($id, $estado)
+    {
         $query = "UPDATE usuario_actividad set estado_usuario_actividad = $estado where fk_actividad = $id";
         $this->db->query($query);
-
     }
 }
