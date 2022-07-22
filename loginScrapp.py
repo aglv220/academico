@@ -1,4 +1,5 @@
 from array import array
+from collections import OrderedDict
 from lib2to3.pgen2 import driver
 from telnetlib import EC
 import time
@@ -65,9 +66,9 @@ def apiCanvas():
           for tarea in tareas:
                datos.append(curso.get_attribute("innerHTML")+";"+tarea.get_attribute("innerHTML"))
 
-
+     final_list = list(OrderedDict.fromkeys(datos))
      with open('canvas.json', 'w') as file:
-          json.dump(datos, file)
+          json.dump(final_list, file)
      print("ok")
      return "ok"
 
