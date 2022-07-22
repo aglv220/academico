@@ -124,6 +124,28 @@ class UsuarioControlador extends UTP_Controller
         return $html_history;
     }
 
+    public function obtener_notificaciones_usuario($userID)
+    {
+        $this->is_loged_off();
+        $html_history = "";
+        $history_user = $this->usuariom->listar_notificaciones_usuario($userID);
+        foreach ($history_user as $row) {
+            $fecha = $row->FECREG;
+            $actividad = $row->N_ACTIVIDAD;
+            $titulo = $row->NOTIFY;
+            $estado = $row->ESTADO;
+            $usuario = $row->USUARIO;
+            $detalle_a = $row->D_ACTIVIDAD;
+            $html_history .= "<tr>";
+            $html_history .= "<td>" . $fecha . "</td>";
+            $html_history .= "<td>" . $actividad . "</td>";
+            $html_history .= "<td>" . $titulo . "</td>";
+            $html_history .= "<td>" . $estado . "</td>";
+            $html_history .= "</tr>";
+        }
+        return $html_history;
+    }
+
     public function obtener_configuracion_usuario($userID)
     {
         $this->is_loged_off();
@@ -277,6 +299,16 @@ class UsuarioControlador extends UTP_Controller
         $data_page['history_user'] = $this->obtener_historial_usuario($this->get_SESSID());
         $this->cabecera_pagina($data_header);
         $this->load->view('usuario/historial', $data_page);
+        $this->pie_pagina();
+    }
+
+    public function notificaciones_usuario()
+    {
+        $this->is_loged_off();
+        $data_header['title_page'] = 'Notificaciones de usuario';
+        $data_page['notifys_user'] = $this->obtener_notificaciones_usuario($this->get_SESSID());
+        $this->cabecera_pagina($data_header);
+        $this->load->view('usuario/notificaciones', $data_page);
         $this->pie_pagina();
     }
 

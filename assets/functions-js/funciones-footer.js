@@ -181,3 +181,22 @@ function msg_swal_loading(titulo, html) {
 function labelFormatter(label, series) {
     return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
 }
+
+options_tbl = {
+    "language": {
+        "processing": "Cargando información...",
+        "loadingRecords": "Cargando registros...",
+        "lengthMenu": "Mostrar _MENU_ registros por página",
+        "zeroRecords": "No se ha encontrado información",
+        "info": "Mostrando página _PAGE_ de _PAGES_",
+        "infoEmpty": "No existe información",
+        "infoFiltered": "(filtered from _MAX_ total records)",
+        "search": "Buscar en la tabla",
+        "paginate": {
+            "first":      "Primero",
+            "previous":   "Anterior",
+            "next":       "Siguiente",
+            "last":       "Último"
+        },
+    }
+}

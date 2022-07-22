@@ -16,8 +16,8 @@ class NotificacionControlador extends UTP_Controller
 
     public function registrar_notificacion()
     {
-        $actividad = 3;
-        $nombre = 'PRUEBA - Actualización de actividad "Foro de opinión y debate"';
+        $actividad = 211;
+        $nombre = 'PRUEBA - Notificación de prueba';
         $estado = 0;
         $id_user = $this->get_SESSID();
         $insertar_notificacion = $this->notifim->insertar_notificacion($actividad, $nombre, $estado);

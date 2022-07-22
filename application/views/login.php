@@ -27,7 +27,7 @@
 
                                 <form id="FRM_LOGIN" class="mt-5 mb-5 login-input form-valide" action="<?php echo base_url(); ?>LoginControlador/iniciar_sesion" method="POST">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Ingresa tu correo institucional" name="usuario_correo" id="usuario_correo" pattern="([a-z]|[0-9])+@utp.edu.pe$" required>
+                                        <input type="email" class="form-control" placeholder="Ingresa tu correo institucional" name="usuario_correo" id="usuario_correo" pattern="([a-z]|[0-9])+@utp.edu.pe$" onkeypress="return validate_user(event);" required>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control" placeholder="Ingresa tu contraseña" name="usuario_clave" required>

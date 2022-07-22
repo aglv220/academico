@@ -26,6 +26,19 @@ function solo_texto(e) {
         return false;
 }
 
+function validate_user(e) {
+    especiales = [32];
+    key = e.keyCode || e.which;
+    tecla = String.fromCharCode(key).toLowerCase();
+    tecla_especial = true;
+    for (var i in especiales) {
+        if (key == especiales[i]) {
+            tecla_especial = false; break;
+        }
+    }
+    return tecla_especial;
+}
+
 function numeros_decimales(e) {
 
     especiales = [8, 9, 37, 39, 46];

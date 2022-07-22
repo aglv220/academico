@@ -139,3 +139,15 @@
 #page-board #preloader.active {
     display: block;
 }
+
+.menu-titulo {
+    margin-top: -0.5rem;
+}
+
+.menu-img {
+    margin-top: -1rem;
+}
+
+.activity.active {
+    background-image: linear-gradient(230deg, #329a9e, #04bb32) !important;
+}

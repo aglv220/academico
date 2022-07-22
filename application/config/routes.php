@@ -61,6 +61,7 @@ $route['usuario/restablecer_cuenta'] = 'UsuarioControlador/recuperar_password';
 $route['usuario/perfil_personal'] = 'UsuarioControlador/perfil_usuario';
 $route['usuario/configuracion'] = 'UsuarioControlador/configuracion_usuario';
 $route['usuario/historial'] = 'UsuarioControlador/historial_usuario';
+$route['usuario/notificaciones'] = 'UsuarioControlador/notificaciones_usuario';
 
 //PAGINAS PRINCIPALES
 $route['calendario'] = 'UsuarioControlador/calendario';

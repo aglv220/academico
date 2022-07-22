@@ -28,7 +28,8 @@
                     <b class="logo-abbr"><img src="<?= base_url() ?>assets/images/logo.png" alt=""> </b>
                     <span class="logo-compact"><img src="<?= base_url() ?>assets/images/logo-compact.png" alt=""></span>
                     <span class="brand-title">
-                        <h1>DAGY</h1>
+                        <!-- <h1 class="menu-titulo">DAGY</h1> -->
+                        <h1 class="menu-img img-fluid"><img src="<?= base_url() ?>assets/images/logo-dagy.png" alt=""></h1>
                     </span>
                 </a>
             </div>
@@ -67,7 +68,7 @@
                                         <?php if (isset($data_notify)) {
                                             echo $data_notify["NOTIFYPENDALL"] == 0 ? "Sin notificaciones" : $data_notify["NOTIFYPENDALL"] . " notificaciones";
                                         } ?></span>
-                                    <a href="javascript:void()" class="d-inline-block">
+                                    <a href="<?= base_url() ?>usuario/notificaciones" class="d-inline-block" data-toggle="tooltip" data-placement="top" title="Ver todas las notificaciones">
                                         <span class="badge badge-pill gradient-2 count-notify-pending notify-number">
                                             <?php if (isset($data_notify)) {
                                                 echo $data_notify["NOTIFYPENDALL"];
@@ -104,7 +105,7 @@
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative" data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="<?= base_url() ?>assets/images/user/1.png" height="40" width="40" alt="">
+                                <img src="<?= base_url() ?>assets/images/user-photo-utp.png" height="40" width="40" alt="">
                             </div>
                             <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                                 <div class="dropdown-content-body">

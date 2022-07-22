@@ -18,7 +18,7 @@ class UsuarioModelo extends CI_Model
         $this->db->select('u.pk_usuario AS ID, usuario_correo, usuario_password, usuario_regcomp, usuario_codrecover, alumno_nombre, alumno_apellidos, alumno_codigo, alumno_carrera, alumno_celular, alumno_ciclo, alumno_fecnac');
         $this->db->from('usuario u');
         $this->db->join('alumno a', 'a.fk_usuario = u.pk_usuario', 'left');
-        $this->db->where('u.' . $campo, $correo_o_valor);
+        $this->db->where('u.' . $campo, $correo_o_valor); //COLLATE utf8_bin
         $consulta = $this->db->get();
         $result = $consulta->result();
         return $result;
@@ -71,6 +71,19 @@ class UsuarioModelo extends CI_Model
     public function listar_historial_usuario($userID)
     {
         $REPORT_SQL = "CALL LISTAR_HISTORIAL_USUARIO(?)";
+        $DATA = array(
+            'IDUSER' => $userID
+        );
+        $consulta = $this->db->query($REPORT_SQL, $DATA);
+        $result = $consulta->result();
+        $consulta->next_result();
+        $consulta->free_result();
+        return $result;
+    }
+
+    public function listar_notificaciones_usuario($userID)
+    {
+        $REPORT_SQL = "CALL LISTAR_NOTIFICACIONES_USUARIO(?)";
         $DATA = array(
             'IDUSER' => $userID
         );

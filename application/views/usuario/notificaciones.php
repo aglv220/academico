@@ -1,7 +1,7 @@
 <!--**********************************
             Content body start
         ***********************************-->
-<div class="content-body">
+        <div class="content-body">
     <div class="row page-titles mx-0">
         <div class="col p-md-0">
             <ol class="breadcrumb">
@@ -16,19 +16,18 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Mi historial de acciones</h4>
-                        <table id="tblhistory" class="display dataTable" style="width:100%">
+                        <h4 class="card-title">Mis notificaciones</h4>
+                        <table id="tblnotifys" class="display dataTable" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Fecha</th>
-                                    <th>Módulo</th>
-                                    <th>Acción</th>
-                                    <th>Título</th>
-                                    <th>Detalle</th>
+                                    <th>Actividad</th>
+                                    <th>Título notificación</th>
+                                    <th>Estado</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <?= $history_user ?>
+                            <?= $notifys_user ?>
                             </tbody>
                         </table>                        
                     </div>

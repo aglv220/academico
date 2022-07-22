@@ -179,5 +179,11 @@ $("#FRM_CONFIGURACION").submit(function (e) {
 /******** HISTORIAL DE SISTEMA *******/
 
 if($("#tblhistory").length != 0){
-    var tblhistory = $('#tblhistory').DataTable();
+    var tblhistory = $('#tblhistory').DataTable(options_tbl);
+}
+
+/******** NOTIFICACIONES DEL SISTEMA *******/
+
+if($("#tblnotifys").length != 0){
+    var tblnotifys = $('#tblnotifys').DataTable(options_tbl);
 }
