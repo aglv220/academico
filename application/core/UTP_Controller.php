@@ -202,4 +202,10 @@ class UTP_Controller extends CI_Controller
         $fase_4 = strrev($fase_3);
         return $fase_4;
     }
+
+    protected function encript_value($value)
+    {
+        $fase = base64_encode($value);
+        return $fase;
+    }
 }

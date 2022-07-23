@@ -12,6 +12,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import json
+import base64
 def apiCanvas():
      #definir opciones de ingreso a chrome
      opts = Options()
@@ -26,10 +27,12 @@ def apiCanvas():
      buton1= driver.find_element(By.XPATH,'//div[@class="ctacanvas_main"]')
      buton1.click() 
 
-     #definir credenciales 
-     user = open('email.txt').readline().strip()
+     #definir credenciales
+     file_email = 'credentials/email.txt'
+     file_pass = 'credentials/password.txt'
+     user = base64.b64decode(open(file_email).readline().strip()).decode('utf-8')
      #definir contraseña y leer el archivo  
-     password = open('password.txt').readline().strip()
+     password = base64.b64decode(open(file_pass).readline().strip()).decode('utf-8')
 
      #recorrer el doom y buscar el input 
      input_user = WebDriverWait(driver, 10).until(
@@ -67,7 +70,7 @@ def apiCanvas():
                datos.append(curso.get_attribute("innerHTML")+";"+tarea.get_attribute("innerHTML"))
 
      final_list = list(OrderedDict.fromkeys(datos))
-     with open('canvas.json', 'w') as file:
+     with open('canvas/canvas.json', 'w') as file:
           json.dump(final_list, file)
      print("ok")
      return "ok"

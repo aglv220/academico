@@ -73,18 +73,19 @@ class ApiControlador extends UTP_Controller
 
     function crear_txt($contenido, $tipo)
     {
-        $ruta_file = $tipo . '.txt';
+        $ruta_file = 'credentials/' . $tipo . '.txt';
         if (file_exists($ruta_file)) {
             unlink($ruta_file);
         }
         $archivo = fopen($ruta_file, 'a');
-        fputs($archivo, $contenido);
+        $encript_content = $this->encript_value($contenido);
+        fputs($archivo, $encript_content);
         fclose($archivo);
     }
 
     function delete_txt($tipo)
     {
-        $ruta_file = $tipo . '.txt';
+        $ruta_file = 'credentials/' . $tipo . '.txt';
         if (file_exists($ruta_file)) {
             unlink($ruta_file);
         }
@@ -98,10 +99,8 @@ class ApiControlador extends UTP_Controller
         $fase = $this->input->get("fase");
         $iduser = $this->input->get("iduser");
         $new_pass_get = $this->decript_data($pass);
-
         $this->crear_txt($new_pass_get, "password");
         $this->crear_txt($correo, "email");
-
         //llamar al script de python
         $respuesta = $this->runScript();
         if ($respuesta == "ok") {
@@ -110,30 +109,26 @@ class ApiControlador extends UTP_Controller
                     $registrar_usuario = $this->usuariom->registrar_usuario($correo, $new_pass_get, true);
                     if ($registrar_usuario == "EXIST") {
                         echo "EXIST";
-                    } else {
+                    } else {                        
                         echo $this->encript_data($registrar_usuario);
-                        //ELIMINAR TXT DE USUARIO Y PASSWORD DESPUES DE VALIDAR
-                        $this->delete_txt("password");
-                        $this->delete_txt("email");
                     }
                     break;
                 case 'REGISTRO':
+                    //ELIMINAR TXT DE USUARIO Y PASSWORD DESPUES DE VALIDAR
+                    $this->delete_txt("password");
+                    $this->delete_txt("email");
                     $idusu_decript = $this->decript_data($iduser);
-
-                    $data = @file_get_contents('canvas.json');
+                    $data = @file_get_contents('canvas/canvas.json');
                     $items = json_decode($data, true);
-
                     $curso = array();
                     $detalle = array();
                     $fecha = array();
                     $cursos_id = array();
-
                     $array = array(
                         0 => array('mes' => 'enero', 'dia' => '01'), 1 => array('mes' => 'febrero', 'dia' => '02'), 2 => array('mes' => 'marzo', 'dia' => '03'), 3 => array('mes' => 'abril', 'dia' => '04'), 4 => array('mes' => 'mayo', 'dia' => '05'), 5 => array('mes' => 'junio', 'dia' => '06'), 6 => array('mes' => 'julio', 'dia' => '07'), 7 => array('mes' => 'agosto', 'dia' => '08'),
                         8 => array('mes' => 'setiembre', 'dia' => '09'), 9 => array('mes' => 'octubre', 'dia' => '10'), 10 => array('mes' => 'noviembre', 'dia' => '11'),
                         11 => array('mes' => 'diciembre', 'dia' => '12')
                     );
-
                     foreach ($items as $key) {
                         //acceder a los cursos
                         $partes = explode(";", $key);
@@ -183,10 +178,7 @@ class ApiControlador extends UTP_Controller
                         $insert_actividad_user = $this->taream->guardar_actividad_usuario($insert_actividad, $partes[0]);
                         $msg_return = $insert_actividad_user;
                     }
-
                     if ($msg_return != false && $msg_return != 0) {
-                        unlink('email.txt');
-                        unlink('password.txt');
                         echo true;
                     } else {
                         echo false;
