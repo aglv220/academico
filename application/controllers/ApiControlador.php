@@ -138,6 +138,7 @@ class ApiControlador extends UTP_Controller
                     $curso = array_unique($curso);
 
                     $id_curso = [];
+                    $actividades = [];
 
                     foreach ($curso as $cur) {
                         $insert_curso = $this->cursom->guardar_curso($cur);
@@ -152,8 +153,6 @@ class ApiControlador extends UTP_Controller
                         array_push($cursos_id, $partes[0]);
                         //acceder al detalle y a la fecha
                         $partes2 = explode(",", $partes[1]);
-                        //crear array de detalle de tarea
-                        //array_push($detalle, $partes2[0]);
 
                         $actividad = explode("-", $partes2[0]);
                         $nombre = $actividad[0];
@@ -172,12 +171,17 @@ class ApiControlador extends UTP_Controller
                         $hora = explode(".", $fecha[6]);
                         $dateTime = $año . "-" . $mes . "-" . $dia . " " . $hora[0] . ":00";
 
+                        $IDcurso = $partes[0];
+
                         //INSERTAR ACTIVIDAD
                         $insert_actividad = $this->taream->guardar_actividad($idusu_decript, $nombre, $detalle, $dateTime);
+                        //$this->taream->guardar_actividad($idusu_decript, $nombre, $detalle, $dateTime, $partes[0]);
+
                         //INSERTAR ACTIVIDAD USUARIO
                         $insert_actividad_user = $this->taream->guardar_actividad_usuario($insert_actividad, $partes[0]);
                         $msg_return = $insert_actividad_user;
                     }
+
                     if ($msg_return != false && $msg_return != 0) {
                         echo true;
                     } else {

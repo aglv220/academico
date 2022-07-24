@@ -30,9 +30,12 @@ def apiCanvas():
      #definir credenciales
      file_email = 'credentials/email.txt'
      file_pass = 'credentials/password.txt'
+
      user = base64.b64decode(open(file_email).readline().strip()).decode('utf-8')
-     #definir contraseña y leer el archivo  
      password = base64.b64decode(open(file_pass).readline().strip()).decode('utf-8')
+
+     #user = open(file_email).readline().strip()
+     #password = open(file_pass).readline().strip()
 
      #recorrer el doom y buscar el input 
      input_user = WebDriverWait(driver, 10).until(
@@ -63,11 +66,29 @@ def apiCanvas():
           EC.presence_of_all_elements_located((By.XPATH,'//span[@class="Grouping-styles__title"]'))
      )
 
+     cursosl = WebDriverWait(driver,20).until(
+          EC.presence_of_all_elements_located((By.XPATH,'//span[@class="enRcg_bGBk enRcg_dfBC enRcg_eQnG enRcg_bLsb"]'))
+     )
+
      datos = []  
+     contador = 0
 
      for curso in cursos:
           for tarea in tareas:
-               datos.append(curso.get_attribute("innerHTML")+";"+tarea.get_attribute("innerHTML"))
+               
+               xpadre = tarea.find_element_by_xpath("..")
+               ypadre = xpadre.find_element_by_xpath("..")
+               ychild = ypadre.find_element_by_xpath('.//div[@class="PlannerItem-styles__type"]/span[@class="enRcg_bGBk enRcg_dfBC enRcg_eQnG enRcg_bLsb"]')
+               #print(ychild.get_attribute("innerHTML"))
+               htmlchild = ychild.get_attribute("innerHTML")
+               
+               clear_name = htmlchild.split(')') 
+               nom_curso = clear_name[0] + ')'
+               
+               if curso.get_attribute("innerHTML") == nom_curso:
+                    datos.append(curso.get_attribute("innerHTML")+";"+tarea.get_attribute("innerHTML"))
+               
+               #datos.append(curso.get_attribute("innerHTML")+";"+tarea.get_attribute("innerHTML"))
 
      final_list = list(OrderedDict.fromkeys(datos))
      with open('canvas/canvas.json', 'w') as file:

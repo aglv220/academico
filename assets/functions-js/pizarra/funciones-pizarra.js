@@ -1,11 +1,12 @@
 actividadesyTareasPausa();
 actividadesyTareasProceso();
 actividadesyTareasFin();
+msg_swal_loading("Cargando...","Un momento, estamos cargando tu información");
 
 function actividadesyTareasPausa() {
     var html = ` `;
     var button1 = "";
-    var button2 = "";
+    var button2 = "";    
     $.ajax({
         type: "POST",
         url: root_path + "ActividadExternaControlador/get_tareas_pausa",
@@ -119,6 +120,7 @@ function actividadesyTareasFin() {
                 `;
             });
             $(".fin").append(html);
+            Swal.close();
         },
         error: function (data) {
             console.log('Error: ' + data);
