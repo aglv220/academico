@@ -45,10 +45,10 @@ class TareaControlador extends UTP_Controller
     $msg = "Se cambio el estado de su Actividad" . $cadena;
     $cfg_en = $this->valide_email_notification($this->get_SESSID(), "emailnotify_calendar_new", $asunto, $msg);
 
-    $where_c = [["campo" => "pk_usuario_actividad", "valor" => $id]];
+    /*$where_c = [["campo" => "pk_usuario_actividad", "valor" => $id]];
     $id_actividad = $this->crudm->listar_campo_tabla_xcond("usuario_actividad", "fk_actividad", $where_c);
-    $actividad = "Se cambio el estado de su Actividad";
+    $actividad = "Se cambio el estado de su Actividad";*/
     $nombre = "Se cambio el estado de su Actividad";
-    $registrar_notificacion = $this->notifim->publicar_notificacion($this->get_SESSID(), $id_actividad, $nombre);
+    $registrar_notificacion = $this->notifim->publicar_notificacion($this->get_SESSID(), $id, $nombre);
   }
 }

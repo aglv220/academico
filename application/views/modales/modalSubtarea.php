@@ -42,7 +42,7 @@ if (true) { ?>
                                     </div>
 
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-block btn-update-selected" disabled>Marcar seleccionadas como completado</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-update-selected" disabled>Marcar seleccionadas como completadas</button>
                             </form>
 
                         </div>
@@ -115,6 +115,7 @@ if (true) { ?>
     });
     $("#new-subtarea").keypress(function(event) {
         if (event.keyCode === 13) {
+            $("#new-subtarea").prop("readonly",true);
             $.ajax({
                 type: "POST",
                 url: "<?= base_url() . 'ActividadExternaControlador/save_subtareas'; ?>",
@@ -127,6 +128,8 @@ if (true) { ?>
                     mydata = JSON.parse(data);
                     subtareas = mydata["subtareas"];
                     if (subtareas != "ERROR") {
+                        $("#new-subtarea").prop("readonly",false);
+                        $("#new-subtarea").val("");
                         $("#lst_subtareas").html("");
                         $("#lst_subtareas").html(subtareas);
                     }
