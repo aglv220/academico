@@ -1,3 +1,22 @@
+body::-webkit-scrollbar, .tarjeta::-webkit-scrollbar {
+    width: 12px;
+    /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track, .tarjeta::-webkit-scrollbar-track {
+    background: white;
+    /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb, .tarjeta::-webkit-scrollbar-thumb {
+    background-color: gray;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    border: 3px solid white;
+    /* creates padding around scroll thumb */
+}
+
 .h-200 {
     height: 200% !important;
 }
@@ -30,11 +49,11 @@
     font-size: 3rem;
 }
 
-.display-none{
+.display-none {
     display: none !important;
 }
 
-.font-p{
+.font-p {
     color: #76838f;
 }
 
@@ -47,10 +66,10 @@
     grid-gap: 65px;
 }
 
-.btn-action {   
+.btn-action {
     border: 1px solid #fff;
     padding: 0.3rem 0.6rem 0.3rem 0.6rem;
-    border-radius: 50%;    
+    border-radius: 50%;
     color: #fff;
     font-size: 1rem;
 }
@@ -73,7 +92,7 @@
     margin-left: 6px; 
     margin: 0.5rem;  
     box-shadow: initial;
-    background-color: #F4F5F7;*/  
+    background-color: #F4F5F7;*/
     min-height: 600px;
     max-height: 1000px;
     overflow: auto;
@@ -178,11 +197,11 @@
     margin-top: 10px;
 }
 
-.icono-calendario{
+.icono-calendario {
     font-size: 3rem;
 }
 
-.icono-calendario label{
+.icono-calendario label {
     font-size: 1.2rem;
     margin-left: -2.2rem;
     margin-top: 1.45rem;
