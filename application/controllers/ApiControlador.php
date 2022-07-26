@@ -165,8 +165,9 @@ class ApiControlador extends UTP_Controller
                         $nombre = $actividad[0];
                         $detalle = array_key_exists(1, $actividad) == 1 ?  $actividad[1] : "";
 
-                        //array_push($fecha, $partes2[2]);
-                        $fecha = explode(" ", $partes2[2]);
+                        $fechaI = array_key_exists(2, $partes2) == 1 ?  $partes2[2] : $partes2[1];
+                        $fecha = explode(" ", $fechaI);
+                        // $fecha = explode(" ", $partes2[2]);
                         foreach ($array as $key) {
                             if (stristr($fecha[3], $key["mes"])) {
                                 $mes = str_replace($key["mes"], $key["dia"], $fecha[3]);
@@ -204,7 +205,7 @@ class ApiControlador extends UTP_Controller
     }
     function runScript()
     {
-        $command = escapeshellcmd('C:/Users/gelvs/AppData/Local/Programs/Python/Python39/python.exe c:/xampp/htdocs/academico/loginScrapp.py');
+        $command = escapeshellcmd('C:/Users/Yuri/AppData/Local/Programs/Python/Python310/python.exe c:/laragon/www/academico/loginScrapp.py');
         $output = shell_exec($command);
         if (!empty($output)) {
             return "ok";

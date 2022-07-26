@@ -76,9 +76,9 @@ def apiCanvas():
      for curso in cursos:
           for tarea in tareas:
                
-               xpadre = tarea.find_element_by_xpath("..")
-               ypadre = xpadre.find_element_by_xpath("..")
-               ychild = ypadre.find_element_by_xpath('.//div[@class="PlannerItem-styles__type"]/span[@class="enRcg_bGBk enRcg_dfBC enRcg_eQnG enRcg_bLsb"]')
+               xpadre = tarea.find_element(By.XPATH,"..")
+               ypadre = xpadre.find_element(By.XPATH,"..")
+               ychild = ypadre.find_element(By.XPATH,'.//div[@class="PlannerItem-styles__type"]/span[@class="enRcg_bGBk enRcg_dfBC enRcg_eQnG enRcg_bLsb"]')
                #print(ychild.get_attribute("innerHTML"))
                htmlchild = ychild.get_attribute("innerHTML")
                
