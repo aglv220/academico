@@ -7,6 +7,7 @@ application/logs/*
 application/logs/index.html
 
 application/config/database.php
+application/config/email.php
 
 !application/*/.htaccess
 
