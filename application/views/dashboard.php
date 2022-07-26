@@ -41,7 +41,7 @@
                                 }
                             } else {
                                 ?>
-                                <div class="actividades">
+                                <div class="actividades-null">
                                     <span>No hay tareas pendientes</span>
                                 </div>
                             <?php
@@ -80,7 +80,7 @@
                                 }
                             } else {
                                 ?>
-                                <div class="actividades">
+                                <div class="actividades-null">
                                     <span>No hay tareas pendientes</span>
                                 </div>
                             <?php

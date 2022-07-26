@@ -193,6 +193,12 @@ body::-webkit-scrollbar-thumb, .tarjeta::-webkit-scrollbar-thumb {
     margin-top: 1.5rem;
 }
 
+.actividades-null span {
+    font-size: 1.10rem;
+    margin-left: 0.5rem;
+    margin-top: 1.5rem;
+}
+
 .cargar-mas {
     margin-top: 10px;
 }

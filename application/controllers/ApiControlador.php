@@ -205,7 +205,7 @@ class ApiControlador extends UTP_Controller
     }
     function runScript()
     {
-        $command = escapeshellcmd('C:/Users/Yuri/AppData/Local/Programs/Python/Python310/python.exe c:/laragon/www/academico/loginScrapp.py');
+        $command = escapeshellcmd('C:/Users/gelvs/AppData/Local/Programs/Python/Python39/python.exe c:/xampp/htdocs/academico/loginScrapp.py');
         $output = shell_exec($command);
         if (!empty($output)) {
             return "ok";

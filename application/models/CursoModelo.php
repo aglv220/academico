@@ -28,7 +28,8 @@ class CursoModelo extends CI_Model
         $data_valid = [["campo" => "fk_curso", "valor" => $id_curso], ["campo" => "fk_usuario", "valor" => $id_usuario]];
         $lst_cursousu_xcyu = $this->crudm->listar_tabla_xcampo("usuario_curso", $data_valid);
         if (count($lst_cursousu_xcyu) > 0) {
-            return true;
+            $id_curso_usu = $lst_cursousu_xcyu[0]->pk_usuario_curso;
+            return $id_curso_usu;
         } else {
             $data_uc = ["fk_curso" => $id_curso, "fk_usuario" => $id_usuario];
             return $this->crudm->ingresar_data($data_uc, "usuario_curso");
