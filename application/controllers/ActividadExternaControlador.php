@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class ActividadExternaControlador extends UTP_Controller
 {
+    public $modsis = 2;
 
     function __construct()
     {
@@ -82,8 +83,21 @@ class ActividadExternaControlador extends UTP_Controller
         $estado = $this->input->post("estado");
         $fechaDisp = $fecha . " " . $hora;
         $idTabla = $this->actextmodelo->crearActividad($tipo, $idUser, $nombre, $descrip, $fechaDisp);
-        $this->notifim->insertar_notificacion($idTabla, $nombre, 0);
-        $this->actextmodelo->insertarUsuarioActividadExterna($idTabla, $estado);
+        $insert_activ = $this->actextmodelo->insertarUsuarioActividadExterna($idTabla, $estado);
+
+        if ($insert_activ > 0 && $insert_activ != null) {
+            if ($tipo == 4 || $tipo == "4") {
+                $asunto = "Nueva actividad externa";
+                $msg = "Se ha agregado una nueva actividad externa en la pizarra";
+                $cfg_name = "emailnotify_board_new";
+            } else {
+                $asunto = "Nueva actividad";
+                $msg = "Se ha agregado una nueva actividad en el calendario";
+                $cfg_name = "emailnotify_calendar_new";
+            }
+            $cfg_en = $this->valide_email_notification($this->get_SESSID(), $cfg_name, $asunto, $msg);
+            $this->notifim->insertar_notificacion($idTabla, "Nueva actividad: " . $nombre, 0);
+        }
     }
 
     public function get_modal_externa($pkActividad = null)
@@ -153,13 +167,20 @@ class ActividadExternaControlador extends UTP_Controller
         }
         $asunto = "Se cambio el estado de su Actividad";
         $msg = "Se cambio el estado de su Actividad" . $cadena;
-        $cfg_en = $this->valide_email_notification($this->get_SESSID(), "emailnotify_calendar_new", $asunto, $msg);
+        $cfg_en = $this->valide_email_notification($this->get_SESSID(), "emailnotify_board_update", $asunto, $msg);
 
         $where_c = [["campo" => "pk_usuario_actividad_externa", "valor" => $id]];
         $id_actividad = $this->crudm->listar_campo_tabla_xcond("usuario_actividad_externa", "fk_actividad", $where_c);
         $actividad = "Se cambio el estado de su Actividad";
         $nombre = "Se cambio el estado de su Actividad";
         $registrar_notificacion = $this->notifim->publicar_notificacion($this->get_SESSID(), $id_actividad, $nombre);
+
+        /*ACCIONES: 1 => INSERTAR | 2 => PIZARRA | 3 => CONFIGURACION | 4 => REPORTES | 5 => USUARIO*/
+        $where_vnf = [["campo" => "pk_actividad", "valor" => $id_actividad]];
+        $value_notify = $this->crudm->listar_campo_tabla_xcond("actividad", "nombre_actividad", $where_vnf);
+        $titulo_notify = "Actualización de pizarra";
+        $detalle_notify = "Cambio de estado a '" . $cadena . "' en la pizarra, actividad: " . $value_notify;
+        $this->audmod->registrar_evento_auditoria($this->modsis, $this->get_SESSID(), 1, $titulo_notify, $detalle_notify);
     }
 
     public function save_subtareas()
@@ -186,8 +207,13 @@ class ActividadExternaControlador extends UTP_Controller
                     '</label>' .
                     '</li>';
                 $contador++;
-            }//onchange="select_st(' . $class_chk . ')"
+            } //onchange="select_st(' . $class_chk . ')"
             $return = ["subtareas" => $html_subtareas];
+
+            /*ACCIONES: 1 => INSERTAR | 2 => ACTUALIZAR | 3 => ELIMINAR | 4 => INICIAR SESION |  5 => CERRAR SESION | 6 => RECUPERACION*/
+            $titulo_notify = "Registro de subtarea";
+            $detalle_notify = "Se ha registrado una nueva subtarea: " . $nombre;
+            $this->audmod->registrar_evento_auditoria($this->modsis, $this->get_SESSID(), 1, $titulo_notify, $detalle_notify);
         }
         echo json_encode($return);
     }
@@ -205,10 +231,22 @@ class ActividadExternaControlador extends UTP_Controller
             $datos = $value[0] . "-" . $value[1] . "-" . $value[2];
             echo $this->actextmodelo->cambiar_estado_subtarea($value[0]);
         }
+        /*ACCIONES: 1 => INSERTAR | 2 => ACTUALIZAR | 3 => ELIMINAR | 4 => INICIAR SESION |  5 => CERRAR SESION | 6 => RECUPERACION*/
+        $id_activ = $this->crudm->listar_campo_tabla_xcond("subtarea", "fk_actividad", [["campo" => "pk_subtarea", "valor" => $id]]);
+        $value_notify = $this->crudm->listar_campo_tabla_xcond("actividad", "nombre_actividad", [["campo" => "pk_actividad", "valor" => $id_activ]]);
+        $titulo_notify = "Actualización de subtareas";
+        $detalle_notify = "Actualización de estados de subtareas, actividad: " . $value_notify;
+        $this->audmod->registrar_evento_auditoria($this->modsis, $this->get_SESSID(), 2, $titulo_notify, $detalle_notify);
     }
     public function delete_subtareas()
     {
         $id = $this->input->post("id");
+        /*ACCIONES: 1 => INSERTAR | 2 => ACTUALIZAR | 3 => ELIMINAR | 4 => INICIAR SESION |  5 => CERRAR SESION | 6 => RECUPERACION*/
+        $where_vnf = [["campo" => "pk_subtarea", "valor" => $id]];
+        $value_notify = $this->crudm->listar_campo_tabla_xcond("subtarea", "nombre_subtarea", $where_vnf);
+        $titulo_notify = "Eliminación de subtarea";
+        $detalle_notify = "Se ha eliminado la subtarea: " . $value_notify;
+        $this->audmod->registrar_evento_auditoria($this->modsis, $this->get_SESSID(), 3, $titulo_notify, $detalle_notify);
         $this->actextmodelo->delete_subtareas($id);
     }
 }

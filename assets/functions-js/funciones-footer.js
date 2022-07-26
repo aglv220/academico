@@ -139,6 +139,7 @@ function convert_uudecode(str) {
     return this.rtrim(decoded, "\0");
 }
 
+
 function encript_data_js(cadena) {
     fase_1 = reverse_string(cadena);
     fase_2 = convert_uuencode(fase_1);
@@ -198,5 +199,6 @@ options_tbl = {
             "next":       "Siguiente",
             "last":       "Último"
         },
-    }
+    },
+    order: [[0, 'desc']]
 }

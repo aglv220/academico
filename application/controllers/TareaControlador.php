@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class TareaControlador extends UTP_Controller
 {
+  public $modsis = 2;
 
   function __construct()
   {
@@ -42,13 +43,17 @@ class TareaControlador extends UTP_Controller
         $cadena = "finalizado";
     }
     $asunto = "Se cambio el estado de su Actividad";
-    $msg = "Se cambio el estado de su Actividad" . $cadena;
-    $cfg_en = $this->valide_email_notification($this->get_SESSID(), "emailnotify_calendar_new", $asunto, $msg);
+    $msg = "Se cambio el estado de su Actividad => " . $cadena;
+    $cfg_en = $this->valide_email_notification($this->get_SESSID(), "emailnotify_board_update", $asunto, $msg);
 
-    /*$where_c = [["campo" => "pk_usuario_actividad", "valor" => $id]];
-    $id_actividad = $this->crudm->listar_campo_tabla_xcond("usuario_actividad", "fk_actividad", $where_c);
-    $actividad = "Se cambio el estado de su Actividad";*/
     $nombre = "Se cambio el estado de su Actividad";
     $registrar_notificacion = $this->notifim->publicar_notificacion($this->get_SESSID(), $id, $nombre);
+
+    /*ACCIONES: 1 => INSERTAR | 2 => ACTUALIZAR | 3 => ELIMINAR | 4 => INICIAR SESION |  5 => CERRAR SESION | 6 => RECUPERACION*/
+    $where_vnf = [["campo" => "pk_actividad", "valor" => $id]];
+    $value_notify = $this->crudm->listar_campo_tabla_xcond("actividad", "nombre_actividad", $where_vnf);
+    $titulo_notify = "Actualización de pizarra";
+    $detalle_notify = "Cambio de estado a '".$cadena."' en la pizarra, actividad: " . $value_notify;
+    $this->audmod->registrar_evento_auditoria($this->modsis, $this->get_SESSID(), 2, $titulo_notify, $detalle_notify);
   }
 }

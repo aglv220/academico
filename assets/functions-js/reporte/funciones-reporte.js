@@ -58,10 +58,11 @@ if (page_name == "actividades" || page_name == "tareas") {
                     txt_lbl = mydata[index].label;
                     data_val = parseInt(mydata[index].data[0]);
                     porcentaje = parseFloat((data_val / parseInt(suma_cant)) * 100);
+                    round_prc = Math.round(porcentaje * 100) / 100;
                     label_html +=
                         '<div class="card">' +
                         '<div class="card-body text-center">' +
-                        '<span class="color porcentaje">' + porcentaje + '% </span> <span class="color nombre">' + txt_lbl + '</span>' +
+                        '<span class="color porcentaje">' + round_prc+ '% </span> <span class="color nombre">' + txt_lbl + '</span>' +
                         '</div>' +
                         '</div>';
                 }
@@ -92,7 +93,6 @@ if (page_name == "actividades" || page_name == "tareas") {
             }
         }).done(function () {
             Swal.close();
-            // setTimeout(function () {}, 1000);
             $("#select-mes").prop("disabled", false);
         });
     }

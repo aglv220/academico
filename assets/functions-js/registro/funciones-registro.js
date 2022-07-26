@@ -127,7 +127,7 @@ function registrar() {
                                     data_t = JSON.parse(data);
                                     token = data_t["token"];
                                     $.get(root_path + "ApiControlador/web_scrapping",
-                                        { correo: correo, clave: password, fase: fase, token: token/*, decode: true*/ }).done(function (data) {
+                                        { correo: correo, clave: password, fase: fase, token: token }).done(function (data) {
                                             swal.close();
                                             if (data != false) {
                                                 id_user = data;
@@ -136,7 +136,7 @@ function registrar() {
                                                 } else {
                                                     msg_swal_loading("Nos enfocamos en brindarte el mejor servicio", html_loading);
                                                     $.get(root_path + "ApiControlador/web_scrapping",
-                                                        { correo: correo, clave: password, fase: "REGISTRO", token: token, iduser: id_user/*, decode: true*/ }).done(function (data) {
+                                                        { correo: correo, clave: password, fase: "REGISTRO", token: token, iduser: id_user }).done(function (data) {
                                                             setTimeout(function () {
                                                                 if (data == true) {
                                                                     swal.close();

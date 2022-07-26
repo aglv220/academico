@@ -12,6 +12,7 @@ function actividadesyTareasPausa() {
         url: root_path + "ActividadExternaControlador/get_tareas_pausa",
         success: function (data) {
             var mydata = JSON.parse(data);
+            $(".cnt-pausa").html(mydata.length);
             mydata.forEach(pausa => {
                 button1 = ``;
                 if (pausa.tipo !== "1") {
@@ -51,6 +52,7 @@ function actividadesyTareasProceso() {
         url: root_path + "ActividadExternaControlador/get_tareas_proceso",
         success: function (data) {
             var mydata = JSON.parse(data);
+            $(".cnt-proceso").html(mydata.length);
             mydata.forEach(pausa => {
                 if (pausa.tipo !== "1") {
                     button1 = `<button title="Crear subtarea" type="button" class="open-modal-container btn-modal-exam btn-action a-subtarea" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodal(${pausa.id})" data-id="${pausa.id}">
@@ -93,6 +95,7 @@ function actividadesyTareasFin() {
         url: root_path + "ActividadExternaControlador/get_tareas_fin",
         success: function (data) {
             var mydata = JSON.parse(data);
+            $(".cnt-fin").html(mydata.length);
             mydata.forEach(pausa => {
                 if (pausa.tipo !== "1") {
                     button1 = `<button title="Crear subtarea" type="button" class="open-modal-container btn-action a-subtarea btn-modal-exam" data-toggle="modal" data-act="ver" data-target="#modal-container" onclick="showmodal(${pausa.id})" data-id="${pausa.id}">

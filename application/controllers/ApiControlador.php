@@ -93,14 +93,22 @@ class ApiControlador extends UTP_Controller
 
     function web_scrapping()
     {
-        $correo = $this->input->get("correo");
-        $pass = $this->input->get("clave");
-        $token = $this->input->get("token");
+        if ($this->session->userdata('SESSION_CORREO')) {
+            $correo = $this->session->userdata('SESSION_CORREO');
+            $iduser = $this->encript_data($this->session->userdata('SESSION_ID'));
+            $new_pass_get = $this->input->get("clave");
+        } else {
+            $correo = $this->input->get("correo");
+            $iduser = $this->input->get("iduser");
+            $pass = $this->input->get("clave");
+            $new_pass_get = $this->decript_data($pass);
+        }
         $fase = $this->input->get("fase");
-        $iduser = $this->input->get("iduser");
-        $new_pass_get = $this->decript_data($pass);
+        //$token = $this->input->get("token");
+
         $this->crear_txt($new_pass_get, "password");
         $this->crear_txt($correo, "email");
+
         //llamar al script de python
         $respuesta = $this->runScript();
         if ($respuesta == "ok") {
@@ -109,7 +117,7 @@ class ApiControlador extends UTP_Controller
                     $registrar_usuario = $this->usuariom->registrar_usuario($correo, $new_pass_get, true);
                     if ($registrar_usuario == "EXIST") {
                         echo "EXIST";
-                    } else {                        
+                    } else {
                         echo $this->encript_data($registrar_usuario);
                     }
                     break;
@@ -138,7 +146,6 @@ class ApiControlador extends UTP_Controller
                     $curso = array_unique($curso);
 
                     $id_curso = [];
-                    $actividades = [];
 
                     foreach ($curso as $cur) {
                         $insert_curso = $this->cursom->guardar_curso($cur);
@@ -189,6 +196,10 @@ class ApiControlador extends UTP_Controller
                     }
                     break;
             }
+        } else {
+            $this->delete_txt("password");
+            $this->delete_txt("email");
+            echo false;
         }
     }
     function runScript()
@@ -200,6 +211,5 @@ class ApiControlador extends UTP_Controller
         } else {
             return "error";
         }
-        //return $output;
     }
 }

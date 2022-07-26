@@ -25,7 +25,7 @@ $("#FRM_RECOVER_PASS").submit(function (e) {
             cache: false,
             processData: false,
             beforeSend: function () {
-                msg_swal_loading(txt_msg_carga,'Espera unos instantes');
+                msg_swal_loading(txt_msg_carga, 'Espera unos instantes');
             },
             success: function (data) {
                 swal.close();
@@ -91,7 +91,19 @@ $("#FRM_RECOVER_PASS").submit(function (e) {
 
 });
 
-$("#FRM_RECOVER_PASS").submit(function (e) {
+/******** PERFIL DE USUARIO *******/
+$("input[name='usuario_chkemailnotify']").on("change", function () {
+    var input_correonotify = $("input[name='usuario_correonotify']");
+    if ($(this).is(':checked')) {
+        input_correonotify.val("Se usará el correo institucional");
+        input_correonotify.prop("disabled", true);
+    } else {
+        input_correonotify.val("");
+        input_correonotify.prop("disabled", false);
+    }
+});
+
+$("#FRM_PERFIL_USU").submit(function (e) {
     e.preventDefault();
     var form = $(this);
     var idform = form.attr("id");
@@ -106,7 +118,7 @@ $("#FRM_RECOVER_PASS").submit(function (e) {
         cache: false,
         processData: false,
         beforeSend: function () {
-            msg_swal_loading('Guardando información','Espera unos instantes');
+            msg_swal_loading('Guardando información', 'Espera unos instantes');
         },
         success: function (data) {
             swal.close();
@@ -178,12 +190,45 @@ $("#FRM_CONFIGURACION").submit(function (e) {
 
 /******** HISTORIAL DE SISTEMA *******/
 
-if($("#tblhistory").length != 0){
+if ($("#tblhistory").length != 0) {
     var tblhistory = $('#tblhistory').DataTable(options_tbl);
 }
 
 /******** NOTIFICACIONES DEL SISTEMA *******/
 
-if($("#tblnotifys").length != 0){
+if ($("#tblnotifys").length != 0) {
     var tblnotifys = $('#tblnotifys').DataTable(options_tbl);
+}
+
+
+function actualizar_informacion() {
+
+    Swal.fire({
+        html: '<b>Ingresa tu contraseña de CANVAS</b>',
+        input: 'password',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Continuar',
+        cancelButtonText: "Cancelar",
+        showLoaderOnConfirm: true,
+        preConfirm: (login) => {
+            $(".swal2-input").prop("readonly",true);
+            return $.get(root_path + "ApiControlador/web_scrapping", { fase: "REGISTRO", clave: login }).done(function (data) {
+                if (data) {
+                    Swal.close();
+                    $(".swal2-input").prop("readonly",false);
+                    msg_swal("success", "Información actualizada", "Tu información ha sido actualizada correctamente");
+                } else {
+                    Swal.close();
+                    $(".swal2-input").prop("readonly",false);
+                    msg_swal("error", "Contraseña incorrecta", "Verifica tu contraseña ingresada");
+                }
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    })
+
+
 }

@@ -115,7 +115,7 @@ class NotificacionModelo extends CI_Model
                 $html_notify .=
                     '<li class="contentedor-notify-pending">
                         <a class="notify-pending" js-id="' . $id_encript . '">
-                            <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
+                            <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-note"></i></span>
                             <div class="notification-content">
                                 <h6 class="notification-heading">' . $nom_notif . '</h6>
                                 <span class="notification-text">' . $FECHA_NOTIF . '</span> 

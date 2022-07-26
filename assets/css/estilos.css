@@ -75,6 +75,8 @@
     box-shadow: initial;
     background-color: #F4F5F7;*/  
     min-height: 600px;
+    max-height: 1000px;
+    overflow: auto;
 }
 
 #page-board .title-card {
@@ -87,8 +89,8 @@
 }
 
 #page-board .actividad-tj {
-    /* width: 90%; */
-    height: 100px;
+    /* width: 90%; 
+    height: 100px;*/
     margin: 1rem 0rem 1rem 0rem;
     padding: 0.5rem 1rem 0.5rem 1rem;
     box-shadow: var(--ds-shadow-raised, 0 1px 1px rgba(23, 43, 77, 0.2), 0 0 1px rgba(23, 43, 77, 0.2));
@@ -150,4 +152,40 @@
 
 .activity.active {
     background-image: linear-gradient(230deg, #329a9e, #04bb32) !important;
+}
+
+/**** PAGINA PRINCIPAL ***/
+
+.div-actividad.card .card-body p {
+    font-weight: bold;
+    font-size: 1.50rem;
+    max-width: 100%;
+}
+
+.div-actividad.card .cartitle {
+    width: 100%;
+    border-bottom: 1px solid #000;
+}
+
+.actividades span {
+    font-size: 1.10rem;
+    margin-left: 0.5rem;
+    position: absolute;
+    margin-top: 1.5rem;
+}
+
+.cargar-mas {
+    margin-top: 10px;
+}
+
+.icono-calendario{
+    font-size: 3rem;
+}
+
+.icono-calendario label{
+    font-size: 1.2rem;
+    margin-left: -2.2rem;
+    margin-top: 1.45rem;
+    position: absolute;
+    font-style: normal;
 }

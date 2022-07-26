@@ -1,6 +1,3 @@
-<style>
-
-</style>
 <!--**********************************
             Content body start
         ***********************************-->
@@ -15,7 +12,6 @@
         </div>
     </div>
     <!-- row -->
-
     <div class="container-fluid">
 
         <div class="row">
@@ -24,7 +20,7 @@
                     <div class="card-body">
                         <div class="tarjeta inicio">
                             <div class="title-card">
-                                <span>Actividades en Pausa</span>
+                                <span>Actividades en Pausa &nbsp;<label class="badge gradient-2 badge-pill badge-primary cnt-pausa">0</label></span>
                             </div>
                         </div>
 
@@ -37,7 +33,7 @@
                     <div class="card-body">
                         <div class="tarjeta proceso">
                             <div class="title-card">
-                                <span>Actividades en Curso</span>
+                                <span>Actividades en Curso &nbsp;<label class="badge gradient-3 badge-pill badge-primary cnt-proceso">0</label></span>
                             </div>
                         </div>
                     </div>
@@ -49,42 +45,13 @@
                     <div class="card-body">
                         <div class="tarjeta fin">
                             <div class="title-card">
-                                <span>Actividades Finalizadas</span>
+                                <span>Actividades Finalizadas &nbsp;<label class="badge gradient-1 badge-pill badge-primary cnt-fin">0</label></span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <!-- <div class="card">
-            <div class="card-body">
-                <div class="card-title">
-                    <h4>Pizarra de actividades</h4>
-                </div>
-                <div class="row">
-                    <div class="contenedor">
-                        <div class="tarjeta inicio">
-                            <div class="title-card">
-                                <span>Actividades en Pausa</span>
-                            </div>
-
-                        </div>
-                        <div class="tarjeta proceso">
-                            <div class="title-card">
-                                <span>Actividades en Curso</span>
-                            </div>
-                        </div>
-                        <div class="tarjeta fin">
-                            <div class="title-card">
-                                <span>Actividades Finalizadas</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
     <!-- #/ container -->
 </div>

@@ -22,6 +22,12 @@ class UTP_Controller extends CI_Controller
         return $this->session->userdata('SESSION_ID');
     }
 
+    protected function get_meses()
+    {
+        $array_meses = ["","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+        return $array_meses;
+    }
+
     protected function generate_token(){
         $r1 = [rand(1389,2787),rand(3036,4668),rand(5187,6798)];
         $r2 = [rand(7641,8315),rand(9961,10544),rand(11319,12634)];
@@ -74,7 +80,8 @@ class UTP_Controller extends CI_Controller
             $value_configbd = $config_user[0]->$config;
             if ($value_configbd == "1") {
                 $lst_user = $this->userm->inicio_sesion($userID, "pk_usuario");
-                $correo_user = $lst_user[0]->usuario_correo;
+                $correo_user = $lst_user[0]->alumno_correonotify;
+                //$correo_user = $lst_user[0]->usuario_correo;
                 $send_mail = $this->enviar_email($correo_user, $asunto, $msg);
                 return $send_mail;
             } else {

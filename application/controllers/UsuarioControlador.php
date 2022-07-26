@@ -34,8 +34,17 @@ class UsuarioControlador extends UTP_Controller
         $carrera = $this->input->post("usuario_carrera");
         $ciclo = $this->input->post("usuario_ciclo");
 
+        $valid_emailnotify = $this->input->post("usuario_chkemailnotify") == "on" ? 1 : 0;
+        if ($valid_emailnotify == 1) {
+            //CORREO DE USUARIO POR DEFECTO
+            $where_c = [["campo" => "pk_usuario", "valor" => $idUser]];
+            $correo_notify = $this->crudm->listar_campo_tabla_xcond("usuario", "usuario_correo", $where_c);
+        } else {
+            $correo_notify = $this->input->post("usuario_correonotify");
+        }
+
         $where_data_a = array("fk_usuario" => $idUser);
-        $data_alumno = array('alumno_nombre' => $nombre, 'alumno_apellidos' => $apellidos, 'alumno_carrera' => $carrera, 'alumno_ciclo' => $ciclo, 'alumno_celular' => $celular, 'alumno_fecnac' => $fec_nac);
+        $data_alumno = array('alumno_nombre' => $nombre, 'alumno_apellidos' => $apellidos, 'alumno_carrera' => $carrera, 'alumno_ciclo' => $ciclo, 'alumno_celular' => $celular, 'alumno_fecnac' => $fec_nac, 'alumno_correonotify' => $correo_notify);
         if ($this->input->post("usuario_newpass")) {
             $new_pass = $this->input->post("usuario_newpass");
             $where_data_u = array("pk_usuario" => $idUser);
@@ -95,6 +104,10 @@ class UsuarioControlador extends UTP_Controller
         );
         $update_configuracion = $this->usuariom->establecer_configuracion($idUser, $lst_config_opt);
         if ($update_configuracion) {
+            /*ACCIONES: 1 => INSERTAR | 2 => ACTUALIZAR | 3 => ELIMINAR | 4 => INICIAR SESION |  5 => CERRAR SESION | 6 => RECUPERACION*/
+            $titulo_notify = "Actualización de configuración";
+            $detalle_notify = "El usuario ha actualizado su configuración personal";
+            $this->audmod->registrar_evento_auditoria($this->modsis, $this->get_SESSID(), 2, $titulo_notify, $detalle_notify);
             echo "OK";
         } else {
             echo "ERROR";
@@ -223,6 +236,7 @@ class UsuarioControlador extends UTP_Controller
         $idUser = $this->session->userdata('SESSION_ID');
         $data["tareas"] = $this->tareamod->listarCursos($idUser);
         $data["actividades"] = $this->actexmod->listarActividades($idUser);
+        $data["lstmeses"] = $this->get_meses();
         $data_header['title_page'] = 'Página principal';
         $this->cabecera_pagina($data_header);
         $this->load->view('dashboard', $data);

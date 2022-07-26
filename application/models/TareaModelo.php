@@ -52,7 +52,7 @@ class TareaModelo extends CI_Model
         // INNER JOIN usuario_actividad ua on ua.fk_curso = c.pk_curso
         // INNER JOIN actividad a on a.pk_actividad = ua.fk_actividad
         // WHERE uc.fk_usuario = $idUser and a.fk_tipo_actividad = 1 and ua.estado_usuario_actividad = 0 ORDER BY a.fecdisp_actividad DESC LIMIT 3" ;
-        $query = "SELECT curso_nombre as nombreCurso, a.nombre_actividad as descpCurso FROM actividad a INNER JOIN usuario_actividad ua ON ua.fk_actividad = a.pk_actividad INNER JOIN usuario_curso uc ON uc.fk_usuario = a.fk_usuario LEFT JOIN curso c on uc.fk_curso = c.pk_curso WHERE uc.fk_usuario = $idUser and a.fk_tipo_actividad = 1 and ua.estado_usuario_actividad = 0 ORDER BY a.fecdisp_actividad DESC LIMIT 3";
+        $query = "SELECT curso_nombre as nombreCurso, a.nombre_actividad as descpCurso, DAY(a.fecdisp_actividad) as dia_actividad, MONTH(a.fecdisp_actividad) as mes_actividad, YEAR(a.fecdisp_actividad) as year_actividad FROM actividad a INNER JOIN usuario_actividad ua ON ua.fk_actividad = a.pk_actividad INNER JOIN usuario_curso uc ON uc.fk_usuario = a.fk_usuario LEFT JOIN curso c on uc.fk_curso = c.pk_curso WHERE uc.fk_usuario = $idUser and a.fk_tipo_actividad = 1 and ua.estado_usuario_actividad = 0 ORDER BY a.fecdisp_actividad DESC LIMIT 3";
         $resultado = $this->db->query($query);
         return $resultado->result_array();
     }

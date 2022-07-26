@@ -92,11 +92,11 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="dropdown-content-heading d-flex justify-content-center">
-                                    <a class="notify-pending-deleteall text-black">
-                                        <i class="fa fa-trash"></i> Eliminar todas las notificaciones
-                                    </a>
-                                </div>
+
+                                <a class="d-flex justify-content-between gradient-4 px-4 text-white notify-pending-deleteall">
+                                    <span>Eliminar todas las notificaciones</span>
+                                    <span><i class="icon-trash"></i></span>
+                                </a>
                             </div>
                         </li>
                         <li class="icons dropdown d-none d-md-flex">

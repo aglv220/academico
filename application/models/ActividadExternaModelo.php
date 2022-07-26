@@ -53,7 +53,8 @@ class ActividadExternaModelo extends CI_Model
     }
 
     public function listarActividades($idUser){
-        $query = "SELECT  ta.nombre_tipo_actividad as nombreCurso,ac.nombre_actividad as descpCurso from actividad ac
+        $query = "SELECT  ta.nombre_tipo_actividad as nombreCurso, ac.nombre_actividad as descpCurso, 
+        DAY(ac.fecdisp_actividad) as dia_actividad, MONTH(ac.fecdisp_actividad) as mes_actividad, YEAR(ac.fecdisp_actividad) as year_actividad FROM actividad ac
         INNER JOIN tipo_actividad ta on ta.pk_tipo_actividad = ac.fk_tipo_actividad
         INNER JOIN usuario_actividad_externa uce on uce.fk_actividad = ac.pk_actividad
         where fk_usuario = $idUser and fk_tipo_actividad != 1 and uce.estado_pizarra = 0 ORDER BY ac.fecdisp_actividad DESC LIMIT 3" ;

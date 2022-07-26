@@ -6,8 +6,8 @@
     <div class="row page-titles mx-0">
         <div class="col p-md-0">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?= base_url() ?>pagina_principal">Página principal</a></li>
+                <li class="breadcrumb-item active"><a href="">Perfil de usuario</a></li>
             </ol>
         </div>
     </div>
@@ -38,7 +38,7 @@
             <div class="col-lg-8 col-xl-9">
                 <div class="card">
                     <div class="card-body">
-                        <form id="FRM_RECOVER_PASS" class="form-profile" action="<?php echo base_url(); ?>UsuarioControlador/actualizar_perfil_personal" method="POST">
+                        <form id="FRM_PERFIL_USU" class="form-profile" action="<?php echo base_url(); ?>UsuarioControlador/actualizar_perfil_personal" method="POST">
                             <div class="row">
                                 <div class="col-lg-6 col-xs-12 mt-2">
                                     <h4 class="card-title">Datos personales</h4>
@@ -77,6 +77,16 @@
                                         <div class="form-group">
                                             <label>Ciclo</label>
                                             <input type="number" name="usuario_ciclo" class="form-control input-flat" placeholder="Ingresa tu nro. de ciclo actual" value="<?= $info_usuario->alumno_ciclo ?>" min="1" max="10" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Correo de notificaciones</label>
+                                            <div class="form-group">
+                                                <div class="form-check form-check-inline">
+                                                    <label class="form-check-label">
+                                                        <input type="checkbox" name="usuario_chkemailnotify" class="form-check-input">Correo por defecto (correo institucional)</label>
+                                                </div>
+                                            </div>
+                                            <input type="email" name="usuario_correonotify" class="form-control input-flat" placeholder="Ingresa tu correo de notificaciones" value="<?= $info_usuario->alumno_correonotify ?>" required>
                                         </div>
                                     </div>
                                 </div>
